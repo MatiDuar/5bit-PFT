@@ -1,0 +1,36 @@
+@charset "ISO-8859-1";
+
+.headerRegistro {
+	display: flex;
+	background: linear-gradient(#006666, #FFFFFF);
+	width: 100%;
+	height: 380px;
+	justify-content: center;
+	color: white;
+	font-size: 20px;
+}
+
+
+
+.box {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 100%;
+	width: 100%;
+	margin-top: -445px;
+}
+
+.separador {
+	margin-top: -10%;
+}
+
+.textoHeader {
+	margin-top: 3%;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}

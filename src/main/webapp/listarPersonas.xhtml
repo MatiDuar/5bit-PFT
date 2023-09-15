@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/index.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
+	<h:outputScript library="primefaces" name="jquery.js"/>
+    <h:outputScript library="primefaces" name="jquery-plugins.js"/>
+	<link type="text/css" rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
+
+
+	<ui:define name="contenidoPrincipal">
+
+		<h1>Gestión de Usuarios</h1>
+
+		<div class="card">
+			<h:form>
+				<p:panel id="contenido">
+					<p:dataTable var="personas" value="#{dtFilterView.personas}"
+						widgetVar="personasTable"
+						emptyMessage="Personas no encontradas con este criterio"
+						filteredValue="#{dtFilterView.filteredPersonas}"
+						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
+						editable="#{gestionPersona.personaLogeada.admin}" id="dateTable"
+						selectionMode="single" rowKey="#{gestionPersona.personasMod}">
+
+						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
+							update="dateTable" />
+						<p:ajax event="rowEditCancel"
+							listener="#{gestionPersona.onRowCancel}" update="dateTable" />
+
+						<f:facet name="header">
+							<div class="flex justify-content-end">
+								<p:inputText id="globalFilter"
+									onkeyup="PF('personasTable').filter()" style="width:300px"
+									placeholder="Buscardor global..." />
+							</div>
+						</f:facet>
+
+						<p:column field="nombre1" headerText="Nombre"
+							sortBy="#{personas.nombre1}" filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombre1}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombre1}"
+										requiredMessage="Debe ingresar el primer Nombre"
+										maxlength="50"
+										validatorMessage="No puede contener solo espacios vacios"
+										id="primerNombre">
+										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+									</p:inputText>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="primerNombre" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column field="apellido1" headerText="Apellido"
+							filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.apellido1}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.apellido1}" required="true"
+										requiredMessage="Debe ingresar el primer Apellido"
+										validatorMessage="No puede contener solo espacios vacios"
+										id="apellido1">
+										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+									</p:inputText>
+
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="apellido1" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column field="mail" headerText="Email" filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.mail}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText id="email1"
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.mail}"
+										requiredMessage="Debe ingresar el Email" type="email"
+										validatorMessage="Formato de Email incorrecto">
+										<f:validateRegex
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+									</p:inputText>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="email1" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+
+						<p:column field="nombreUsuario" headerText="Nombre de Usuario"
+							filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombreUsuario}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombreUsuario}" required="true"
+										requiredMessage="Debe ingresar el Nombre de Usuario"
+										id="nombreUsuario" validator="#{validatorPersona.validateOnLista}">
+
+
+									</p:inputText>
+
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="nombreUsuario" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column field="direccion" headerText="Direccion"
+							filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.direccion}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+
+									<p:inputText id="direccion"
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.direccion}" required="true"
+										requiredMessage="Debe ingresar la Direccion"
+										validatorMessage="No puede contener solo espacios vacios">
+										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="direccion" /></small>
+									</p:inputText>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
+						<p:column headerText="Edad" filterable="false">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{dtFilterView.getEdad(personas.fechaNacimiento)}" />
+
+						</p:column>
+
+						<p:column headerText="Carrera" filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.carrera}" />
+								</f:facet>
+								<f:facet name="input" class="col-10 elemento3" id="elementoCoso">
+									<p:selectOneMenu id="group" value="#{personas.carrera}"
+										rendered="#{personas.carrera!=null}"
+										appendTo="@(#groupCarreraMod)" styleClass="elemento">
+										<f:selectItem itemLabel="" itemValue="" styleClass="elemento2" />
+										<c:forEach var="carrera" items="#{gestionPersona.carreras}">
+											<f:selectItem itemLabel="#{carrera.nombre}"
+												itemValue="#{carrera.nombre}" />
+										</c:forEach>
+										<f:validateRequired></f:validateRequired>
+
+									</p:selectOneMenu>
+
+								</f:facet>
+							</p:cellEditor>
+
+						</p:column>
+						<div id="groupCarreraMod">prueba</div>
+
+
+						<p:column headerText="Id Estudiante" filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.idEstudiantil}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+
+									<p:inputText id="idEstudiante"
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.idEstudiantil}"
+										rendered="#{personas.idEstudiantil!=null}"
+										requiredMessage="Debe ingresar el Id Estudiantil"
+										required="true">
+									</p:inputText>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="idEstudiante" /></small>
+								</f:facet>
+
+							</p:cellEditor>
+						</p:column>
+
+						<p:column rendered="#{gestionPersona.personaLogeada.admin}"
+							headerText="Estado">
+							<div class="columnaEditar">
+								<p:commandButton icon="pi pi-plus-circle"
+									styleClass="rounded-button ui-button-success ui-button-flat"
+									action="#{gestionPersona.activarPersonaOnLista(personas)}"
+									rendered="#{!personas.activo}" immediate="true"
+									update="dateTable">
+									<p:confirm header="Estas Seguro?"
+										message="La cuenta sera activada en el sistema"
+										icon="pi pi-info-circle" class="confirmDialog" />
+
+								</p:commandButton>
+
+								<p:commandButton icon="pi pi-minus-circle"
+									styleClass="rounded-button ui-button-danger ui-button-flat"
+									action="#{gestionPersona.bajaPersonaOnLista(personas)}"
+									rendered="#{personas.activo}" immediate="true"
+									update="dateTable" id="botonBaja">
+									<p:confirm header="Estas Seguro?"
+										message="La cuenta seleccionada sera dada de baja y no podra ingresar a la aplicacion"
+										icon="pi pi-info-circle" class="confirmDialog" />
+
+
+								</p:commandButton>
+							</div>
+						</p:column>
+						<p:column style="width:6rem;" headerText="Editar"
+							rendered="#{gestionPersona.personaLogeada.admin}">
+
+							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+								saveTitle="Save Row">
+
+							</p:rowEditor>
+						</p:column>
+
+
+
+					</p:dataTable>
+
+
+
+				</p:panel>
+
+				<p:confirmDialog global="true" showEffect="fade" responsive="true"
+					width="350" class="dialog" appendTo="contenido">
+					<p:commandButton value="No" type="button"
+						styleClass="ui-confirmdialog-no ui-button-flat" update="dateTable" />
+					<p:commandButton value="Sí" type="button"
+						styleClass="ui-confirmdialog-yes" update="dateTable" />
+				</p:confirmDialog>
+			</h:form>
+		</div>
+
+
+	</ui:define>
+
+
+</ui:composition>

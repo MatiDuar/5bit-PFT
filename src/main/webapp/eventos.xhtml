@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/index.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
+	<link type="text/css" rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
+<h:outputScript library="primefaces" name="jquery.js"/>
+    <h:outputScript library="primefaces" name="jquery-plugins.js"/>
+
+	<ui:define name="contenidoPrincipal">
+
+		<h1>Gestion de Eventos</h1>
+
+
+		<div class="card">
+			<div class="grid formgrid">
+				<div class="field col-12">
+					<h3>
+						<span class="pi pi-exclamation-triangle"></span> En Desarollo
+					</h3>
+					<p:skeleton class="mb-2" />
+					<p:skeleton class="mb-2" />
+					<p:skeleton width="15rem" class="mb-2" />
+
+				</div>
+			</div>
+		</div>
+
+
+
+		<div class="card">
+			<div class="grid formgrid">
+				<h5>Tabla de Eventos</h5>
+				<p:dataTable var="dataTable" value="">
+					<f:facet name="header">
+						<h4>Filtros</h4>
+						<p:panelGrid columns="4" layout="grid">
+							<p:outputLabel value="Tipo Evento"></p:outputLabel>
+							<p:outputLabel value="Estado"></p:outputLabel>
+							<p:outputLabel value="ITR"></p:outputLabel>
+							<p:outputLabel value="Modalidad"></p:outputLabel>
+							<p:selectOneMenu disabled="true" style="width:80%;">
+								<f:selectItem itemLabel="" itemValue="" />
+							</p:selectOneMenu>
+
+							<p:selectOneMenu disabled="true" style="width:80%;">
+								<f:selectItem itemLabel="" itemValue="" />
+							</p:selectOneMenu>
+
+
+							<p:selectOneMenu disabled="true" style="width:80%;">
+								<f:selectItem itemLabel="" itemValue="" />
+							</p:selectOneMenu>
+							<p:selectOneMenu disabled="true" style="width:80%;">
+								<f:selectItem itemLabel="" itemValue="" />
+							</p:selectOneMenu>
+
+						</p:panelGrid>
+					</f:facet>
+					<p:column headerText="Titulo">
+						<p:skeleton />
+
+					</p:column>
+					<p:column headerText="Tipo">
+						<p:skeleton />
+
+					</p:column>
+					<p:column headerText="Fec.Inc">
+						<p:skeleton />
+					</p:column>
+					<p:column headerText="ITR">
+						<p:skeleton />
+					</p:column>
+					<p:column headerText="Modalidad">
+						<p:skeleton />
+					</p:column>
+					<p:column headerText="Estado">
+						<p:skeleton />
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+
+
+	</ui:define>
+
+
+</ui:composition>
