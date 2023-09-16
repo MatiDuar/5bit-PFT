@@ -547,6 +547,9 @@ public class GestionPersona implements Serializable {
 		return usuarioLogeado instanceof Tutor;
 	}
 
+	public boolean esEstudianteMod(Usuario usuario) {
+		return usuario instanceof Estudiante;
+	}
 	public void setFechaNacSel(java.util.Date fechaNacSel) {
 		personaSeleccionada.setFechaNacimiento(new java.sql.Date(fechaNacSel.getTime()));
 		this.fechaNacSel = fechaNacSel;

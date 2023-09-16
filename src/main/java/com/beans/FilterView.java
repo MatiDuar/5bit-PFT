@@ -40,8 +40,10 @@ public class FilterView implements Serializable {
 	private String itrSeleccionado;
 
 	private String tipoUsuarioSeleccionado;
-	
+
 	private String anoIngresoSeleccionado;
+	
+	private String estadoSeleccionado;
 
 	private List<Usuario> personas;
 
@@ -60,7 +62,8 @@ public class FilterView implements Serializable {
 			personas = service.listarPersonas();
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
-			anoIngresoSeleccionado= "";
+			anoIngresoSeleccionado = "";
+			estadoSeleccionado= "";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -85,7 +88,8 @@ public class FilterView implements Serializable {
 	 */
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		if (LangUtils.isBlank(filterText) && itrSeleccionado.isBlank() && tipoUsuarioSeleccionado.isBlank() && anoIngresoSeleccionado.isBlank()) {
+		if (LangUtils.isBlank(filterText) && itrSeleccionado.isBlank() && tipoUsuarioSeleccionado.isBlank()
+				&& anoIngresoSeleccionado.isBlank()) {
 			return true;
 		}
 
@@ -98,17 +102,30 @@ public class FilterView implements Serializable {
 				&& !tipoUsuarioSeleccionado.isBlank()) {
 			return false;
 		}
-		if(!(persona instanceof Estudiante) && !anoIngresoSeleccionado.isBlank()) {
+		if (!(persona instanceof Estudiante) && !anoIngresoSeleccionado.isBlank()) {
 			return false;
 		}
+		if (!anoIngresoSeleccionado.isBlank()) {
+			return (((Estudiante) persona).getAnoIngreso() + "").equals(anoIngresoSeleccionado);
+		}
+		System.out.println(estadoSeleccionado);
 		
-			System.out.println(anoIngresoSeleccionado);
-			return (persona.getNombre1().toLowerCase().contains(filterText)
-					|| persona.getApellido1().toLowerCase().contains(filterText)
-					|| persona.getNombreUsuario().toLowerCase().contains(filterText)
-					|| persona.getMail().toString().toLowerCase().contains(filterText)
-					|| persona.getLocalidad().toLowerCase().contains(filterText))
-					|| (((Estudiante) persona).getAnoIngreso()+"").equals(anoIngresoSeleccionado);
+		if(estadoSeleccionado.equalsIgnoreCase("sin validar")) {
+			return !(persona.getActivo() && !persona.getValidado());
+		}
+		
+		if(estadoSeleccionado.equalsIgnoreCase("eliminado")) {
+			return !(persona.getActivo());
+		}
+		if(estadoSeleccionado.equalsIgnoreCase("validados")) {
+			return !(persona.getActivo() && persona.getValidado());
+		}
+		
+		return (persona.getNombre1().toLowerCase().contains(filterText)
+				|| persona.getApellido1().toLowerCase().contains(filterText)
+				|| persona.getNombreUsuario().toLowerCase().contains(filterText)
+				|| persona.getMail().toString().toLowerCase().contains(filterText)
+				|| persona.getLocalidad().toLowerCase().contains(filterText));
 
 	}
 
@@ -239,7 +256,13 @@ public class FilterView implements Serializable {
 	public void setAnoIngresoSeleccionado(String anoIngresoSeleccionado) {
 		this.anoIngresoSeleccionado = anoIngresoSeleccionado;
 	}
-	
-	
+
+	public String getEstadoSeleccionado() {
+		return estadoSeleccionado;
+	}
+
+	public void setEstadoSeleccionado(String estadoSeleccionado) {
+		this.estadoSeleccionado = estadoSeleccionado;
+	}
 
 }
