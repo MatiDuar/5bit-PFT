@@ -9,8 +9,8 @@
 
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript library="primefaces" name="primefaces.js" />
-	<h:outputScript library="primefaces" name="jquery.js"/>
-    <h:outputScript library="primefaces" name="jquery-plugins.js"/>
+	<h:outputScript library="primefaces" name="jquery.js" />
+	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 	<link type="text/css" rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
@@ -28,8 +28,7 @@
 						emptyMessage="Personas no encontradas con este criterio"
 						filteredValue="#{dtFilterView.filteredPersonas}"
 						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
-						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable"
-						 >
+						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable">
 
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
 							update="dateTable" />
@@ -37,10 +36,64 @@
 							listener="#{gestionPersona.onRowCancel}" update="dateTable" />
 
 						<f:facet name="header">
-							<div class="flex justify-content-end">
-								<p:inputText id="globalFilter"
-									onkeyup="PF('personasTable').filter()" style="width:300px"
-									placeholder="Buscardor global..." />
+
+
+							<div class="grid ui-fluid">
+								<div class=" justify-content-center">
+									<p:inputText id="globalFilter"
+										onkeyup="PF('personasTable').filter()" style="width:300px"
+										placeholder="Buscardor global..." />
+								</div>
+
+								<div class="col-12 md:col-2">
+
+									<p:outputLabel>Tipo Usuario</p:outputLabel>
+									<p:selectOneMenu id="groupTipoUsuario"
+										value="#{dtFilterView.tipoUsuarioSeleccionado}"
+										onchange="PF('personasTable').filter()">
+										<f:selectItem itemLabel="-" itemValue=" " />
+
+										<f:selectItem itemLabel="Estudiante" itemValue="estudiante" />
+										<f:selectItem itemLabel="Tutor" itemValue="tutor" />
+										<f:selectItem itemLabel="Analista" itemValue="analista" />
+
+
+										<f:validateRequired></f:validateRequired>
+									</p:selectOneMenu>
+								</div>
+
+								<div class="col-12 md:col-2">
+
+									<p:outputLabel>ITR</p:outputLabel>
+									<p:selectOneMenu id="groupItr"
+										value="#{dtFilterView.itrSeleccionado}"
+										onchange="PF('personasTable').filter()">
+										<f:selectItem itemLabel="-" itemValue=" " />
+										<c:forEach var="itr" items="#{gestionPersona.itrs}">
+											<f:selectItem itemLabel="#{itr.nombre}"
+												itemValue="#{itr.nombre}" />
+										</c:forEach>
+
+										<f:validateRequired></f:validateRequired>
+									</p:selectOneMenu>
+								</div>
+
+								<div class="col-12 md:col-2">
+
+									<p:outputLabel>Generacion</p:outputLabel>
+									<p:inputText id="anoIngreso" type="number"
+										value="#{dtFilterView.anoIngresoSeleccionado}"
+										onkeyup="PF('personasTable').filter()">
+
+									</p:inputText>
+								</div>
+								<div class="justify-content-right">
+									<p:commandButton id="toggler" type="button" value="Columns"
+										icon="pi pi-align-justify" />
+									<p:columnToggler datasource="dateTable" trigger="toggler">
+										<p:ajax />
+									</p:columnToggler>
+								</div>
 							</div>
 						</f:facet>
 
@@ -129,7 +182,8 @@
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.nombreUsuario}" required="true"
 										requiredMessage="Debe ingresar el Nombre de Usuario"
-										id="nombreUsuario" validator="#{validatorPersona.validateOnLista}">
+										id="nombreUsuario"
+										validator="#{validatorPersona.validateOnLista}">
 
 
 									</p:inputText>
@@ -167,11 +221,11 @@
 
 						</p:column>
 
-						
+
 						<div id="groupCarreraMod">prueba</div>
 
 
-						
+
 
 						<p:column rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
@@ -201,7 +255,7 @@
 							</div>
 						</p:column>
 						<p:column style="width:6rem;" headerText="Editar"
-							rendered="#{gestionPersona.personaLogeada.admin}">
+							rendered="#{gestionPersona.esAnalistaLogeado()}">
 
 							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 								saveTitle="Save Row">

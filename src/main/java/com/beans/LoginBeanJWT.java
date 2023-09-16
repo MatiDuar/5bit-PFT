@@ -15,7 +15,6 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.logicaNegocio.GestionPersonaService;
-import com.persistencia.entities.Persona;
 import com.persistencia.entities.Usuario;
 
 import java.io.Serializable;

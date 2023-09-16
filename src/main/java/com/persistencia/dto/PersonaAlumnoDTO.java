@@ -3,10 +3,8 @@ package com.persistencia.dto;
 import java.util.Date;
 
 
-import com.persistencia.entities.Alumno;
 import com.persistencia.entities.Carrera;
 
-import com.persistencia.entities.Persona;
 
 public class PersonaAlumnoDTO {
 
@@ -34,31 +32,31 @@ public class PersonaAlumnoDTO {
 		super();
 	}
 
-	public PersonaAlumnoDTO(Persona p) {
-		this.id = p.getId();
-		this.activo = p.getActivo();
-		this.nombreUsuario = p.getNombreUsuario();
-		this.nombre1 = p.getNombre1();
-		this.apellido1 = p.getApellido1();
-		this.fechaNacimiento = p.getFechaNacimiento().toString();
-		this.direccion = p.getDireccion();
-		this.mail = p.getMail();
-		
-	}
+//	public PersonaAlumnoDTO(Persona p) {
+//		this.id = p.getId();
+//		this.activo = p.getActivo();
+//		this.nombreUsuario = p.getNombreUsuario();
+//		this.nombre1 = p.getNombre1();
+//		this.apellido1 = p.getApellido1();
+//		this.fechaNacimiento = p.getFechaNacimiento().toString();
+//		this.direccion = p.getDireccion();
+//		this.mail = p.getMail();
+//		
+//	}
 	
-	public PersonaAlumnoDTO(Alumno a) {
-		this.id = a.getId();
-		this.activo = a.getActivo();
-		this.nombreUsuario = a.getNombreUsuario();
-		this.nombre1 = a.getNombre1();
-		this.apellido1 = a.getApellido1();
-		this.fechaNacimiento = a.getFechaNacimiento().toString();
-		this.direccion = a.getDireccion();
-		this.mail = a.getMail();
-		this.idEstudiantil=a.getIdEstudiantil();
-		this.carrera=a.getCarrera().getNombre();
-		
-	}
+//	public PersonaAlumnoDTO(Alumno a) {
+//		this.id = a.getId();
+//		this.activo = a.getActivo();
+//		this.nombreUsuario = a.getNombreUsuario();
+//		this.nombre1 = a.getNombre1();
+//		this.apellido1 = a.getApellido1();
+//		this.fechaNacimiento = a.getFechaNacimiento().toString();
+//		this.direccion = a.getDireccion();
+//		this.mail = a.getMail();
+//		this.idEstudiantil=a.getIdEstudiantil();
+//		this.carrera=a.getCarrera().getNombre();
+//		
+//	}
 	
 	
 

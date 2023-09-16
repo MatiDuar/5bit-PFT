@@ -90,7 +90,7 @@ public class CarreraDAO{
 
 		} catch (PersistenceException e) {
 
-			throw new Exception("No se pudo obtener la lista de Carreras");
+			throw new ServicesException("No se pudo obtener la lista de Carreras");
 		}
 
 	}

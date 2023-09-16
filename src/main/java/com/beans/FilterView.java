@@ -20,6 +20,7 @@ import org.primefaces.util.LangUtils;
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.dto.PersonaAlumnoDTO;
 import com.persistencia.entities.Carrera;
+import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Usuario;
 
 @Named("dtFilterView")
@@ -35,7 +36,13 @@ public class FilterView implements Serializable {
 	private GestionPersonaService service;
 
 	private String carreraSel;
+
+	private String itrSeleccionado;
+
+	private String tipoUsuarioSeleccionado;
 	
+	private String anoIngresoSeleccionado;
+
 	private List<Usuario> personas;
 
 	private List<Usuario> filteredPersonas;
@@ -43,7 +50,7 @@ public class FilterView implements Serializable {
 	private List<FilterMeta> filterBy;
 
 	private boolean globalFilterOnly;
-	
+
 	private int currentYear;
 
 	@PostConstruct
@@ -51,12 +58,14 @@ public class FilterView implements Serializable {
 		globalFilterOnly = true;
 		try {
 			personas = service.listarPersonas();
+			itrSeleccionado = "";
+			tipoUsuarioSeleccionado = "";
+			anoIngresoSeleccionado= "";
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		currentYear=new Date(System.currentTimeMillis()).getYear()+1900;
+		currentYear = new Date(System.currentTimeMillis()).getYear() + 1900;
 		filterBy = new ArrayList<>();
-
 
 		filterBy.add(FilterMeta.builder().field("date")
 				.filterValue(
@@ -66,32 +75,47 @@ public class FilterView implements Serializable {
 	}
 
 	/**
-	 * Esta funcion se encarga de filtrar la tabla, 
-	 * @param value El objeto al cual se le aplicaran los filtros
-	 * @param filter Los filtros a aplicar 
-	 * @param locale 
-	 * @return retorna verdadero si el objeto coincide con los filtros sino retorna falso
+	 * Esta funcion se encarga de filtrar la tabla,
+	 * 
+	 * @param value  El objeto al cual se le aplicaran los filtros
+	 * @param filter Los filtros a aplicar
+	 * @param locale
+	 * @return retorna verdadero si el objeto coincide con los filtros sino retorna
+	 *         falso
 	 */
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		if (LangUtils.isBlank(filterText)) {
+		if (LangUtils.isBlank(filterText) && itrSeleccionado.isBlank() && tipoUsuarioSeleccionado.isBlank() && anoIngresoSeleccionado.isBlank()) {
 			return true;
 		}
 
 		Usuario persona = (Usuario) value;
-		Usuario personaAlumno=buscar(persona.getId());
-		return persona.getNombre1().toLowerCase().contains(filterText)
-				|| persona.getApellido1().toLowerCase().contains(filterText)
-				|| persona.getNombreUsuario().toLowerCase().contains(filterText)
-				|| persona.getMail().toString().toLowerCase().contains(filterText)
-				|| persona.getLocalidad().toLowerCase().contains(filterText);
+
+		if (!persona.getItr().getNombre().equalsIgnoreCase(itrSeleccionado) && !itrSeleccionado.isBlank()) {
+			return false;
+		}
+		if (!persona.getClass().toString().toLowerCase().contains(tipoUsuarioSeleccionado)
+				&& !tipoUsuarioSeleccionado.isBlank()) {
+			return false;
+		}
+		if(!(persona instanceof Estudiante) && !anoIngresoSeleccionado.isBlank()) {
+			return false;
+		}
+		
+			System.out.println(anoIngresoSeleccionado);
+			return (persona.getNombre1().toLowerCase().contains(filterText)
+					|| persona.getApellido1().toLowerCase().contains(filterText)
+					|| persona.getNombreUsuario().toLowerCase().contains(filterText)
+					|| persona.getMail().toString().toLowerCase().contains(filterText)
+					|| persona.getLocalidad().toLowerCase().contains(filterText))
+					|| (((Estudiante) persona).getAnoIngreso()+"").equals(anoIngresoSeleccionado);
 
 	}
 
 	public void toggleGlobalFilter() {
 		setGlobalFilterOnly(!isGlobalFilterOnly());
 	}
-	
+
 //	public boolean esAlumno(Persona p) {
 //		return service.buscarAlumno(p.getId())!=null;
 //	}
@@ -103,7 +127,7 @@ public class FilterView implements Serializable {
 			return 0;
 		}
 	}
-	
+
 //	public void buscarCarrera(Alumno a,String carrera) {
 //		a.setCarrera(service.buscarCarrera(carrera));
 //	}
@@ -115,11 +139,11 @@ public class FilterView implements Serializable {
 	public Usuario buscar(long id) {
 		return service.buscarUsuario(id);
 	}
-	
+
 	public int getEdad(String fecha) {
-		String str[]=fecha.split("-");
-		
-		return currentYear-Integer.parseInt(str[0]);
+		String str[] = fecha.split("-");
+
+		return currentYear - Integer.parseInt(str[0]);
 	}
 
 //	public List<PersonaAlumnoDTO> getPersonas() {
@@ -191,7 +215,31 @@ public class FilterView implements Serializable {
 	public void setFilteredPersonas(List<Usuario> filteredPersonas) {
 		this.filteredPersonas = filteredPersonas;
 	}
+
+	public String getItrSeleccionado() {
+		return itrSeleccionado;
+	}
+
+	public void setItrSeleccionado(String itrSeleccionado) {
+		this.itrSeleccionado = itrSeleccionado;
+	}
+
+	public String getTipoUsuarioSeleccionado() {
+		return tipoUsuarioSeleccionado;
+	}
+
+	public void setTipoUsuarioSeleccionado(String tipoUsuarioSeleccionado) {
+		this.tipoUsuarioSeleccionado = tipoUsuarioSeleccionado;
+	}
+
+	public String getAnoIngresoSeleccionado() {
+		return anoIngresoSeleccionado;
+	}
+
+	public void setAnoIngresoSeleccionado(String anoIngresoSeleccionado) {
+		this.anoIngresoSeleccionado = anoIngresoSeleccionado;
+	}
 	
 	
-	
+
 }

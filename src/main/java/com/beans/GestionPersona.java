@@ -299,16 +299,16 @@ public class GestionPersona implements Serializable {
 	 * @return
 	 */
 
-//	public String bajaPersonaOnLista(PersonaAlumnoDTO pDto) {
-//		Persona p = parsePersonaFromDTO(pDto);
-//		p.setActivo(false);
-//		persistenciaBean.modificarUsuario(p);
-//		String msg1 = "Se elimino correctamente el usuario";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		return "";
-//	}
+	public String bajaPersonaOnLista(Usuario usuario) {
+
+		usuario.setActivo(false);
+		persistenciaBean.modificarUsuario(usuario);
+		String msg1 = "Se elimino correctamente el usuario";
+		// mensaje de actualizacion correcta
+		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+		return "";
+	}
 
 	/**
 	 * La funcion se encarga de activar a una persona en la base de datos
@@ -317,16 +317,15 @@ public class GestionPersona implements Serializable {
 	 * @return
 	 */
 
-//	public String activarPersonaOnLista(PersonaAlumnoDTO pDto) {
-//		Persona p = parsePersonaFromDTO(pDto);
-//		p.setActivo(true);
-//		persistenciaBean.modificarUsuario(p);
-//		String msg1 = "Se activo correctamente el usuario";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		return "";
-//	}
+	public String activarPersonaOnLista(Usuario usuario) {
+		usuario.setActivo(true);
+		persistenciaBean.modificarUsuario(usuario);
+		String msg1 = "Se activo correctamente el usuario";
+		// mensaje de actualizacion correcta
+		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+		return "";
+	}
 
 	/**
 	 * La funcion modifica la contraseña del usuario logeado
