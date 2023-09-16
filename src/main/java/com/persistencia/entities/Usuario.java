@@ -74,7 +74,7 @@ public abstract class Usuario implements Serializable {
 	
 	
 
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 

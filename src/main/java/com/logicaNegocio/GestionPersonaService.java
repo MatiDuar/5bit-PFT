@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 import com.persistencia.dao.AreaTutorDAO;
 import com.persistencia.dao.CarreraDAO;
 import com.persistencia.dao.DepartamentoDAO;
-import com.persistencia.dao.ITRDAO;
+import com.persistencia.dao.ItrDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.dto.PersonaAlumnoDTO;
@@ -40,7 +40,7 @@ public class GestionPersonaService implements Serializable {
 	DepartamentoDAO depDAO;
 
 	@EJB
-	ITRDAO itrDAO;
+	ItrDAO itrDAO;
 	
 	@EJB
 	AreaTutorDAO areaTutorDAO;
@@ -114,6 +114,30 @@ public class GestionPersonaService implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+	
+	
+	
+	public Usuario buscarUsuario(Long id) {
+		try {
+			return usuarioDAO.buscarUsuarioPorId(id);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	
+	public Boolean modificarUsuario(Usuario usuario) {
+		try {
+			usuarioDAO.modificarUsuario(usuario);
+			return true;
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();		
+			return false;
 		}
 	}
 	/**
@@ -282,6 +306,7 @@ public class GestionPersonaService implements Serializable {
 	private void initDepartamentos() {
 
 		try {
+			depDAO.crearDepartamento("Rivera", true);
 			depDAO.crearDepartamento("Durazno", true);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
@@ -313,6 +338,7 @@ public class GestionPersonaService implements Serializable {
 
 	private void initItrs() {
 		try {
+			itrDAO.crearITR("Norte", depDAO.obtenerDepPorNombre("Rivera"), true);
 			itrDAO.crearITR("Centro-sur", depDAO.obtenerDepPorNombre("Durazno"), true);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block

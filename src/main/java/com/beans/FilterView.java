@@ -19,9 +19,8 @@ import org.primefaces.util.LangUtils;
 
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.dto.PersonaAlumnoDTO;
-import com.persistencia.entities.Alumno;
 import com.persistencia.entities.Carrera;
-import com.persistencia.entities.Persona;
+import com.persistencia.entities.Usuario;
 
 @Named("dtFilterView")
 @ViewScoped
@@ -37,9 +36,9 @@ public class FilterView implements Serializable {
 
 	private String carreraSel;
 	
-	private List<PersonaAlumnoDTO> personas;
+	private List<Usuario> personas;
 
-	private List<PersonaAlumnoDTO> filteredPersonas;
+	private List<Usuario> filteredPersonas;
 
 	private List<FilterMeta> filterBy;
 
@@ -51,7 +50,7 @@ public class FilterView implements Serializable {
 	public void init() {
 		globalFilterOnly = true;
 		try {
-			personas = service.listarPersonasDTO();
+			personas = service.listarPersonas();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -79,15 +78,13 @@ public class FilterView implements Serializable {
 			return true;
 		}
 
-		PersonaAlumnoDTO persona = (PersonaAlumnoDTO) value;
-		Alumno personaAlumno=buscar(persona.getId());
+		Usuario persona = (Usuario) value;
+		Usuario personaAlumno=buscar(persona.getId());
 		return persona.getNombre1().toLowerCase().contains(filterText)
 				|| persona.getApellido1().toLowerCase().contains(filterText)
 				|| persona.getNombreUsuario().toLowerCase().contains(filterText)
 				|| persona.getMail().toString().toLowerCase().contains(filterText)
-				|| persona.getDireccion().toLowerCase().contains(filterText)
-				|| (personaAlumno!=null && personaAlumno.getCarrera().getNombre().toLowerCase().contains(filterText) )
-				|| (personaAlumno!=null && personaAlumno.getIdEstudiantil().toString().toLowerCase().contains(filterText));
+				|| persona.getLocalidad().toLowerCase().contains(filterText);
 
 	}
 
@@ -95,9 +92,9 @@ public class FilterView implements Serializable {
 		setGlobalFilterOnly(!isGlobalFilterOnly());
 	}
 	
-	public boolean esAlumno(Persona p) {
-		return service.buscarAlumno(p.getId())!=null;
-	}
+//	public boolean esAlumno(Persona p) {
+//		return service.buscarAlumno(p.getId())!=null;
+//	}
 
 	private int getInteger(String string) {
 		try {
@@ -107,16 +104,16 @@ public class FilterView implements Serializable {
 		}
 	}
 	
-	public void buscarCarrera(Alumno a,String carrera) {
-		a.setCarrera(service.buscarCarrera(carrera));
-	}
-	
-	public Carrera buscarCarrera(String nombre) {
-		return service.buscarCarrera(nombre);
-	}
+//	public void buscarCarrera(Alumno a,String carrera) {
+//		a.setCarrera(service.buscarCarrera(carrera));
+//	}
+//	
+//	public Carrera buscarCarrera(String nombre) {
+//		return service.buscarCarrera(nombre);
+//	}
 
-	public Alumno buscar(long id) {
-		return service.buscarAlumno(id);
+	public Usuario buscar(long id) {
+		return service.buscarUsuario(id);
 	}
 	
 	public int getEdad(String fecha) {
@@ -125,27 +122,27 @@ public class FilterView implements Serializable {
 		return currentYear-Integer.parseInt(str[0]);
 	}
 
-	public List<PersonaAlumnoDTO> getPersonas() {
-		try {
-			personas=service.listarPersonasDTO();
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return personas;
-	}
-
-	public void setPersonas(List<PersonaAlumnoDTO> personas) {
-		this.personas = personas;
-	}
-
-	public List<PersonaAlumnoDTO> getFilteredPersonas() {
-		return filteredPersonas;
-	}
-
-	public void setFilteredPersonas(List<PersonaAlumnoDTO> filteredPersonas) {
-		this.filteredPersonas = filteredPersonas;
-	}
+//	public List<PersonaAlumnoDTO> getPersonas() {
+//		try {
+//			personas=service.listarPersonasDTO();
+//		} catch (Exception e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		return personas;
+//	}
+//
+//	public void setPersonas(List<PersonaAlumnoDTO> personas) {
+//		this.personas = personas;
+//	}
+//
+//	public List<PersonaAlumnoDTO> getFilteredPersonas() {
+//		return filteredPersonas;
+//	}
+//
+//	public void setFilteredPersonas(List<PersonaAlumnoDTO> filteredPersonas) {
+//		this.filteredPersonas = filteredPersonas;
+//	}
 
 	public void setFilterBy(List<FilterMeta> filterBy) {
 		this.filterBy = filterBy;
@@ -177,6 +174,22 @@ public class FilterView implements Serializable {
 
 	public void setCarreraSel(String carreraSel) {
 		this.carreraSel = carreraSel;
+	}
+
+	public List<Usuario> getPersonas() {
+		return personas;
+	}
+
+	public void setPersonas(List<Usuario> personas) {
+		this.personas = personas;
+	}
+
+	public List<Usuario> getFilteredPersonas() {
+		return filteredPersonas;
+	}
+
+	public void setFilteredPersonas(List<Usuario> filteredPersonas) {
+		this.filteredPersonas = filteredPersonas;
 	}
 	
 	

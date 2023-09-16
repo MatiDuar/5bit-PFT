@@ -134,7 +134,7 @@
 
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
-										style="color:red;" for="direccion" /></small>
+										style="color:red;" for="telefono" /></small>
 							</div>
 
 							<div class="col-12 md:col-4">
@@ -162,20 +162,7 @@
 					</p:fieldset>
 					<p:fieldset id="grid2" legend="Datos Usuario" class="fildsetprueba">
 						<div class="grid ui-fluid">
-							<div class="col-12 md:col-4">
-								<h5>Nombre de Usuario *</h5>
-
-								<p:inputText id="nombreUsuario"
-									value="#{gestionPersona.personaSeleccionada.nombreUsuario}"
-									required="true"
-									requiredMessage="Debe ingresar el Nombre de Usuario"
-									styleClass="block" validator="#{validatorPersona.validate}">
-
-
-								</p:inputText>
-								<small class="block ui-state-error"><h:message
-										style="color:red;" for="nombreUsuario" /></small>
-							</div>
+						
 
 							<div class="col-12 md:col-4">
 								<h5>Email *</h5>
@@ -310,7 +297,7 @@
 									<div class="col-12 md:col-4">
 										<h5>Rol *</h5>
 										<p:selectOneMenu id="groupRol"
-											value="#{gestionPersona.areaTutorSeleccionado}"
+											value="#{gestionPersona.rolTutorSeleccionado}"
 											validatorMessage="Debe Seleccionar una opcion">
 											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
 											<c:forEach var="rol" items="#{gestionPersona.rolesTutor}">

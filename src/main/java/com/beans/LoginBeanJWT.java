@@ -16,6 +16,7 @@ import javax.inject.Named;
 
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.entities.Persona;
+import com.persistencia.entities.Usuario;
 
 import java.io.Serializable;
 
@@ -35,7 +36,7 @@ public class LoginBeanJWT implements Serializable {
 
 	public String generarToken(String nombreUsuario, String contrasena) throws Exception {
 		// a esta altura ya se valido el usuario, solo hay que generar el Token
-		Persona persona= persistenciaBean.verificarUsuario(nombreUsuario, contrasena);
+		Usuario persona= persistenciaBean.verificarUsuario(nombreUsuario, contrasena);
 		String token = null;
 		try{
 			if(persona==null) {
@@ -45,7 +46,6 @@ public class LoginBeanJWT implements Serializable {
 
 			Map<String, Object> claims = new HashMap<>();
 			claims.put("id", persona.getId());
-			claims.put("esAdmin", persona.getAdmin());
 			claims.put("activo", persona.getActivo());
 
 			token = Jwts.builder().setSubject(persona.getNombreUsuario()).addClaims(claims)

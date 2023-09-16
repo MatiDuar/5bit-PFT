@@ -28,8 +28,8 @@
 						emptyMessage="Personas no encontradas con este criterio"
 						filteredValue="#{dtFilterView.filteredPersonas}"
 						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
-						editable="#{gestionPersona.personaLogeada.admin}" id="dateTable"
-						selectionMode="single" rowKey="#{gestionPersona.personasMod}">
+						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable"
+						 >
 
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
 							update="dateTable" />
@@ -145,18 +145,18 @@
 								<f:facet name="output">
 									<h:outputText
 										style="vertical-align: middle; margin-left: .5rem"
-										value="#{personas.direccion}" />
+										value="#{personas.localidad}" />
 								</f:facet>
 								<f:facet name="input" class="col-10">
 
-									<p:inputText id="direccion"
+									<p:inputText id="localidad"
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
-										value="#{personas.direccion}" required="true"
+										value="#{personas.localidad}" required="true"
 										requiredMessage="Debe ingresar la Direccion"
 										validatorMessage="No puede contener solo espacios vacios">
 										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 										<small class="block ui-state-error"><h:message
-												style="color:red;" for="direccion" /></small>
+												style="color:red;" for="localidad" /></small>
 									</p:inputText>
 								</f:facet>
 							</p:cellEditor>
@@ -167,57 +167,13 @@
 
 						</p:column>
 
-						<p:column headerText="Carrera" filterable="false">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{personas.carrera}" />
-								</f:facet>
-								<f:facet name="input" class="col-10 elemento3" id="elementoCoso">
-									<p:selectOneMenu id="group" value="#{personas.carrera}"
-										rendered="#{personas.carrera!=null}"
-										appendTo="@(#groupCarreraMod)" styleClass="elemento">
-										<f:selectItem itemLabel="" itemValue="" styleClass="elemento2" />
-										<c:forEach var="carrera" items="#{gestionPersona.carreras}">
-											<f:selectItem itemLabel="#{carrera.nombre}"
-												itemValue="#{carrera.nombre}" />
-										</c:forEach>
-										<f:validateRequired></f:validateRequired>
-
-									</p:selectOneMenu>
-
-								</f:facet>
-							</p:cellEditor>
-
-						</p:column>
+						
 						<div id="groupCarreraMod">prueba</div>
 
 
-						<p:column headerText="Id Estudiante" filterable="false">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{personas.idEstudiantil}" />
-								</f:facet>
-								<f:facet name="input" class="col-10">
+						
 
-									<p:inputText id="idEstudiante"
-										style="width:100%;vertical-align: middle; margin-left: .5rem"
-										value="#{personas.idEstudiantil}"
-										rendered="#{personas.idEstudiantil!=null}"
-										requiredMessage="Debe ingresar el Id Estudiantil"
-										required="true">
-									</p:inputText>
-									<small class="block ui-state-error"><h:message
-											style="color:red;" for="idEstudiante" /></small>
-								</f:facet>
-
-							</p:cellEditor>
-						</p:column>
-
-						<p:column rendered="#{gestionPersona.personaLogeada.admin}"
+						<p:column rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
 							<div class="columnaEditar">
 								<p:commandButton icon="pi pi-plus-circle"

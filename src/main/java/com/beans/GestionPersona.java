@@ -52,21 +52,26 @@ public class GestionPersona implements Serializable {
 	private Usuario personaSeleccionada;
 //
 
-//	private Alumno alumnoLogeado;
+//	private Usuario alumnoLogeado;
 
 
 	private String carreraSeleccionada;
 	private String itrSeleccionado;
 
-	private String carreraSeleccionadaLog;
+	private String depSeleccionadoLog;
 	private String itrSeleccionadoLog;
-
+	private int anoIngresoLog;
+	private String rolTutorLog;
+	private String areaTutorLog;
+	
+	
 	private String contrasenaModificar;
 	
 	private String tipoUsuario;
 	private String departamentoSeleccionado;
 
 	private String toRegistro;
+	
 	private List<Carrera> carreras;
 	private List<ITR> itrs;
 	private List<AreaTutor> areasTutor;
@@ -128,47 +133,47 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return devuelve un sting con el path hacia la pagina donde hay que dirigirse
 	 */
-//	public String verificarPersona() {
-//		try {
-//
-//			// Generar JSON Web Token
-//			token = jwt.generarToken(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
-//
-//			datosToken = jwt.obtenerClaim(token);
-//
-//			// traemos los datos de la persona logeada a partir del Id Persona del token
-//			// generado
-//			Long idPersona = ((Double) datosToken.get("id")).longValue();
-//			if (persistenciaBean.buscarAlumno(idPersona) != null) {
-//				alumnoLogeado = persistenciaBean.buscarAlumno(idPersona);
-//			}
-//			personaLogeada = persistenciaBean.buscarPersona(idPersona);
-//			if (!(Boolean) datosToken.get("activo")) {
-//				// Mensaje si el usuario esta inactivo
-//				String msg1 = "Usuario dado de baja del sistema";
-//				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
-//				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//				return "";
-//			}
-//			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-//
-//			return "";
-//
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			String msg1 = "Usuario o Contrseña errónea";
-//			// mensaje autenticación incorrecta
-//			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
-//			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//
-//			return "";
-//		}
-//	}
-	
 	public String verificarUsuario() {
-		persistenciaBean.verificarUsuario(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
-		return "index.xhtml";
+		try {
+
+			// Generar JSON Web Token
+			token = jwt.generarToken(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
+
+			datosToken = jwt.obtenerClaim(token);
+
+			// traemos los datos de la persona logeada a partir del Id Persona del token
+			// generado
+			Long idPersona = ((Double) datosToken.get("id")).longValue();
+			
+			usuarioLogeado = persistenciaBean.buscarUsuario(idPersona);
+			
+			if (!(Boolean) datosToken.get("activo")) {
+				// Mensaje si el usuario esta inactivo
+				String msg1 = "Usuario dado de baja del sistema";
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				return "";
+			}
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+
+			return "";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg1 = "Usuario o Contrseña errónea";
+			// mensaje autenticación incorrecta
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+
+			return "";
+		}
 	}
+	
+//	public String verificarUsuario() {
+//		
+//		persistenciaBean.verificarUsuario(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
+//		return "index.xhtml";
+//	}
 
 	/**
 	 * este metodo se encarga de crear una persona en la base de datos
@@ -178,7 +183,9 @@ public class GestionPersona implements Serializable {
 	public String agregarUsuario() {
 		personaSeleccionada.setActivo(true);
 		personaSeleccionada.setValidado(false);
+		String nombreUsuario=personaSeleccionada.getMailInstitucional().split("@")[0];
 		
+		personaSeleccionada.setNombreUsuario(nombreUsuario);
 		personaSeleccionada.setDepartamento(persistenciaBean.buscarDepartamento(departamentoSeleccionado));
 		personaSeleccionada.setItr(persistenciaBean.buscarItr(itrSeleccionado));
 		
@@ -190,11 +197,11 @@ public class GestionPersona implements Serializable {
 			Tutor tutor=new Tutor();
 			
 			copiarDatos(personaSeleccionada, tutor);
-			System.out.println(areaTutorSeleccionado);
+			
 			tutor.setAreaTutor(persistenciaBean.buscarAreaTutor(areaTutorSeleccionado));
 			tutor.setTipoTutor(persistenciaBean.buscarTipoTutor(rolTutorSeleccionado));
 			persistenciaBean.agregarUsuario(tutor);
-			System.out.println("Tutor");
+			
 
 		}else if(esEstudiante()) {
 			Estudiante estudiante=new Estudiante();
@@ -203,7 +210,6 @@ public class GestionPersona implements Serializable {
 			
 			persistenciaBean.agregarUsuario(estudiante);
 
-			System.out.println("estudiante");
 		}
 		reset();
 		String msg1 = "Se creo correctamente el usuario";
@@ -246,21 +252,27 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return
 	 */
-//	public String modificarPersona() {
-//		if (alumnoLogeado != null) {
-//			parsePersona(personaLogeada, alumnoLogeado);
-//			persistenciaBean.modificarUsuario(alumnoLogeado);
-//		} else {
-//			System.out.println(personaLogeada);
-//			persistenciaBean.modificarUsuario(personaLogeada);
-//		}
-//
-//		String msg1 = "Se modifico correctamente el usuario";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		return "";
-//	}
+	public String modificarUsuario() {
+		
+		usuarioLogeado.setItr(persistenciaBean.buscarItr(itrSeleccionadoLog));
+		usuarioLogeado.setDepartamento(persistenciaBean.buscarDepartamento(depSeleccionadoLog));
+		
+		if(esEstudianteLogeado()) {
+			((Estudiante) usuarioLogeado).setAnoIngreso(anoIngresoLog);;
+		}
+		
+		if(esTutorLogeado()) {
+			((Tutor) usuarioLogeado).setAreaTutor(persistenciaBean.buscarAreaTutor(areaTutorLog));
+			((Tutor) usuarioLogeado).setTipoTutor(persistenciaBean.buscarTipoTutor(rolTutorLog));
+		}
+		persistenciaBean.modificarUsuario(usuarioLogeado);
+
+		String msg1 = "Se modifico correctamente el usuario";
+		// mensaje de actualizacion correcta
+		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+		return "";
+	}
 
 	/**
 	 * La funcion se encarga de modificar una persona en la lista
@@ -321,21 +333,21 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return
 	 */
-//	public String modificarContrasena() {
-//		
-//		
-//		System.out.println(personaLogeada);
-//		personaLogeada.setContrasena(contrasenaModificar);
-//
-//		persistenciaBean.modificarUsuario(personaLogeada);
-//
-//		String msg1 = "Se modifico correctamente la Contraseña";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		isModContraseña = false;
-//		return "";
-//	}
+	public String modificarContrasena() {
+		
+		
+		
+		usuarioLogeado.setContrasena(contrasenaModificar);
+
+		persistenciaBean.modificarUsuario(usuarioLogeado);
+
+		String msg1 = "Se modifico correctamente la Contraseña";
+		// mensaje de actualizacion correcta
+		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+		isModContraseña = false;
+		return "";
+	}
 
 	/**
 	 * Mensaje cuando se cierra el modificar contraseña
@@ -354,10 +366,13 @@ public class GestionPersona implements Serializable {
 	 * Reinicia todos la mayoria de datos en el bean
 	 */
 	private void reset() {
-//		personaSeleccionada = new Persona();
-//		personaLogeada = new Persona();
+		personaSeleccionada = new Analista();
 		fechaNacSel = null;
-//		alumnoSeleccionado = new Alumno();
+		anoIngresoSeleccionado=0;
+		areaTutorSeleccionado="";
+		departamentoSeleccionado="";
+		itrSeleccionado="";
+		tipoUsuario="";
 		carreraSeleccionada = "";
 		itrSeleccionado = "";
 		token = "";
@@ -390,8 +405,8 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @param persona Persona con los datos a modificar
 	 */
-//	public void onRowEdit(RowEditEvent<PersonaAlumnoDTO> persona) {
-//
+	public void onRowEdit(RowEditEvent<Usuario> persona) {
+
 //		if (persona.getObject().getCarrera() == null) {
 //			Persona modPersona = parsePersonaFromDTO(persona.getObject());
 //			modificarPersonaOnLista(modPersona);
@@ -399,8 +414,9 @@ public class GestionPersona implements Serializable {
 //			Alumno modAlumno = parseAlumnoFromDTO(persona.getObject());
 //			modificarPersonaOnLista(modAlumno);
 //		}
-//
-//	}
+		persistenciaBean.modificarUsuario(persona.getObject());
+			
+	}
 
 	/**
 	 * Funcion que permite parsear un objeto PersonaAlumnoDTO a un objeto Persona
@@ -487,20 +503,20 @@ public class GestionPersona implements Serializable {
 	/**
 	 * Este metodo valida si el usuario esta logeado
 	 */
-//	public void checkUserIsLogin() {
-//		if (personaLogeada.getId() == null || personaLogeada == null) {
-//			try {
-//
-//				isKicked = true;
-//				FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-//
-//			} catch (IOException e) {
-//
-//				e.printStackTrace();
-//			}
-//		}
-//
-//	}
+	public void checkUserIsLogin() {
+		if (usuarioLogeado.getId()==null || usuarioLogeado == null) {
+			try {
+
+				isKicked = true;
+				FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+
+			} catch (IOException e) {
+
+				e.printStackTrace();
+			}
+		}
+
+	}
 
 	public void msjKick() {
 		if (isKicked) {
@@ -518,6 +534,18 @@ public class GestionPersona implements Serializable {
 	}
 	public boolean esAnalista() {
 		return tipoUsuario.equals("analista");
+	}
+	
+	public boolean esAnalistaLogeado() {
+		return usuarioLogeado instanceof Analista;
+	}
+	
+	public boolean esEstudianteLogeado() {
+		return usuarioLogeado instanceof Estudiante;
+	}
+	
+	public boolean esTutorLogeado() {
+		return usuarioLogeado instanceof Tutor;
 	}
 
 	public void setFechaNacSel(java.util.Date fechaNacSel) {
@@ -598,17 +626,17 @@ public class GestionPersona implements Serializable {
 	public void setItrSeleccionado(String itrSeleccionado) {
 		this.itrSeleccionado = itrSeleccionado;
 	}
-//
-//	public java.util.Date getFechaNacLog() {
-//		fechaNacLog = personaLogeada.getFechaNacimiento();
-//		return fechaNacLog;
-//	}
-//
-//	public void setFechaNacLog(java.util.Date fechaNacLog) {
-//		personaLogeada.setFechaNacimiento(new java.sql.Date(fechaNacLog.getTime()));
-//
-//		this.fechaNacLog = fechaNacLog;
-//	}
+
+	public java.util.Date getFechaNacLog() {
+		fechaNacLog = usuarioLogeado.getFechaNacimiento();
+		return fechaNacLog;
+	}
+
+	public void setFechaNacLog(java.util.Date fechaNacLog) {
+		usuarioLogeado.setFechaNacimiento(new java.sql.Date(fechaNacLog.getTime()));
+
+		this.fechaNacLog = fechaNacLog;
+	}
 //
 //	public String getCarreraSeleccionadaLog() {
 //		carreraSeleccionadaLog = alumnoLogeado.getCarrera().getNombre();
@@ -776,6 +804,51 @@ public class GestionPersona implements Serializable {
 
 	public void setRolesTutor(List<TipoTutor> rolesTutor) {
 		this.rolesTutor = rolesTutor;
+	}
+
+	public String getDepSeleccionadoLog() {
+		depSeleccionadoLog=usuarioLogeado.getDepartamento().getNombre();
+		return depSeleccionadoLog;
+	}
+
+	public void setDepSeleccionadoLog(String depSeleccionadaLog) {
+		this.depSeleccionadoLog = depSeleccionadaLog;
+	}
+
+	public String getItrSeleccionadoLog() {
+		itrSeleccionadoLog=usuarioLogeado.getItr().getNombre();
+		return itrSeleccionadoLog;
+	}
+
+	public void setItrSeleccionadoLog(String itrSeleccionadoLog) {
+		this.itrSeleccionadoLog = itrSeleccionadoLog;
+	}
+
+	public int getAnoIngresoLog() {
+		anoIngresoLog=((Estudiante) usuarioLogeado).getAnoIngreso();
+		return anoIngresoLog;
+	}
+
+	public void setAnoIngresoLog(int anoIngresoLog) {
+		this.anoIngresoLog = anoIngresoLog;
+	}
+
+	public String getRolTutorLog() {
+		rolTutorLog=((Tutor) usuarioLogeado).getTipoTutor().getNombre();
+		return rolTutorLog;
+	}
+
+	public void setRolTutorLog(String rolTutorLog) {
+		this.rolTutorLog = rolTutorLog;
+	}
+
+	public String getAreaTutorLog() {
+		areaTutorLog=((Tutor) usuarioLogeado).getAreaTutor().getNombre();
+		return areaTutorLog;
+	}
+
+	public void setAreaTutorLog(String areaTutorLog) {
+		this.areaTutorLog = areaTutorLog;
 	}
 	
 	

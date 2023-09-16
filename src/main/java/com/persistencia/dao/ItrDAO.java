@@ -23,12 +23,12 @@ import com.persistencia.entities.ITR;
 @Stateless
 @LocalBean
 
-public class ITRDAO {
+public class ItrDAO {
 
 	@PersistenceContext
 	private EntityManager em;
 	
-    public ITRDAO() {
+    public ItrDAO() {
     }
     
     
