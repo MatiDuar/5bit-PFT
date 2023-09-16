@@ -5,23 +5,24 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Usuario
- *
- */
-@Entity
-@Table(name="PERSONAS")
-@Inheritance(strategy=InheritanceType.JOINED)
-public class Persona implements Serializable {
 
-	
-	private static final long serialVersionUID = 1L;
-	
+
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+public abstract class Usuario implements Serializable {
+
+	public Usuario() {
+		super();
+	}
+	private static final long serialVersionUID = 1L;	
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USUARIO" )
 	@SequenceGenerator(name = "SEQ_USUARIO", initialValue = 1, allocationSize = 1)
 	private Long id;
+	
+	@Column(nullable=false,length=50)
+	private String documento;
 	
 	@Column(nullable=false,length=50,unique=true)
 	private String nombreUsuario;
@@ -44,47 +45,49 @@ public class Persona implements Serializable {
 	@Column(nullable=false)
 	private Date fechaNacimiento;
 	
+	@ManyToOne
+	private Genero genero;
+	
+	@ManyToOne(optional=false)
+	private Departamento departamento;
+	
 	@Column(nullable=false,length=150)
-	private String direccion;
+	private String localidad;
 	
 	@Column(nullable=false,length=50)
 	private String mail;
 	
+	@Column(nullable=false,length=50)
+	private String mailInstitucional;
+	
+	@Column(nullable=false,length=50)
+	private String telefono;
+	
+	@Column(nullable=false)
+	private Boolean validado;
+	
+	@ManyToOne(optional=false)
+	private ITR itr;
+	
 	@Column(nullable=false)
 	private Boolean activo;
 	
-	@Column(nullable=false)
-	private Boolean admin;
 	
-	public Persona() {
-		super();
-	}
 
-	
-	public Persona(Long id, String nombreUsuario, String contrasena, String apellido1, String apellido2, String nombre1,
-			String nombre2, Date fechaNacimiento, String direccion, String mail, Boolean activo,Boolean admin) {
-		super();
-		this.id = id;
-		this.nombreUsuario = nombreUsuario;
-		this.contrasena = contrasena;
-		this.apellido1 = apellido1;
-		this.apellido2 = apellido2;
-		this.nombre1 = nombre1;
-		this.nombre2 = nombre2;
-		this.fechaNacimiento = fechaNacimiento;
-		this.direccion = direccion;
-		this.mail = mail;
-		this.activo = activo;
-		this.admin=admin;
-	}
-
-
-	public Long getId() {
+	public long getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
+	}
+
+	public String getDocumento() {
+		return documento;
+	}
+
+	public void setDocumento(String documento) {
+		this.documento = documento;
 	}
 
 	public String getNombreUsuario() {
@@ -142,14 +145,29 @@ public class Persona implements Serializable {
 	public void setFechaNacimiento(Date fechaNacimiento) {
 		this.fechaNacimiento = fechaNacimiento;
 	}
-	
 
-	public String getDireccion() {
-		return direccion;
+	public Genero getGenero() {
+		return genero;
 	}
 
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setGenero(Genero genero) {
+		this.genero = genero;
+	}
+
+	public Departamento getDepartamento() {
+		return departamento;
+	}
+
+	public void setDepartamento(Departamento departamento) {
+		this.departamento = departamento;
+	}
+
+	public String getLocalidad() {
+		return localidad;
+	}
+
+	public void setLocalidad(String localidad) {
+		this.localidad = localidad;
 	}
 
 	public String getMail() {
@@ -159,6 +177,31 @@ public class Persona implements Serializable {
 	public void setMail(String mail) {
 		this.mail = mail;
 	}
+	
+	public String getMailInstitucional() {
+		return mailInstitucional;
+	}
+
+	public void setMailInstitucional(String mail) {
+		this.mailInstitucional = mail;
+	}
+
+
+	public String getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
+	}
+
+	public ITR getItr() {
+		return itr;
+	}
+
+	public void setItr(ITR itr) {
+		this.itr = itr;
+	}
 
 	public Boolean getActivo() {
 		return activo;
@@ -167,28 +210,25 @@ public class Persona implements Serializable {
 	public void setActivo(Boolean activo) {
 		this.activo = activo;
 	}
-
+	
 	
 
-	public Boolean getAdmin() {
-		return admin;
+	public Boolean getValidado() {
+		return validado;
 	}
 
-
-	public void setAdmin(Boolean admin) {
-		this.admin = admin;
+	public void setValidado(Boolean valido) {
+		this.validado = valido;
 	}
-
 
 	@Override
 	public String toString() {
-		return "Persona [id=" + id + ", nombreUsuario=" + nombreUsuario + ", contrasena=" + contrasena + ", apellido1="
-				+ apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1 + ", nombre2=" + nombre2
-				+ ", fechaNacimiento=" + fechaNacimiento + ", direccion=" + direccion + ", mail=" + mail + ", activo="
-				+ activo + "]";
-	}
-	
-	
+		return "Usuario [id=" + id + ", documento=" + documento + ", nombreUsuario=" + nombreUsuario + ", contrasena="
+				+ contrasena + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1
+				+ ", nombre2=" + nombre2 + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero
+				+ ", departamento=" + departamento + ", localidad=" + localidad + ", mail=" + mail + ", telefono="
+				+ telefono + ", itr=" + itr + ", activo=" + activo + "]";
+	} 
 	
 	
 	

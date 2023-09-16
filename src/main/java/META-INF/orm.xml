@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings version="2.2" xmlns="http://xmlns.jcp.org/xml/ns/persistence/orm" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence/orm http://xmlns.jcp.org/xml/ns/persistence/orm_2_2.xsd">
+	<persistence-unit-metadata>
+		<persistence-unit-defaults>
+			<access>FIELD</access>
+		</persistence-unit-defaults>
+	</persistence-unit-metadata>
+	<entity class="com.persistencia.entities.Departamento" access="FIELD">
+		<table name="DEPARTAMENTOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Usuario" access="FIELD">
+		<table name="USUARIOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Tutor" access="FIELD">
+		<table name="TUTORES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Evento" access="FIELD">
+		<table name="EVENTOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Analista" access="FIELD">
+		<table name="ANALISTAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Estudiante" access="FIELD">
+		<table name="ESTUDIANTES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Justificacion" access="FIELD">
+		<table name="JUSTIFICACIONES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Constancia" access="FIELD">
+		<table name="CONSTANCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Reclamo" access="FIELD">
+		<table name="RECLAMOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.TipoTutor" access="FIELD">
+		<table name="TIPOS_TUTORES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.AreaTutor" access="FIELD">
+		<table name="AREAS_TUTORES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.TipoActividad" access="FIELD">
+		<table name="TIPOS_ACTIVIDADES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.EstadoAsistencia" access="FIELD">
+		<table name="ESTADOS_ASISTENCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Estado" access="FIELD">
+		<table name="ESTADOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.AccionJustificacion" access="FIELD">
+		<table name="ACCIONES_JUSTIFICACIONES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.TipoConstancia" access="FIELD">
+		<table name="TIPOS_CONSTANCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.AccionConstancia" access="FIELD">
+		<table name="ACCIONES_CONSTANCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.AccionReclamo" access="FIELD">
+		<table name="ACCIONES_RECLAMOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.ConvocatoriaAsistencia" access="FIELD">
+		<table name="CONVOCATORIAS_ASISTENCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Genero" access="FIELD">
+		<table name="GENEROS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.ITR" access="FIELD">
+		<table name="ITR">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.PlantillaConstancia" access="FIELD">
+		<table name="PLANTILLAS_CONSTANCIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.ModalidadesEventos" access="FIELD">
+		<table name="MODALIDADES_EVENTOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.EstadosEventos" access="FIELD">
+		<table name="ESTADOS_EVENTOS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Materia" access="FIELD">
+		<table name="MATERIAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Carrera" access="FIELD">
+		<table name="CARRERAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Inscripcion" access="FIELD">
+		<table name="INSCRIPCIONES">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Matricula" access="FIELD">
+		<table name="MATRICULAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.TipoAsignatura" access="FIELD">
+		<table name="TIPOS_ASIGNATURAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.TipoConvocatoriaMatricula" access="FIELD">
+		<table name="TIPOS_CONVOCATORIAS_MATRICULAS">
+		</table>
+	</entity>
+</entity-mappings>

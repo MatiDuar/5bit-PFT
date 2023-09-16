@@ -20,10 +20,16 @@ import org.primefaces.event.RowEditEvent;
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.dto.PersonaAlumnoDTO;
 import com.persistencia.dto.PersonaLogeadaDTO;
-import com.persistencia.entities.Alumno;
+
+import com.persistencia.entities.Analista;
+import com.persistencia.entities.AreaTutor;
 import com.persistencia.entities.Carrera;
+import com.persistencia.entities.Departamento;
+import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.ITR;
-import com.persistencia.entities.Persona;
+import com.persistencia.entities.TipoTutor;
+import com.persistencia.entities.Tutor;
+import com.persistencia.entities.Usuario;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -41,12 +47,12 @@ public class GestionPersona implements Serializable {
 	@Inject
 	LoginBeanJWT jwt;
 
-	private List<Alumno> personasMod;
-	private Persona personaLogeada;
-	private Persona personaSeleccionada;
+//	private List<Alumno> personasMod;
+	private Usuario usuarioLogeado;
+	private Usuario personaSeleccionada;
+//
 
-	private Alumno alumnoSeleccionado;
-	private Alumno alumnoLogeado;
+//	private Alumno alumnoLogeado;
 
 
 	private String carreraSeleccionada;
@@ -56,15 +62,28 @@ public class GestionPersona implements Serializable {
 	private String itrSeleccionadoLog;
 
 	private String contrasenaModificar;
+	
+	private String tipoUsuario;
+	private String departamentoSeleccionado;
 
 	private String toRegistro;
 	private List<Carrera> carreras;
 	private List<ITR> itrs;
+	private List<AreaTutor> areasTutor;
+	private List<Departamento> departamentos;
+	private List<TipoTutor>rolesTutor;
+
 	
 	private List<String> bottonesMenu;
 
 	private java.util.Date fechaNacSel;
 	private java.util.Date fechaNacLog;
+	
+	
+	private String areaTutorSeleccionado;
+	private String rolTutorSeleccionado;
+	
+	private int anoIngresoSeleccionado;
 
 	private boolean isAlumno;
 
@@ -81,16 +100,24 @@ public class GestionPersona implements Serializable {
 	@PostConstruct
 	public void init() {
 		persistenciaBean.initPersona();
-		carreras = persistenciaBean.listarCarreras();
+//		carreras = persistenciaBean.listarCarreras();
 
-		itrs = persistenciaBean.listarITRs();
-
-		personaSeleccionada = new Persona();
+		try {
+			itrs = persistenciaBean.listarITRs();
+			areasTutor=persistenciaBean.listarAreaTutor();
+			departamentos=persistenciaBean.listarDepartamento();
+			rolesTutor=persistenciaBean.listarTipoTutor();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		tipoUsuario="";
+		personaSeleccionada=new Analista();
 		fechaNacSel = new java.util.Date();
 		isAlumno = true;
 		isModContraseña = false;
 		toRegistro = "registro.xhtml?facesRedirect=true";
-		personasMod = new LinkedList<>();
+//		personasMod = new LinkedList<>();
 		bottonesMenu=new LinkedList<>();
 
 	}
@@ -101,41 +128,46 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return devuelve un sting con el path hacia la pagina donde hay que dirigirse
 	 */
-	public String verificarPersona() {
-		try {
-
-			// Generar JSON Web Token
-			token = jwt.generarToken(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
-
-			datosToken = jwt.obtenerClaim(token);
-
-			// traemos los datos de la persona logeada a partir del Id Persona del token
-			// generado
-			Long idPersona = ((Double) datosToken.get("id")).longValue();
-			if (persistenciaBean.buscarAlumno(idPersona) != null) {
-				alumnoLogeado = persistenciaBean.buscarAlumno(idPersona);
-			}
-			personaLogeada = persistenciaBean.buscarPersona(idPersona);
-			if (!(Boolean) datosToken.get("activo")) {
-				// Mensaje si el usuario esta inactivo
-				String msg1 = "Usuario dado de baja del sistema";
-				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
-				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				return "";
-			}
-			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
-
-			return "";
-
-		} catch (Exception e) {
-			e.printStackTrace();
-			String msg1 = "Usuario o Contrseña errónea";
-			// mensaje autenticación incorrecta
-			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
-			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-
-			return "";
-		}
+//	public String verificarPersona() {
+//		try {
+//
+//			// Generar JSON Web Token
+//			token = jwt.generarToken(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
+//
+//			datosToken = jwt.obtenerClaim(token);
+//
+//			// traemos los datos de la persona logeada a partir del Id Persona del token
+//			// generado
+//			Long idPersona = ((Double) datosToken.get("id")).longValue();
+//			if (persistenciaBean.buscarAlumno(idPersona) != null) {
+//				alumnoLogeado = persistenciaBean.buscarAlumno(idPersona);
+//			}
+//			personaLogeada = persistenciaBean.buscarPersona(idPersona);
+//			if (!(Boolean) datosToken.get("activo")) {
+//				// Mensaje si el usuario esta inactivo
+//				String msg1 = "Usuario dado de baja del sistema";
+//				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+//				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//				return "";
+//			}
+//			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+//
+//			return "";
+//
+//		} catch (Exception e) {
+//			e.printStackTrace();
+//			String msg1 = "Usuario o Contrseña errónea";
+//			// mensaje autenticación incorrecta
+//			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
+//			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//
+//			return "";
+//		}
+//	}
+	
+	public String verificarUsuario() {
+		persistenciaBean.verificarUsuario(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
+		return "index.xhtml";
 	}
 
 	/**
@@ -143,12 +175,35 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return devuelve la pagian en la que se tiene que redirigir
 	 */
-	public String agregarPersona() {
-		if (isAlumno) {
-			parsePersona(personaSeleccionada, alumnoSeleccionado);
-			persistenciaBean.agregarUsuario(alumnoSeleccionado);
-		} else {
-			persistenciaBean.agregarUsuario(personaSeleccionada);
+	public String agregarUsuario() {
+		personaSeleccionada.setActivo(true);
+		personaSeleccionada.setValidado(false);
+		
+		personaSeleccionada.setDepartamento(persistenciaBean.buscarDepartamento(departamentoSeleccionado));
+		personaSeleccionada.setItr(persistenciaBean.buscarItr(itrSeleccionado));
+		
+		if (esAnalista()) {
+			Analista analista=(Analista) personaSeleccionada;
+			persistenciaBean.agregarUsuario(analista);
+			
+		} else if(esDocente()){
+			Tutor tutor=new Tutor();
+			
+			copiarDatos(personaSeleccionada, tutor);
+			System.out.println(areaTutorSeleccionado);
+			tutor.setAreaTutor(persistenciaBean.buscarAreaTutor(areaTutorSeleccionado));
+			tutor.setTipoTutor(persistenciaBean.buscarTipoTutor(rolTutorSeleccionado));
+			persistenciaBean.agregarUsuario(tutor);
+			System.out.println("Tutor");
+
+		}else if(esEstudiante()) {
+			Estudiante estudiante=new Estudiante();
+			copiarDatos(personaSeleccionada, estudiante);
+			estudiante.setAnoIngreso(anoIngresoSeleccionado);
+			
+			persistenciaBean.agregarUsuario(estudiante);
+
+			System.out.println("estudiante");
 		}
 		reset();
 		String msg1 = "Se creo correctamente el usuario";
@@ -165,27 +220,47 @@ public class GestionPersona implements Serializable {
 		}
 		return "";
 	}
+	
+	public void copiarDatos(Usuario a, Usuario b) {
+		b.setActivo(a.getActivo());
+		b.setApellido1(a.getApellido1());
+		b.setApellido2(a.getApellido2());
+		b.setContrasena(a.getContrasena());
+		b.setDepartamento(a.getDepartamento());
+		b.setDocumento(a.getDocumento());
+		b.setFechaNacimiento(a.getFechaNacimiento());
+		b.setGenero(a.getGenero());
+		b.setItr(a.getItr());
+		b.setLocalidad(a.getLocalidad());
+		b.setMail(a.getMail());
+		b.setMailInstitucional(a.getMailInstitucional());
+		b.setNombre1(a.getNombre1());
+		b.setNombre2(a.getNombre2());
+		b.setNombreUsuario(a.getNombreUsuario());
+		b.setTelefono(a.getTelefono());
+		b.setValidado(a.getValidado());
+	}
 
 	/**
 	 * Esta funcion modifica al usuario logeado con los cambios realizados
 	 * 
 	 * @return
 	 */
-	public String modificarPersona() {
-		if (alumnoLogeado != null) {
-			parsePersona(personaLogeada, alumnoLogeado);
-			persistenciaBean.modificarUsuario(alumnoLogeado);
-		} else {
-			System.out.println(personaLogeada);
-			persistenciaBean.modificarUsuario(personaLogeada);
-		}
-
-		String msg1 = "Se modifico correctamente el usuario";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		return "";
-	}
+//	public String modificarPersona() {
+//		if (alumnoLogeado != null) {
+//			parsePersona(personaLogeada, alumnoLogeado);
+//			persistenciaBean.modificarUsuario(alumnoLogeado);
+//		} else {
+//			System.out.println(personaLogeada);
+//			persistenciaBean.modificarUsuario(personaLogeada);
+//		}
+//
+//		String msg1 = "Se modifico correctamente el usuario";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		return "";
+//	}
 
 	/**
 	 * La funcion se encarga de modificar una persona en la lista
@@ -194,16 +269,16 @@ public class GestionPersona implements Serializable {
 	 * @return
 	 */
 
-	public String modificarPersonaOnLista(Persona p) {
-
-		persistenciaBean.modificarUsuario(p);
-
-		String msg1 = "Se modifico correctamente el usuario";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		return "";
-	}
+//	public String modificarPersonaOnLista(Persona p) {
+//
+//		persistenciaBean.modificarUsuario(p);
+//
+//		String msg1 = "Se modifico correctamente el usuario";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		return "";
+//	}
 
 	/**
 	 * La funcion se encarga de dar de baja a una persona en la base de datos
@@ -212,16 +287,16 @@ public class GestionPersona implements Serializable {
 	 * @return
 	 */
 
-	public String bajaPersonaOnLista(PersonaAlumnoDTO pDto) {
-		Persona p = parsePersonaFromDTO(pDto);
-		p.setActivo(false);
-		persistenciaBean.modificarUsuario(p);
-		String msg1 = "Se elimino correctamente el usuario";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		return "";
-	}
+//	public String bajaPersonaOnLista(PersonaAlumnoDTO pDto) {
+//		Persona p = parsePersonaFromDTO(pDto);
+//		p.setActivo(false);
+//		persistenciaBean.modificarUsuario(p);
+//		String msg1 = "Se elimino correctamente el usuario";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		return "";
+//	}
 
 	/**
 	 * La funcion se encarga de activar a una persona en la base de datos
@@ -230,37 +305,37 @@ public class GestionPersona implements Serializable {
 	 * @return
 	 */
 
-	public String activarPersonaOnLista(PersonaAlumnoDTO pDto) {
-		Persona p = parsePersonaFromDTO(pDto);
-		p.setActivo(true);
-		persistenciaBean.modificarUsuario(p);
-		String msg1 = "Se activo correctamente el usuario";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		return "";
-	}
+//	public String activarPersonaOnLista(PersonaAlumnoDTO pDto) {
+//		Persona p = parsePersonaFromDTO(pDto);
+//		p.setActivo(true);
+//		persistenciaBean.modificarUsuario(p);
+//		String msg1 = "Se activo correctamente el usuario";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		return "";
+//	}
 
 	/**
 	 * La funcion modifica la contraseña del usuario logeado
 	 * 
 	 * @return
 	 */
-	public String modificarContrasena() {
-		
-		
-		System.out.println(personaLogeada);
-		personaLogeada.setContrasena(contrasenaModificar);
-
-		persistenciaBean.modificarUsuario(personaLogeada);
-
-		String msg1 = "Se modifico correctamente la Contraseña";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		isModContraseña = false;
-		return "";
-	}
+//	public String modificarContrasena() {
+//		
+//		
+//		System.out.println(personaLogeada);
+//		personaLogeada.setContrasena(contrasenaModificar);
+//
+//		persistenciaBean.modificarUsuario(personaLogeada);
+//
+//		String msg1 = "Se modifico correctamente la Contraseña";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		isModContraseña = false;
+//		return "";
+//	}
 
 	/**
 	 * Mensaje cuando se cierra el modificar contraseña
@@ -279,10 +354,10 @@ public class GestionPersona implements Serializable {
 	 * Reinicia todos la mayoria de datos en el bean
 	 */
 	private void reset() {
-		personaSeleccionada = new Persona();
-		personaLogeada = new Persona();
+//		personaSeleccionada = new Persona();
+//		personaLogeada = new Persona();
 		fechaNacSel = null;
-		alumnoSeleccionado = new Alumno();
+//		alumnoSeleccionado = new Alumno();
 		carreraSeleccionada = "";
 		itrSeleccionado = "";
 		token = "";
@@ -295,19 +370,19 @@ public class GestionPersona implements Serializable {
 	 * @param p Persona con los datos originales
 	 * @param a Alumno a modificar los datos
 	 */
-	public void parsePersona(Persona p, Alumno a) {
-		a.setId(p.getId());
-		a.setActivo(p.getActivo());
-		a.setNombre1(p.getNombre1());
-		a.setNombre2(p.getApellido2());
-		a.setApellido1(p.getApellido1());
-		a.setApellido2(p.getApellido2());
-		a.setNombreUsuario(p.getNombreUsuario());
-		a.setContrasena(p.getContrasena());
-		a.setMail(p.getMail());
-		a.setDireccion(p.getDireccion());
-		a.setFechaNacimiento(p.getFechaNacimiento());
-	}
+//	public void parsePersona(Persona p, Alumno a) {
+//		a.setId(p.getId());
+//		a.setActivo(p.getActivo());
+//		a.setNombre1(p.getNombre1());
+//		a.setNombre2(p.getApellido2());
+//		a.setApellido1(p.getApellido1());
+//		a.setApellido2(p.getApellido2());
+//		a.setNombreUsuario(p.getNombreUsuario());
+//		a.setContrasena(p.getContrasena());
+//		a.setMail(p.getMail());
+//		a.setDireccion(p.getDireccion());
+//		a.setFechaNacimiento(p.getFechaNacimiento());
+//	}
 
 	/**
 	 * Funcion que al terminar de editar la persona en la tabla realiza los cambios
@@ -315,17 +390,17 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @param persona Persona con los datos a modificar
 	 */
-	public void onRowEdit(RowEditEvent<PersonaAlumnoDTO> persona) {
-
-		if (persona.getObject().getCarrera() == null) {
-			Persona modPersona = parsePersonaFromDTO(persona.getObject());
-			modificarPersonaOnLista(modPersona);
-		} else {
-			Alumno modAlumno = parseAlumnoFromDTO(persona.getObject());
-			modificarPersonaOnLista(modAlumno);
-		}
-
-	}
+//	public void onRowEdit(RowEditEvent<PersonaAlumnoDTO> persona) {
+//
+//		if (persona.getObject().getCarrera() == null) {
+//			Persona modPersona = parsePersonaFromDTO(persona.getObject());
+//			modificarPersonaOnLista(modPersona);
+//		} else {
+//			Alumno modAlumno = parseAlumnoFromDTO(persona.getObject());
+//			modificarPersonaOnLista(modAlumno);
+//		}
+//
+//	}
 
 	/**
 	 * Funcion que permite parsear un objeto PersonaAlumnoDTO a un objeto Persona
@@ -333,18 +408,18 @@ public class GestionPersona implements Serializable {
 	 * @param pdto Objeto que tiene los datos
 	 * @return Persona con todos los datos de pdto
 	 */
-	public Persona parsePersonaFromDTO(PersonaAlumnoDTO pdto) {
-		Persona p = persistenciaBean.buscarPersona(pdto.getId());
-		p.setActivo(pdto.getActivo());
-		p.setNombre1(pdto.getNombre1());
-		p.setApellido1(pdto.getApellido1());
-		p.setMail(pdto.getMail());
-		p.setNombreUsuario(pdto.getNombreUsuario());
-		p.setDireccion(pdto.getDireccion());
-
-		return p;
-
-	}
+//	public Persona parsePersonaFromDTO(PersonaAlumnoDTO pdto) {
+//		Persona p = persistenciaBean.buscarPersona(pdto.getId());
+//		p.setActivo(pdto.getActivo());
+//		p.setNombre1(pdto.getNombre1());
+//		p.setApellido1(pdto.getApellido1());
+//		p.setMail(pdto.getMail());
+//		p.setNombreUsuario(pdto.getNombreUsuario());
+//		p.setDireccion(pdto.getDireccion());
+//
+//		return p;
+//
+//	}
 
 	/**
 	 * Funcion que permite parsear un objeto PersonaAlumnoDTO a un objeto Alumno
@@ -352,20 +427,20 @@ public class GestionPersona implements Serializable {
 	 * @param pdto Objeto que tiene los datos
 	 * @return Alumno con todos los datos de pdto
 	 */
-	public Alumno parseAlumnoFromDTO(PersonaAlumnoDTO pdto) {
-		Alumno a = persistenciaBean.buscarAlumno(pdto.getId());
-		a.setActivo(pdto.getActivo());
-		a.setNombre1(pdto.getNombre1());
-		a.setApellido1(pdto.getApellido1());
-		a.setMail(pdto.getMail());
-		a.setNombreUsuario(pdto.getNombreUsuario());
-		a.setDireccion(pdto.getDireccion());
-		a.setIdEstudiantil(pdto.getIdEstudiantil());
-		a.setCarrera(persistenciaBean.buscarCarrera(pdto.getCarrera()));
-
-		return a;
-
-	}
+//	public Alumno parseAlumnoFromDTO(PersonaAlumnoDTO pdto) {
+//		Alumno a = persistenciaBean.buscarAlumno(pdto.getId());
+//		a.setActivo(pdto.getActivo());
+//		a.setNombre1(pdto.getNombre1());
+//		a.setApellido1(pdto.getApellido1());
+//		a.setMail(pdto.getMail());
+//		a.setNombreUsuario(pdto.getNombreUsuario());
+//		a.setDireccion(pdto.getDireccion());
+//		a.setIdEstudiantil(pdto.getIdEstudiantil());
+//		a.setCarrera(persistenciaBean.buscarCarrera(pdto.getCarrera()));
+//
+//		return a;
+//
+//	}
 
 	public void onRowCancel(RowEditEvent<PersonaAlumnoDTO> persona) {
 
@@ -378,9 +453,9 @@ public class GestionPersona implements Serializable {
 		return "";
 	}
 
-	public Alumno esAlumnoLogeado() {
-		return persistenciaBean.buscarAlumno(personaLogeada.getId());
-	}
+//	public Alumno esAlumnoLogeado() {
+//		return persistenciaBean.buscarAlumno(personaLogeada.getId());
+//	}
 
 	public java.util.Date getFechaNacSel() {
 		return fechaNacSel;
@@ -391,17 +466,17 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return
 	 */
-	public String darDeBaja() {
-
-		personaLogeada.setActivo(false);
-		persistenciaBean.modificarUsuario(personaLogeada);
-		reset();
-		String msg1 = "Se dio de baja al Usuario";
-		// mensaje de actualizacion correcta
-		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-		return "login.xhtml?facesRedirect=true";
-	}
+//	public String darDeBaja() {
+//
+//		personaLogeada.setActivo(false);
+//		persistenciaBean.modificarUsuario(personaLogeada);
+//		reset();
+//		String msg1 = "Se dio de baja al Usuario";
+//		// mensaje de actualizacion correcta
+//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+//		return "login.xhtml?facesRedirect=true";
+//	}
 
 	public String cerrarSesion() {
 		reset();
@@ -412,20 +487,20 @@ public class GestionPersona implements Serializable {
 	/**
 	 * Este metodo valida si el usuario esta logeado
 	 */
-	public void checkUserIsLogin() {
-		if (personaLogeada.getId() == null || personaLogeada == null) {
-			try {
-
-				isKicked = true;
-				FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
-
-			} catch (IOException e) {
-
-				e.printStackTrace();
-			}
-		}
-
-	}
+//	public void checkUserIsLogin() {
+//		if (personaLogeada.getId() == null || personaLogeada == null) {
+//			try {
+//
+//				isKicked = true;
+//				FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+//
+//			} catch (IOException e) {
+//
+//				e.printStackTrace();
+//			}
+//		}
+//
+//	}
 
 	public void msjKick() {
 		if (isKicked) {
@@ -434,6 +509,15 @@ public class GestionPersona implements Serializable {
 			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 			isKicked = false;
 		}
+	}
+	public boolean esEstudiante() {
+		return tipoUsuario.equals("estudiante");
+	}
+	public boolean esDocente() {
+		return tipoUsuario.equals("docente");
+	}
+	public boolean esAnalista() {
+		return tipoUsuario.equals("analista");
 	}
 
 	public void setFechaNacSel(java.util.Date fechaNacSel) {
@@ -450,19 +534,19 @@ public class GestionPersona implements Serializable {
 		this.toRegistro = toRegistro;
 	}
 
-	public Persona getPersonaLogeada() {
-		return personaLogeada;
-	}
-
-	public void setPersonaLogeada(Persona personaLogeada) {
-		this.personaLogeada = personaLogeada;
-	}
-
-	public Persona getPersonaSeleccionada() {
+//	public Persona getPersonaLogeada() {
+//		return personaLogeada;
+//	}
+//
+//	public void setPersonaLogeada(Persona personaLogeada) {
+//		this.personaLogeada = personaLogeada;
+//	}
+//
+	public Usuario getPersonaSeleccionada() {
 		return personaSeleccionada;
 	}
 
-	public void setPersonaSeleccionada(Persona personaSeleccionada) {
+	public void setPersonaSeleccionada(Usuario personaSeleccionada) {
 		this.personaSeleccionada = personaSeleccionada;
 	}
 
@@ -482,22 +566,22 @@ public class GestionPersona implements Serializable {
 		this.isAlumno = isAlumno;
 	}
 
-	public Alumno getAlumnoSeleccionado() {
-		return alumnoSeleccionado;
-	}
-
-	public void setAlumnoSeleccionado(Alumno alumnoSeleccionado) {
-		this.alumnoSeleccionado = alumnoSeleccionado;
-	}
-
-	public String getCarreraSeleccionada() {
-		return carreraSeleccionada;
-	}
-
-	public void setCarreraSeleccionada(String carreraSeleccionada) {
-		alumnoSeleccionado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionada));
-		this.carreraSeleccionada = carreraSeleccionada;
-	}
+//	public Alumno getAlumnoSeleccionado() {
+//		return alumnoSeleccionado;
+//	}
+//
+//	public void setAlumnoSeleccionado(Alumno alumnoSeleccionado) {
+//		this.alumnoSeleccionado = alumnoSeleccionado;
+//	}
+//
+//	public String getCarreraSeleccionada() {
+//		return carreraSeleccionada;
+//	}
+//
+//	public void setCarreraSeleccionada(String carreraSeleccionada) {
+//		alumnoSeleccionado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionada));
+//		this.carreraSeleccionada = carreraSeleccionada;
+//	}
 
 	public List<ITR> getItrs() {
 		return itrs;
@@ -512,50 +596,49 @@ public class GestionPersona implements Serializable {
 	}
 
 	public void setItrSeleccionado(String itrSeleccionado) {
-		alumnoSeleccionado.setItr(persistenciaBean.buscarITR(itrSeleccionado));
 		this.itrSeleccionado = itrSeleccionado;
 	}
-
-	public java.util.Date getFechaNacLog() {
-		fechaNacLog = personaLogeada.getFechaNacimiento();
-		return fechaNacLog;
-	}
-
-	public void setFechaNacLog(java.util.Date fechaNacLog) {
-		personaLogeada.setFechaNacimiento(new java.sql.Date(fechaNacLog.getTime()));
-
-		this.fechaNacLog = fechaNacLog;
-	}
-
-	public String getCarreraSeleccionadaLog() {
-		carreraSeleccionadaLog = alumnoLogeado.getCarrera().getNombre();
-		return carreraSeleccionadaLog;
-	}
-
-	public void setCarreraSeleccionadaLog(String carreraSeleccionadaLog) {
-		alumnoLogeado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionadaLog));
-		this.carreraSeleccionadaLog = carreraSeleccionadaLog;
-	}
-
-	public String getItrSeleccionadoLog() {
-		itrSeleccionadoLog = alumnoLogeado.getItr().getNombre();
-		return itrSeleccionadoLog;
-	}
-
-	public void setItrSeleccionadoLog(String itrSeleccionadoLog) {
-
-		alumnoLogeado.setItr(persistenciaBean.buscarITR(itrSeleccionadoLog));
-
-		this.itrSeleccionadoLog = itrSeleccionadoLog;
-	}
-
-	public Alumno getAlumnoLogeado() {
-		return alumnoLogeado;
-	}
-
-	public void setAlumnoLogeado(Alumno alumnoLogeada) {
-		this.alumnoLogeado = alumnoLogeada;
-	}
+//
+//	public java.util.Date getFechaNacLog() {
+//		fechaNacLog = personaLogeada.getFechaNacimiento();
+//		return fechaNacLog;
+//	}
+//
+//	public void setFechaNacLog(java.util.Date fechaNacLog) {
+//		personaLogeada.setFechaNacimiento(new java.sql.Date(fechaNacLog.getTime()));
+//
+//		this.fechaNacLog = fechaNacLog;
+//	}
+//
+//	public String getCarreraSeleccionadaLog() {
+//		carreraSeleccionadaLog = alumnoLogeado.getCarrera().getNombre();
+//		return carreraSeleccionadaLog;
+//	}
+//
+//	public void setCarreraSeleccionadaLog(String carreraSeleccionadaLog) {
+//		alumnoLogeado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionadaLog));
+//		this.carreraSeleccionadaLog = carreraSeleccionadaLog;
+//	}
+//
+//	public String getItrSeleccionadoLog() {
+//		itrSeleccionadoLog = alumnoLogeado.getItr().getNombre();
+//		return itrSeleccionadoLog;
+//	}
+//
+//	public void setItrSeleccionadoLog(String itrSeleccionadoLog) {
+//
+//		alumnoLogeado.setItr(persistenciaBean.buscarITR(itrSeleccionadoLog));
+//
+//		this.itrSeleccionadoLog = itrSeleccionadoLog;
+//	}
+//
+//	public Alumno getAlumnoLogeado() {
+//		return alumnoLogeado;
+//	}
+//
+//	public void setAlumnoLogeado(Alumno alumnoLogeada) {
+//		this.alumnoLogeado = alumnoLogeada;
+//	}
 
 	public String getContrasenaModificar() {
 		return contrasenaModificar;
@@ -575,13 +658,13 @@ public class GestionPersona implements Serializable {
 
 
 
-	public List<Alumno> getPersonasMod() {
-		return personasMod;
-	}
-
-	public void setPersonasMod(List<Alumno> personasMod) {
-		this.personasMod = personasMod;
-	}
+//	public List<Alumno> getPersonasMod() {
+//		return personasMod;
+//	}
+//
+//	public void setPersonasMod(List<Alumno> personasMod) {
+//		this.personasMod = personasMod;
+//	}
 
 	public boolean isKicked() {
 		return isKicked;
@@ -620,5 +703,83 @@ public class GestionPersona implements Serializable {
 	public void setBottonesMenu(List<String> bottonesMenu) {
 		this.bottonesMenu = bottonesMenu;
 	}
+
+	public String getTipoUsuario() {
+		return tipoUsuario;
+	}
+
+	public void setTipoUsuario(String tipoUsuario) {
+		this.tipoUsuario = tipoUsuario;
+	}
+
+
+
+	public String getAreaTutorSeleccionado() {
+		return areaTutorSeleccionado;
+	}
+
+	public void setAreaTutorSeleccionado(String areaTutorSeleccionado) {
+		this.areaTutorSeleccionado = areaTutorSeleccionado;
+	}
+
+	public List<AreaTutor> getAreasTutor() {
+		return areasTutor;
+	}
+
+	public void setAreasTutor(List<AreaTutor> areasTutor) {
+		this.areasTutor = areasTutor;
+	}
+
+	public String getRolTutorSeleccionado() {
+		return rolTutorSeleccionado;
+	}
+
+	public void setRolTutorSeleccionado(String rolTutorSeleccionado) {
+		this.rolTutorSeleccionado = rolTutorSeleccionado;
+	}
+
+	public int getAnoIngresoSeleccionado() {
+		return anoIngresoSeleccionado;
+	}
+
+	public void setAnoIngresoSeleccionado(int anoIngresoSeleccionado) {
+		this.anoIngresoSeleccionado = anoIngresoSeleccionado;
+	}
+
+	public Usuario getUsuarioLogeado() {
+		return usuarioLogeado;
+	}
+
+	public void setUsuarioLogeado(Usuario usuarioLogeado) {
+		this.usuarioLogeado = usuarioLogeado;
+	}
+
+	public String getDepartamentoSeleccionado() {
+		return departamentoSeleccionado;
+	}
+
+	public void setDepartamentoSeleccionado(String departamentoSeleccionado) {
+		this.departamentoSeleccionado = departamentoSeleccionado;
+	}
+
+	public List<Departamento> getDepartamentos() {
+		return departamentos;
+	}
+
+	public void setDepartamentos(List<Departamento> departamentos) {
+		this.departamentos = departamentos;
+	}
+
+	public List<TipoTutor> getRolesTutor() {
+		return rolesTutor;
+	}
+
+	public void setRolesTutor(List<TipoTutor> rolesTutor) {
+		this.rolesTutor = rolesTutor;
+	}
+	
+	
+	
+	
 
 }

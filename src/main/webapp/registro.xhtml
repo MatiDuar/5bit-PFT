@@ -74,6 +74,18 @@
 										style="color:red;" for="spanish" /></small>
 
 							</div>
+							<div class="field col-12 md:col-4">
+								<h5>Documento *</h5>
+								<p:inputText id="documento"
+									value="#{gestionPersona.personaSeleccionada.documento}"
+									validatorMessage="No puede contener solo espacios vacios">
+									<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
+
+								</p:inputText>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="documento" /></small>
+
+							</div>
 						</div>
 						<div class="grid ui-fluid">
 							<div class="col-12 md:col-4">
@@ -101,10 +113,22 @@
 										style="color:red;" for="apellido2" /></small>
 							</div>
 							<div class="field col-12 md:col-4">
-								<h5>Direccion *</h5>
-								<p:inputText id="direccion"
-									value="#{gestionPersona.personaSeleccionada.direccion}"
+								<h5>Localidad *</h5>
+								<p:inputText id="localidad"
+									value="#{gestionPersona.personaSeleccionada.localidad}"
 									required="true" requiredMessage="Debe ingresar la Direccion"
+									validatorMessage="No puede contener solo espacios vacios">
+									<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+								</p:inputText>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="localidad" /></small>
+							</div>
+							<div class="field col-12 md:col-4">
+								<h5>Telefono *</h5>
+								<p:inputText id="telefono"
+									value="#{gestionPersona.personaSeleccionada.telefono}"
+									required="true" requiredMessage="Debe ingresar el telefono"
 									validatorMessage="No puede contener solo espacios vacios">
 									<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 
@@ -112,6 +136,24 @@
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="direccion" /></small>
 							</div>
+
+							<div class="col-12 md:col-4">
+								<h5>Departamento *</h5>
+								<p:selectOneMenu id="groupDep"
+									value="#{gestionPersona.departamentoSeleccionado}"
+									validatorMessage="Debe Seleccionar una opcion">
+									<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+									<c:forEach var="dep" items="#{gestionPersona.departamentos}">
+										<f:selectItem itemLabel="#{dep.nombre}"
+											itemValue="#{dep.nombre}" />
+									</c:forEach>
+
+									<f:validateRequired></f:validateRequired>
+								</p:selectOneMenu>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="groupDep" /></small>
+							</div>
+
 						</div>
 
 						<div class="grid ui-fluid"></div>
@@ -148,6 +190,19 @@
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="email1" /></small>
 							</div>
+							<div class="col-12 md:col-4">
+								<h5>Email Instutucional *</h5>
+								<p:inputText id="email2"
+									value="#{gestionPersona.personaSeleccionada.mailInstitucional}"
+									required="true" requiredMessage="Debe ingresar el Email"
+									type="email" validatorMessage="Formato de Email incorrecto">
+									<f:validateRegex
+										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+
+								</p:inputText>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="email2" /></small>
+							</div>
 						</div>
 						<div class="grid ui-fluid">
 							<div class="col-12 md:col-4">
@@ -172,23 +227,43 @@
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="pass2" /></small>
 							</div>
+							<div class="col-12 md:col-4">
+								<h5>ITR *</h5>
+								<p:selectOneMenu id="groupItr"
+									value="#{gestionPersona.itrSeleccionado}"
+									validatorMessage="Debe Seleccionar una opcion">
+									<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+									<c:forEach var="itr" items="#{gestionPersona.itrs}">
+										<f:selectItem itemLabel="#{itr.nombre}"
+											itemValue="#{itr.nombre}" />
+									</c:forEach>
+
+									<f:validateRequired></f:validateRequired>
+								</p:selectOneMenu>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="groupItr" /></small>
+							</div>
 						</div>
 					</p:fieldset>
+
 
 					<p:fieldset id="grid3" legend="Datos Alumno" class="fildsetprueba">
 						<div class="grid ui-fluid">
 							<div class="col-12 md:col-4">
-								<h5>Eres Estudiante *</h5>
+								<h5>Tipo de Usuario *</h5>
 
 								<p:selectOneMenu id="isEstudiante" required="true"
-									value="#{gestionPersona.alumno}">
-									<p:ajax update="datosAlumno" process="@this" event="change" />
+									value="#{gestionPersona.tipoUsuario}">
+									<p:ajax update="datosAlumno datosDocente" process="@this"
+										event="change" />
 
 
 
 									<f:selectItem itemLabel="Selecciona uno" itemValue="" />
-									<f:selectItem itemLabel="Si" itemValue="true" />
-									<f:selectItem itemLabel="No" itemValue="false" />
+									<f:selectItem itemLabel="Estudiante" itemValue="estudiante" />
+									<f:selectItem itemLabel="Analista" itemValue="analista" />
+									<f:selectItem itemLabel="Docente" itemValue="docente" />
+
 
 								</p:selectOneMenu>
 
@@ -196,58 +271,62 @@
 							</div>
 						</div>
 						<h:panelGroup id="datosAlumno" layout="block">
-							<p:outputPanel rendered="#{gestionPersona.alumno}">
+							<p:outputPanel rendered="#{gestionPersona.esEstudiante()}">
 								<div class="grid ui-fluid" id="datosAlumno">
 									<div class="col-12 md:col-4">
-										<h5>Id Estudiantil *</h5>
-										<p:inputText id="idEstudiante" type="number"
-											value="#{gestionPersona.alumnoSeleccionado.idEstudiantil}"
+										<h5>Año de ingreso *</h5>
+										<p:inputText id="anoIngreso" type="number"
+											value="#{gestionPersona.anoIngresoSeleccionado}"
 											requiredMessage="Debe ingresar el Id Estudiantil"
 											required="true">
 
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
-												style="color:red;" for="idEstudiante" /></small>
+												style="color:red;" for="anoIngreso" /></small>
 									</div>
-
+								</div>
+							</p:outputPanel>
+						</h:panelGroup>
+						<h:panelGroup id="datosDocente" layout="block">
+							<p:outputPanel rendered="#{gestionPersona.esDocente()}">
+								<div class="grid ui-fluid" id="datosAlumno">
 									<div class="col-12 md:col-4">
-										<h5>Carrera *</h5>
-										<p:selectOneMenu id="group"
-											value="#{gestionPersona.carreraSeleccionada}"
+										<h5>Area Tutor *</h5>
+										<p:selectOneMenu id="groupAreaTutor"
+											value="#{gestionPersona.areaTutorSeleccionado}"
 											validatorMessage="Debe Seleccionar una opcion">
 											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
-											<c:forEach var="carrera" items="#{gestionPersona.carreras}">
-												<f:selectItem itemLabel="#{carrera.nombre}"
-													itemValue="#{carrera.nombre}" />
-											</c:forEach>
-
-											<f:validateRequired></f:validateRequired>
-
-										</p:selectOneMenu>
-										<small class="block ui-state-error"><h:message
-												style="color:red;" for="group" /></small>
-									</div>
-
-									<div class="col-12 md:col-4">
-										<h5>ITR *</h5>
-										<p:selectOneMenu id="groupItr"
-											value="#{gestionPersona.itrSeleccionado}"
-											validatorMessage="Debe Seleccionar una opcion">
-											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
-											<c:forEach var="itr" items="#{gestionPersona.itrs}">
-												<f:selectItem itemLabel="#{itr.nombre}"
-													itemValue="#{itr.nombre}" />
+											<c:forEach var="areas" items="#{gestionPersona.areasTutor}">
+												<f:selectItem itemLabel="#{areas.nombre}"
+													itemValue="#{areas.nombre}" />
 											</c:forEach>
 
 											<f:validateRequired></f:validateRequired>
 										</p:selectOneMenu>
 										<small class="block ui-state-error"><h:message
-												style="color:red;" for="groupItr" /></small>
+												style="color:red;" for="groupAreaTutor" /></small>
+									</div>
+
+									<div class="col-12 md:col-4">
+										<h5>Rol *</h5>
+										<p:selectOneMenu id="groupRol"
+											value="#{gestionPersona.areaTutorSeleccionado}"
+											validatorMessage="Debe Seleccionar una opcion">
+											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+											<c:forEach var="rol" items="#{gestionPersona.rolesTutor}">
+												<f:selectItem itemLabel="#{rol.nombre}"
+													itemValue="#{rol.nombre}" />
+											</c:forEach>
+											<f:validateRequired></f:validateRequired>
+										</p:selectOneMenu>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="groupRol" /></small>
 									</div>
 								</div>
 							</p:outputPanel>
 						</h:panelGroup>
 					</p:fieldset>
+
 
 					<div>
 						<div class="flex card-container">
@@ -255,7 +334,7 @@
 								class="flex-none flex align-items-center justify-content-center">
 								<p:commandButton value="Cancelar"
 									styleClass="ui-button-raised  ui-button-flat"
-									action="login.xhtml" immediate="true"/>
+									action="login.xhtml" immediate="true" />
 							</div>
 
 							<div
@@ -263,9 +342,7 @@
 							<div
 								class="flex-none flex align-items-center justify-content-center">
 								<p:commandButton value="Guardar"
-									 
-									action="#{gestionPersona.agregarPersona}"
-									update="grid grid2 datosAlumno" />
+									action="#{gestionPersona.agregarUsuario()}" update="grid grid2" />
 							</div>
 						</div>
 					</div>

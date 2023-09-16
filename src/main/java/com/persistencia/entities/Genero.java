@@ -5,18 +5,17 @@ import javax.persistence.*;
 
 
 @Entity
-public class Departamento implements Serializable {
-
-	public Departamento() {
+public class Genero implements Serializable {
+	
+	public Genero() {
 		super();
 	} 
+	
 	private static final long serialVersionUID = 1L;	
-	
-	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEPARTAMENTO" )
-	@SequenceGenerator(name = "SEQ_DEPARTAMENTO", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_GENERO" )
+	@SequenceGenerator(name = "SEQ_GENERO", initialValue = 1, allocationSize = 1)
 	private Long id;
 	
 	@Column(nullable=false,length=50,unique=true)
@@ -51,8 +50,10 @@ public class Departamento implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Departamento [id=" + id + ", nombre=" + nombre + ", activo=" + activo + "]";
+		return "Genero [id=" + id + ", nombre=" + nombre + ", activo=" + activo + "]";
 	}
+	
+	
 	
 	
    

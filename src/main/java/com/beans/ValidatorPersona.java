@@ -32,7 +32,7 @@ public class ValidatorPersona implements Serializable {
 		
 		String patternEmail = "^(?!\\s*$).+";
 		if (persistenciaBean.existeNombreUsuario((String) arg2)
-				&& !gestionPersona.getPersonaLogeada().getNombreUsuario().equals((String) arg2)) {
+				&& !gestionPersona.getUsuarioLogeado().getNombreUsuario().equals((String) arg2)) {
 			throw new ValidatorException(new FacesMessage("Ya existe un usuario con ese nombre de usuario "));
 		}
 
