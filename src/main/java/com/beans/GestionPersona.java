@@ -310,6 +310,21 @@ public class GestionPersona implements Serializable {
 		return "";
 	}
 
+	
+	
+	public Estudiante usuarioToEstudiante(Usuario u) {
+		if(u instanceof Estudiante) {
+			return (Estudiante) u;
+		}
+		return  null;
+	}
+	
+	public Tutor usuarioToTutor(Usuario u) {
+		if(u instanceof Tutor) {
+			return (Tutor) u;
+		}
+		return  null;
+	}
 	/**
 	 * La funcion se encarga de activar a una persona en la base de datos
 	 * 
@@ -550,9 +565,28 @@ public class GestionPersona implements Serializable {
 	public boolean esEstudianteMod(Usuario usuario) {
 		return usuario instanceof Estudiante;
 	}
+	
+	
+	public boolean esTutorMod(Usuario usuario) {
+		return usuario instanceof Tutor;
+	}
 	public void setFechaNacSel(java.util.Date fechaNacSel) {
 		personaSeleccionada.setFechaNacimiento(new java.sql.Date(fechaNacSel.getTime()));
 		this.fechaNacSel = fechaNacSel;
+	}
+	
+	public String tipoUsuario(Usuario u) {
+		if(u instanceof Estudiante) {
+			return "Estudiante";
+		}
+		if(u instanceof Tutor) {
+			return "Tutor";
+		}
+		if(u instanceof Analista) {
+			return "Analista";
+		}
+		
+		return null;
 	}
 
 	public String getToRegistro() {
