@@ -18,8 +18,7 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 import com.logicaNegocio.GestionPersonaService;
-import com.persistencia.dto.PersonaAlumnoDTO;
-import com.persistencia.dto.PersonaLogeadaDTO;
+
 
 import com.persistencia.entities.Analista;
 import com.persistencia.entities.AreaTutor;
@@ -72,6 +71,7 @@ public class GestionPersona implements Serializable {
 
 	private String toRegistro;
 	
+	
 	private List<Carrera> carreras;
 	private List<ITR> itrs;
 	private List<AreaTutor> areasTutor;
@@ -89,10 +89,13 @@ public class GestionPersona implements Serializable {
 	private String rolTutorSeleccionado;
 	
 	private int anoIngresoSeleccionado;
+	
 
 	private boolean isAlumno;
 
 	private boolean isModContraseña;
+	
+	private boolean editando;
 
 	// Para saber si entro sin logearse al sistema
 	private boolean isKicked;
@@ -117,10 +120,12 @@ public class GestionPersona implements Serializable {
 			e.printStackTrace();
 		}
 		tipoUsuario="";
+		
 		personaSeleccionada=new Analista();
 		fechaNacSel = new java.util.Date();
 		isAlumno = true;
 		isModContraseña = false;
+		editando=false;
 		toRegistro = "registro.xhtml?facesRedirect=true";
 //		personasMod = new LinkedList<>();
 		bottonesMenu=new LinkedList<>();
@@ -428,6 +433,7 @@ public class GestionPersona implements Serializable {
 //			Alumno modAlumno = parseAlumnoFromDTO(persona.getObject());
 //			modificarPersonaOnLista(modAlumno);
 //		}
+		
 		persistenciaBean.modificarUsuario(persona.getObject());
 			
 	}
@@ -472,7 +478,7 @@ public class GestionPersona implements Serializable {
 //
 //	}
 
-	public void onRowCancel(RowEditEvent<PersonaAlumnoDTO> persona) {
+	public void onRowCancel(RowEditEvent<Usuario> persona) {
 
 		FacesMessage msg = new FacesMessage("Edit Cancelled", "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
@@ -540,6 +546,20 @@ public class GestionPersona implements Serializable {
 			isKicked = false;
 		}
 	}
+	
+	
+	public String getEstado(Usuario u) {
+		if (u.getActivo() && u.getValidado()) {
+			return "Validado";
+		}else if(u.getActivo() && !u.getValidado()) {
+			return "Sin Validar";
+		}else {
+			return "Eliminado";
+		}
+	}
+	
+	
+	
 	public boolean esEstudiante() {
 		return tipoUsuario.equals("estudiante");
 	}
@@ -588,7 +608,13 @@ public class GestionPersona implements Serializable {
 		
 		return null;
 	}
-
+	
+	public void darDeBaja(Usuario u) {
+		u.setActivo(false);
+		persistenciaBean.modificarUsuario(u);
+	}
+	
+	
 	public String getToRegistro() {
 		reset();
 		return toRegistro;
@@ -886,9 +912,21 @@ public class GestionPersona implements Serializable {
 	public void setAreaTutorLog(String areaTutorLog) {
 		this.areaTutorLog = areaTutorLog;
 	}
+
+	public boolean isEditando() {
+		return editando;
+	}
+
+	public void setEditando(boolean editando) {
+		this.editando = editando;
+	}
+
+	
 	
 	
 	
 	
 
 }
+
+

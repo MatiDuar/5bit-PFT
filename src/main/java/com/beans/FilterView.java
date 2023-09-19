@@ -18,7 +18,7 @@ import org.primefaces.model.MatchMode;
 import org.primefaces.util.LangUtils;
 
 import com.logicaNegocio.GestionPersonaService;
-import com.persistencia.dto.PersonaAlumnoDTO;
+
 import com.persistencia.entities.Carrera;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Usuario;
@@ -89,7 +89,7 @@ public class FilterView implements Serializable {
 	public boolean globalFilterFunction(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
 		if (LangUtils.isBlank(filterText) && itrSeleccionado.isBlank() && tipoUsuarioSeleccionado.isBlank()
-				&& anoIngresoSeleccionado.isBlank()) {
+				&& anoIngresoSeleccionado.isBlank() && estadoSeleccionado.isBlank()) {
 			return true;
 		}
 
@@ -98,6 +98,7 @@ public class FilterView implements Serializable {
 		if (!persona.getItr().getNombre().equalsIgnoreCase(itrSeleccionado) && !itrSeleccionado.isBlank()) {
 			return false;
 		}
+		
 		if (!persona.getClass().toString().toLowerCase().contains(tipoUsuarioSeleccionado)
 				&& !tipoUsuarioSeleccionado.isBlank()) {
 			return false;
@@ -108,17 +109,17 @@ public class FilterView implements Serializable {
 		if (!anoIngresoSeleccionado.isBlank()) {
 			return (((Estudiante) persona).getAnoIngreso() + "").equals(anoIngresoSeleccionado);
 		}
-		System.out.println(estadoSeleccionado);
+	
 		
-		if(estadoSeleccionado.equalsIgnoreCase("sin validar")) {
-			return !(persona.getActivo() && !persona.getValidado());
+		if(estadoSeleccionado.equalsIgnoreCase("Sin Validar") && !(persona.getActivo() && !persona.getValidado()) ) {
+			return false;
 		}
 		
-		if(estadoSeleccionado.equalsIgnoreCase("eliminado")) {
-			return !(persona.getActivo());
+		if(estadoSeleccionado.equalsIgnoreCase("Eliminado") && persona.getActivo()) {
+			return false;
 		}
-		if(estadoSeleccionado.equalsIgnoreCase("validados")) {
-			return !(persona.getActivo() && persona.getValidado());
+		if(estadoSeleccionado.equalsIgnoreCase("Validados") && !(persona.getValidado() && persona.getActivo())) {
+			return false;
 		}
 		
 		return (persona.getNombre1().toLowerCase().contains(filterText)

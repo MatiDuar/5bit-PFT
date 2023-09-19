@@ -26,7 +26,9 @@
 				<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index">
 					<f:param name="i" value="1" />
 				</p:menuitem>
-				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas">
+				
+				
+				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas" rendered="#{gestionPersona.esAnalistaLogeado()}">
 					<f:param name="i" value="2" />
 				</p:menuitem>
 				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" outcome="eventos">

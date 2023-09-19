@@ -2,6 +2,7 @@ package com.persistencia.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -228,7 +229,28 @@ public abstract class Usuario implements Serializable {
 				+ ", nombre2=" + nombre2 + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero
 				+ ", departamento=" + departamento + ", localidad=" + localidad + ", mail=" + mail + ", telefono="
 				+ telefono + ", itr=" + itr + ", activo=" + activo + "]";
-	} 
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		return Objects.equals(id, other.id);
+	}
+
+	
+	
+	
 	
 	
 	

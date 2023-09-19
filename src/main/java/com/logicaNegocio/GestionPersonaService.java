@@ -16,7 +16,6 @@ import com.persistencia.dao.DepartamentoDAO;
 import com.persistencia.dao.ItrDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.UsuarioDAO;
-import com.persistencia.dto.PersonaAlumnoDTO;
 import com.persistencia.entities.*;
 import com.persistencia.exception.ServicesException;
 

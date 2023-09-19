@@ -13,8 +13,8 @@
 	<link type="text/css" rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
-	<h:outputScript library="primefaces" name="jquery.js"/>
-    <h:outputScript library="primefaces" name="jquery-plugins.js"/>
+	<h:outputScript library="primefaces" name="jquery.js" />
+	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 
 </h:head>
 <h:body onload="#{gestionPersona.checkUserIsLogin()}">
@@ -41,15 +41,11 @@
 				<ui:insert name="contenidoPrincipal">
 
 					<div>
-						<h1>Proyecto Infraestructura - 5bit</h1>
+						<h1>Proyecto PFT - 5bit</h1>
 
 						<div class="card">
 							<h5>PDF</h5>
-							<p:media value="/resources/document/PInfra.pdf" width="100%"
-								height="620px">
-       							 Your browser can't display pdf, <h:outputLink
-									value="#{request.contextPath}/resources/document/PInfra.pdf">click</h:outputLink> to download pdf instead.
-    					</p:media>
+							
 						</div>
 					</div>
 
@@ -57,22 +53,18 @@
 			</div>
 		</div>
 	</h:panelGroup>
-	
+
 	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0}">
 		<div class="layout-content2">
 			<div id="contenidoPrincipal" style="margin-bottom: 75px;">
 				<ui:insert name="contenidoPrincipal">
 
 					<div>
-						<h1>Proyecto Infraestructura - 5bit</h1>
+						<h1>Proyecto PFT - 5bit</h1>
 
 						<div class="card">
 							<h5>PDF</h5>
-							<p:media value="/resources/document/PInfra.pdf" width="100%"
-								height="620px">
-       							 Your browser can't display pdf, <h:outputLink
-									value="#{request.contextPath}/resources/document/PInfra.pdf">click</h:outputLink> to download pdf instead.
-    					</p:media>
+							
 						</div>
 					</div>
 

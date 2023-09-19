@@ -218,7 +218,8 @@
 								<h5>ITR *</h5>
 								<p:selectOneMenu id="groupItr"
 									value="#{gestionPersona.itrSeleccionado}"
-									validatorMessage="Debe Seleccionar una opcion">
+									validatorMessage="Debe Seleccionar una opcion"
+									converter="omnifaces.SelectItemsConverter">
 									<f:selectItem itemLabel="Selecciona uno" itemValue="" />
 									<c:forEach var="itr" items="#{gestionPersona.itrs}">
 										<f:selectItem itemLabel="#{itr.nombre}"

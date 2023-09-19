@@ -1,6 +1,8 @@
 package com.persistencia.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -63,6 +65,23 @@ public class ITR implements Serializable {
 	@Override
 	public String toString() {
 		return "ITR [id=" + id + ", nombre=" + nombre + ", departamento=" + departamento + ", activo=" + activo + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ITR other = (ITR) obj;
+		return Objects.equals(id, other.id);
 	}
 	
 	

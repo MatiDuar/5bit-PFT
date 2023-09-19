@@ -61,7 +61,6 @@
 										<f:selectItem itemLabel="Analista" itemValue="analista" />
 
 
-										<f:validateRequired></f:validateRequired>
 									</p:selectOneMenu>
 								</div>
 
@@ -71,13 +70,14 @@
 									<p:selectOneMenu id="groupItr"
 										value="#{dtFilterView.itrSeleccionado}"
 										onchange="PF('personasTable').filter()">
+										
 										<f:selectItem itemLabel="-" itemValue=" " />
 										<c:forEach var="itr" items="#{gestionPersona.itrs}">
 											<f:selectItem itemLabel="#{itr.nombre}"
 												itemValue="#{itr.nombre}" />
 										</c:forEach>
 
-										<f:validateRequired></f:validateRequired>
+
 									</p:selectOneMenu>
 								</div>
 
@@ -93,16 +93,18 @@
 
 								<div class="col-12 md:col-2">
 
+
+
 									<p:outputLabel>Estado</p:outputLabel>
 									<p:selectOneMenu id="groupEstado"
 										value="#{dtFilterView.estadoSeleccionado}"
 										onchange="PF('personasTable').filter()">
 										<f:selectItem itemLabel="-" itemValue=" " />
-										<f:selectItem itemLabel="Sin Validar" itemValue="sin validar" />
-										<f:selectItem itemLabel="Validados" itemValue="validados" />
-										<f:selectItem itemLabel="Eliminado" itemValue="eliminado" />
+										<f:selectItem itemLabel="Sin Validar" itemValue="Sin Validar" />
+										<f:selectItem itemLabel="Validados" itemValue="Validados" />
+										<f:selectItem itemLabel="Eliminado" itemValue="Eliminado" />
 
-										<f:validateRequired></f:validateRequired>
+
 									</p:selectOneMenu>
 								</div>
 
@@ -291,6 +293,33 @@
 								value="#{dtFilterView.getEdad(personas.fechaNacimiento)}" />
 
 						</p:column>
+
+						<p:column headerText="ITR" filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.itr.nombre}" />
+
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:selectOneMenu id="groupITR" value="#{personas.itr}"
+										validatorMessage="Debe Seleccionar una opcion"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+										<c:forEach var="itr" items="#{gestionPersona.itrs}">
+											<f:selectItem itemLabel="#{itr.nombre}" itemValue="#{itr}" />
+										</c:forEach>
+
+										<f:validateRequired></f:validateRequired>
+									</p:selectOneMenu>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="groupITR" /></small>
+
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 						<p:column headerText="Departamento" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -410,30 +439,29 @@
 
 						<p:column rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
-							<div class="columnaEditar">
-								<p:commandButton icon="pi pi-plus-circle"
-									styleClass="rounded-button ui-button-success ui-button-flat"
-									action="#{gestionPersona.activarPersonaOnLista(personas)}"
-									rendered="#{!personas.activo}" immediate="true"
-									update="dateTable">
-									<p:confirm header="Estas Seguro?"
-										message="La cuenta sera activada en el sistema"
-										icon="pi pi-info-circle" class="confirmDialog" />
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{gestionPersona.getEstado(personas)}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
 
-								</p:commandButton>
+									<p:selectOneMenu id="groupEstadoMod"
+										validatorMessage="Debe Seleccionar una opcion"
+										converter="omnifaces.SelectItemsConverter">
+										<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+										<f:selectItem itemLabel="Validado" itemValue="Validado" />
+										<f:selectItem itemLabel="Eliminado" itemValue="Eliminado" />
+										<f:selectItem itemLabel="Sin Validar" itemValue="Sin Validar" />
 
-								<p:commandButton icon="pi pi-minus-circle"
-									styleClass="rounded-button ui-button-danger ui-button-flat"
-									action="#{gestionPersona.bajaPersonaOnLista(personas)}"
-									rendered="#{personas.activo}" immediate="true"
-									update="dateTable" id="botonBaja">
-									<p:confirm header="Estas Seguro?"
-										message="La cuenta seleccionada sera dada de baja y no podra ingresar a la aplicacion"
-										icon="pi pi-info-circle" class="confirmDialog" />
+										<f:validateRequired></f:validateRequired>
+									</p:selectOneMenu>
 
-
-								</p:commandButton>
-							</div>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="groupEstadoMod" /></small>
+								</f:facet>
+							</p:cellEditor>
 						</p:column>
 						<p:column style="width:6rem;" headerText="Editar"
 							rendered="#{gestionPersona.esAnalistaLogeado()}">
