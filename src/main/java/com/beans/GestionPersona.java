@@ -43,12 +43,18 @@ public class GestionPersona implements Serializable {
 	private long id = 1;
 	@Inject
 	GestionPersonaService persistenciaBean;
+	
+	@Inject
+	DFView dfView;
+	
 	@Inject
 	LoginBeanJWT jwt;
 
 //	private List<Alumno> personasMod;
 	private Usuario usuarioLogeado;
 	private Usuario personaSeleccionada;
+	
+	private Usuario usuarioModificar;
 //
 
 //	private Usuario alumnoLogeado;
@@ -398,6 +404,16 @@ public class GestionPersona implements Serializable {
 		datosToken = null;
 	}
 
+	
+	public void modificarUsuarioEstado() {
+		persistenciaBean.modificarUsuario(usuarioModificar);
+		dfView.closeResponsive();
+	}
+	
+	public void abrirModificarEstado(Usuario usuario) {
+		usuarioModificar=usuario;
+		dfView.viewEstadoUsuario();
+	}
 	/**
 	 * Copia todos los datos de la Persona al Alumno
 	 * 
@@ -620,6 +636,14 @@ public class GestionPersona implements Serializable {
 		return toRegistro;
 	}
 
+	
+	public void updateITRs()  {
+		try {
+			itrs=persistenciaBean.listarITRs();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	public void setToRegistro(String toRegistro) {
 		this.toRegistro = toRegistro;
 	}
@@ -778,7 +802,7 @@ public class GestionPersona implements Serializable {
 		// Obtener la ruta de la vista actual
 		String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 
-		if(viewId.equals("/index.xhtml") || viewId.equals("/listarPersonas.xhtml") || viewId.equals("/editarPerfil.xhtml")) {
+		if(viewId.equals("/index.xhtml")  || viewId.equals("/editarPerfil.xhtml")) {
 			bottonesMenu=new LinkedList<>();
 		}else{
 			bottonesMenu=new LinkedList<>();
@@ -919,6 +943,14 @@ public class GestionPersona implements Serializable {
 
 	public void setEditando(boolean editando) {
 		this.editando = editando;
+	}
+
+	public Usuario getUsuarioModificar() {
+		return usuarioModificar;
+	}
+
+	public void setUsuarioModificar(Usuario usuarioModificar) {
+		this.usuarioModificar = usuarioModificar;
 	}
 
 	

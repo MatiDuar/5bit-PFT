@@ -21,7 +21,9 @@ import com.logicaNegocio.GestionPersonaService;
 
 import com.persistencia.entities.Carrera;
 import com.persistencia.entities.Estudiante;
+import com.persistencia.entities.Evento;
 import com.persistencia.entities.Usuario;
+import com.persistencia.entities.ITR;
 
 @Named("dtFilterView")
 @ViewScoped
@@ -48,7 +50,17 @@ public class FilterView implements Serializable {
 	private List<Usuario> personas;
 
 	private List<Usuario> filteredPersonas;
+	
+	private List<ITR> itrs;
 
+	private List<ITR> filteredItrs;
+
+	
+	private List<Evento> eventos;
+
+	private List<Evento> filteredEventos;
+	
+	
 	private List<FilterMeta> filterBy;
 
 	private boolean globalFilterOnly;
@@ -60,6 +72,8 @@ public class FilterView implements Serializable {
 		globalFilterOnly = true;
 		try {
 			personas = service.listarPersonas();
+			itrs=service.listarITRs();
+			eventos=service.listarEventos();
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
 			anoIngresoSeleccionado = "";
@@ -122,11 +136,39 @@ public class FilterView implements Serializable {
 			return false;
 		}
 		
+		
+
 		return (persona.getNombre1().toLowerCase().contains(filterText)
 				|| persona.getApellido1().toLowerCase().contains(filterText)
 				|| persona.getNombreUsuario().toLowerCase().contains(filterText)
 				|| persona.getMail().toString().toLowerCase().contains(filterText)
 				|| persona.getLocalidad().toLowerCase().contains(filterText));
+
+	}
+	
+	public boolean globalFilterFunctionITR(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText) ) {
+			return true;
+		}
+
+		ITR itr = (ITR) value;
+		
+		return (itr.getNombre().toLowerCase().contains(filterText)
+				|| itr.getDepartamento().getNombre().toLowerCase().contains(filterText));
+
+	}
+	
+	
+	public boolean globalFilterFunctionEventos(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText) ) {
+			return true;
+		}
+
+		Evento itr = (Evento) value;
+		
+		return (itr.getTitulo().toLowerCase().contains(filterText));
 
 	}
 
@@ -234,6 +276,24 @@ public class FilterView implements Serializable {
 		this.filteredPersonas = filteredPersonas;
 	}
 
+	
+	
+	public List<ITR> getItrs() {
+		return itrs;
+	}
+
+	public void setItrs(List<ITR> itrs) {
+		this.itrs = itrs;
+	}
+
+	public List<ITR> getFilteredItrs() {
+		return filteredItrs;
+	}
+
+	public void setFilteredItrs(List<ITR> filteredItrs) {
+		this.filteredItrs = filteredItrs;
+	}
+
 	public String getItrSeleccionado() {
 		return itrSeleccionado;
 	}
@@ -264,6 +324,22 @@ public class FilterView implements Serializable {
 
 	public void setEstadoSeleccionado(String estadoSeleccionado) {
 		this.estadoSeleccionado = estadoSeleccionado;
+	}
+
+	public List<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(List<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	public List<Evento> getFilteredEventos() {
+		return filteredEventos;
+	}
+
+	public void setFilteredEventos(List<Evento> filteredEventos) {
+		this.filteredEventos = filteredEventos;
 	}
 
 }

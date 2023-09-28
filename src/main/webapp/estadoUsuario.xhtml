@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+
+
+<h:head>
+	<link type="text/css" rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
+	<title>Estado Usuario</title>
+</h:head>
+
+<h:body>
+
+	<div class="box">
+		<div style="padding: 20px;">
+			<h:form>
+				<p:growl id="messages" life="4000" closable="true" />
+
+
+				<div class="grid ui-fluid">
+
+					<div class="col-12 md:col-2">
+						<p:outputLabel>Estado de Usuario</p:outputLabel>
+						<p:selectOneMenu id="groupActivo"
+							value="#{gestionPersona.usuarioModificar.activo}"
+							validatorMessage="Debe Seleccionar una opcion">
+							<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+							<f:selectItem itemLabel="Activo" itemValue="true" />
+							<f:selectItem itemLabel="Inactivo" itemValue="false" />
+
+							<f:validateRequired></f:validateRequired>
+						</p:selectOneMenu>
+						<small class="block ui-state-error"><h:message
+								style="color:red;" for="groupActivo" /></small>
+
+					</div>
+					<div class="col-12 md:col-2">
+						<p:outputLabel>Validacion de Usuario</p:outputLabel>
+						<p:selectOneMenu id="groupValidado"
+							value="#{gestionPersona.usuarioModificar.validado}"
+							validatorMessage="Debe Seleccionar una opcion">
+							<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+							<f:selectItem itemLabel="Validado" itemValue="true" />
+							<f:selectItem itemLabel="Sin Validar" itemValue="false" />
+
+							<f:validateRequired></f:validateRequired>
+						</p:selectOneMenu>
+						<small class="block ui-state-error"><h:message
+								style="color:red;" for="groupValidado" /></small>
+					</div>
+
+				</div>
+
+
+				<div style="margin-top: 20px;">
+					<div class="flex card-container">
+						<div
+							class="flex-none flex align-items-center justify-content-center">
+							<p:commandButton value="Cancelar"
+								styleClass="ui-button-raised  ui-button-flat" immediate="true" action="#{dfView.closeResponsive()}"/>
+						</div>
+
+						<div
+							class="flex-grow-1 flex align-items-center justify-content-center "></div>
+						<div
+							class="flex-none flex align-items-center justify-content-center">
+							<p:commandButton value="Guardar"
+								action="#{gestionPersona.modificarUsuarioEstado}"  />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+
+	</div>
+</h:body>
+</html>
+

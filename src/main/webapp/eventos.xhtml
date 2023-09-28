@@ -12,8 +12,8 @@
 	<link type="text/css" rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
-<h:outputScript library="primefaces" name="jquery.js"/>
-    <h:outputScript library="primefaces" name="jquery-plugins.js"/>
+	<h:outputScript library="primefaces" name="jquery.js" />
+	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 
 	<ui:define name="contenidoPrincipal">
 
@@ -33,61 +33,180 @@
 				</div>
 			</div>
 		</div>
+		<h:form>
+			<p:dataTable var="evento" value="#{dtFilterView.eventos}"
+				widgetVar="eventoTable"
+				emptyMessage="Eventos no encontradas con este criterio"
+				filteredValue="#{dtFilterView.filteredEventos}"
+				globalFilterFunction="#{dtFilterView.globalFilterFunctionEventos}"
+				editable="true" id="dataTable">
+
+				<p:ajax event="rowEdit" listener="#{gestionEventos.onRowEdit}"
+					update="dataTable" />
+				<p:ajax event="rowEditCancel"
+					listener="#{gestionEventos.onRowCancel}" update="dataTable" />
+
+				<f:facet name="header">
+					<h4>Filtros</h4>
+					<div class="col-12 md:col-2">
+						<br></br>
+						<p:inputText id="globalFilter"
+							onkeyup="PF('eventoTable').filter()" style="width:250px"
+							placeholder="Buscardor global..." />
+					</div>
+					<p:panelGrid columns="4" layout="grid">
+						<p:outputLabel value="Tipo Evento"></p:outputLabel>
+						<p:outputLabel value="Estado"></p:outputLabel>
+						<p:outputLabel value="ITR"></p:outputLabel>
+						<p:outputLabel value="Modalidad"></p:outputLabel>
+						<p:selectOneMenu disabled="true" style="width:80%;">
+							<f:selectItem itemLabel="" itemValue="" />
+						</p:selectOneMenu>
+
+						<p:selectOneMenu disabled="true" style="width:80%;">
+							<f:selectItem itemLabel="" itemValue="" />
+						</p:selectOneMenu>
+
+
+						<p:selectOneMenu disabled="true" style="width:80%;">
+							<f:selectItem itemLabel="" itemValue="" />
+						</p:selectOneMenu>
+						<p:selectOneMenu disabled="true" style="width:80%;">
+							<f:selectItem itemLabel="" itemValue="" />
+						</p:selectOneMenu>
+
+					</p:panelGrid>
+				</f:facet>
+
+				<p:column field="titulo" headerText="Titulo"
+					sortBy="#{evento.titulo}" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.titulo}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+							<p:inputText
+								style="width:100%;vertical-align: middle; margin-left: .5rem"
+								value="#{evento.titulo}"
+								requiredMessage="Debe ingresar el Titulo del Evento"
+								maxlength="50"
+								validatorMessage="No puede contener solo espacios vacios"
+								id="titulo">
+								<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+							</p:inputText>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="titulo" /></small>
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Tipo de Evento" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.tipoActividad.nombre}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.tipoActividad.nombre}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Fecha Inicio" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.fechaInicio}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.fechaInicio}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Fecha Final" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.fechaFin}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.fechaFin}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Modalidad" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.modalidad.nombre}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.modalidad.nombre}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="ITR" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.itr.nombre}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.itr.nombre}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Localización" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.localizacion}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.localizacion}" />
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+
+				<p:column headerText="Tutores encargados" filterable="false">
+
+				</p:column>
+
+				<p:column style="width:6rem;" headerText="Editar">
+
+					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
+						saveTitle="Save Row">
+
+					</p:rowEditor>
+				</p:column>
 
 
 
-		<div class="card">
-			<div class="grid formgrid">
-				<h5>Tabla de Eventos</h5>
-				<p:dataTable var="dataTable" value="">
-					<f:facet name="header">
-						<h4>Filtros</h4>
-						<p:panelGrid columns="4" layout="grid">
-							<p:outputLabel value="Tipo Evento"></p:outputLabel>
-							<p:outputLabel value="Estado"></p:outputLabel>
-							<p:outputLabel value="ITR"></p:outputLabel>
-							<p:outputLabel value="Modalidad"></p:outputLabel>
-							<p:selectOneMenu disabled="true" style="width:80%;">
-								<f:selectItem itemLabel="" itemValue="" />
-							</p:selectOneMenu>
-
-							<p:selectOneMenu disabled="true" style="width:80%;">
-								<f:selectItem itemLabel="" itemValue="" />
-							</p:selectOneMenu>
-
-
-							<p:selectOneMenu disabled="true" style="width:80%;">
-								<f:selectItem itemLabel="" itemValue="" />
-							</p:selectOneMenu>
-							<p:selectOneMenu disabled="true" style="width:80%;">
-								<f:selectItem itemLabel="" itemValue="" />
-							</p:selectOneMenu>
-
-						</p:panelGrid>
-					</f:facet>
-					<p:column headerText="Titulo">
-						<p:skeleton />
-
-					</p:column>
-					<p:column headerText="Tipo">
-						<p:skeleton />
-
-					</p:column>
-					<p:column headerText="Fec.Inc">
-						<p:skeleton />
-					</p:column>
-					<p:column headerText="ITR">
-						<p:skeleton />
-					</p:column>
-					<p:column headerText="Modalidad">
-						<p:skeleton />
-					</p:column>
-					<p:column headerText="Estado">
-						<p:skeleton />
-					</p:column>
-				</p:dataTable>
-			</div>
-		</div>
+			</p:dataTable>
+		</h:form>
 
 
 	</ui:define>

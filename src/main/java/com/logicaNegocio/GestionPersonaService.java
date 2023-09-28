@@ -2,7 +2,7 @@ package com.logicaNegocio;
 
 import java.io.Serializable;
 import java.sql.Date;
-
+import java.sql.Timestamp;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -13,7 +13,10 @@ import javax.ejb.Stateless;
 import com.persistencia.dao.AreaTutorDAO;
 import com.persistencia.dao.CarreraDAO;
 import com.persistencia.dao.DepartamentoDAO;
+import com.persistencia.dao.EstadosEventosDAO;
+import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ItrDAO;
+import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.entities.*;
@@ -40,19 +43,24 @@ public class GestionPersonaService implements Serializable {
 
 	@EJB
 	ItrDAO itrDAO;
-	
+	@EJB
+	EventoDAO eventoDAO;
+
 	@EJB
 	AreaTutorDAO areaTutorDAO;
-	
+
 	@EJB
 	TipoTutorDAO tipoTutorDAO;
-	
+
 	@EJB
 	DepartamentoDAO departamentoDAO;
 	
 	
+	@EJB
+	EstadosEventosDAO estadosEventoDAO;
 	
-	
+	@EJB
+	TipoActividadDAO tipoActividadDAO;
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -67,34 +75,35 @@ public class GestionPersonaService implements Serializable {
 		return listaPersonas;
 	}
 
-	
 	public List<ITR> listarITRs() throws Exception {
 
 		List<ITR> listaITR = itrDAO.obtenerItrs();
 
 		return listaITR;
 	}
-	
+
 	public List<TipoTutor> listarTipoTutor() throws Exception {
 
 		List<TipoTutor> listaTipoTutor = tipoTutorDAO.obtenerTipoTutor();
 
 		return listaTipoTutor;
 	}
-	
-	
-	public List<AreaTutor>listarAreaTutor() throws Exception{
+
+	public List<AreaTutor> listarAreaTutor() throws Exception {
 		List<AreaTutor> listaAreaTutor = areaTutorDAO.obtenerAreaTutor();
 
 		return listaAreaTutor;
 	}
-	
-	public List<Departamento>listarDepartamento() throws Exception{
+
+	public List<Departamento> listarDepartamento() throws Exception {
 		List<Departamento> listaDepartamento = departamentoDAO.obtenerDepartamento();
 		return listaDepartamento;
 	}
 	
-	
+	public List<Evento>listarEventos()throws Exception{
+		return eventoDAO.obtenerEvento();
+	}
+
 	public Departamento buscarDepartamento(String nombre) {
 		try {
 			return departamentoDAO.obtenerDepPorNombre(nombre);
@@ -104,8 +113,7 @@ public class GestionPersonaService implements Serializable {
 			return null;
 		}
 	}
-	
-	
+
 	public ITR buscarItr(String nombre) {
 		try {
 			return itrDAO.obtenerItrPorNombre(nombre);
@@ -115,9 +123,7 @@ public class GestionPersonaService implements Serializable {
 			return null;
 		}
 	}
-	
-	
-	
+
 	public Usuario buscarUsuario(Long id) {
 		try {
 			return usuarioDAO.buscarUsuarioPorId(id);
@@ -127,15 +133,14 @@ public class GestionPersonaService implements Serializable {
 			return null;
 		}
 	}
-	
-	
+
 	public Boolean modificarUsuario(Usuario usuario) {
 		try {
 			usuarioDAO.modificarUsuario(usuario);
 			return true;
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
-			e.printStackTrace();		
+			e.printStackTrace();
 			return false;
 		}
 	}
@@ -195,8 +200,7 @@ public class GestionPersonaService implements Serializable {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public AreaTutor buscarAreaTutor(String nombre) {
 		try {
 			return areaTutorDAO.buscarPorNombre(nombre);
@@ -206,7 +210,7 @@ public class GestionPersonaService implements Serializable {
 			return null;
 		}
 	}
-	
+
 	public TipoTutor buscarTipoTutor(String nombre) {
 		try {
 			return tipoTutorDAO.obtenerTipoTutorPorNombre(nombre);
@@ -279,27 +283,34 @@ public class GestionPersonaService implements Serializable {
 			p.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
 
 			usuarioDAO.crearUsuario(p);
+			
+			Tutor t=new Tutor();
+			t.setActivo(true);
+			t.setDocumento("50329199");
+			t.setApellido1("demo");
+			t.setNombre1("demo");
+			t.setNombreUsuario("demo.tutor");
+			t.setContrasena("demo");
+			t.setDepartamento(depDAO.obtenerDepPorNombre("Durazno"));
+			t.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
+			t.setLocalidad("demo");
+			t.setMail("demo@demo.com");
+			t.setMailInstitucional("demo@demo.com");
+			t.setTelefono("09999999");
+			t.setValidado(true);
+			t.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
+			t.setTipoTutor(tipoTutorDAO.buscarTipoTutorPorId((long)1));
+			t.setAreaTutor(areaTutorDAO.buscarAreaTutorPorId((long)1));
+
+			usuarioDAO.crearUsuario(t);
+			
+			
+			initEventos();
 		} catch (ServicesException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-//		Alumno a = new Alumno();
-//		a.setAdmin(false);
-//		a.setActivo(true);
-//		a.setApellido1("Marshall");
-//		a.setNombre1("Jean");
-//		a.setNombreUsuario("jean.marshall");
-//		a.setContrasena("demo");
-//		a.setDireccion("demo");
-//		a.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
-//		a.setMail("jean.marshall@estudiantes.utec.edu.uy");
-//		a.setIdEstudiantil((long) 2222);
-//
-//		a.setItr(itrDAO.buscarITR("Centro-sur"));
-//		a.setCarrera(carreraDAO.buscarCarrera("LTI"));
-//		a.setIdEstudiantil((long) 2222);
-//		personaDAO.agregarPersona(a);
+
 	}
 
 	private void initDepartamentos() {
@@ -345,14 +356,44 @@ public class GestionPersonaService implements Serializable {
 		}
 
 	}
-	
+
 	private void initAreaTutor() {
 		try {
 			areaTutorDAO.crearAreaTutor("Programacion");
-			
+
 			tipoTutorDAO.crearTipoTutor("Tutor");
 			tipoTutorDAO.crearTipoTutor("Encargado");
 
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void initEventos() {
+		try {
+			EstadosEventos ee=new EstadosEventos();
+			ee.setActivo(true);
+			ee.setNombre("Futuro");
+			estadosEventoDAO.crearEstadoEvento(ee);
+			
+			
+			
+			tipoActividadDAO.crearTipoActividad("Presencial", true, false);;
+			
+			Evento evento = new Evento();
+			evento.setTitulo("Demo");
+			evento.setCreditos(2);
+			evento.setFechaInicio(new Timestamp(2023, 10, 7, 17, 0, 0, 0));
+			evento.setFechaFin(new Timestamp(2023, 10, 7, 17, 0, 0, 0));
+			evento.setItr(itrDAO.buscarItrPorId((long)1));
+			evento.setLocalizacion("Demo");
+			evento.setSemestre(4);
+			evento.addAnalista((Analista)usuarioDAO.buscarNombre("demo"));
+			evento.addTutor((Tutor)usuarioDAO.buscarNombre("demo.tutor"));
+			evento.setEstado(estadosEventoDAO.buscarNombreEstadoEvento("Futuro"));
+			evento.setTipoActividad(tipoActividadDAO.buscarTipoActividadPorId((long)1));
+			eventoDAO.crearEvento(evento);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

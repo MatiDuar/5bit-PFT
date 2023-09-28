@@ -44,7 +44,7 @@
 								<div class="col-12 md:col-2">
 									<br></br>
 									<p:inputText id="globalFilter"
-										onkeyup="PF('personasTable').filter()" style="width:300px"
+										onkeyup="PF('personasTable').filter()" style="width:250px"
 										placeholder="Buscardor global..." />
 								</div>
 
@@ -70,7 +70,7 @@
 									<p:selectOneMenu id="groupItr"
 										value="#{dtFilterView.itrSeleccionado}"
 										onchange="PF('personasTable').filter()">
-										
+
 										<f:selectItem itemLabel="-" itemValue=" " />
 										<c:forEach var="itr" items="#{gestionPersona.itrs}">
 											<f:selectItem itemLabel="#{itr.nombre}"
@@ -108,8 +108,21 @@
 									</p:selectOneMenu>
 								</div>
 
+								<div class="col-12 md:col-1">
 
-								<div class="col-12 md:col-2">
+
+
+									<br></br>
+									<p:commandButton value="ITR"
+										action="#{dfView.viewMantenimientoITR}" />
+
+
+
+								</div>
+
+
+
+								<div class="col-12 md:col-1">
 									<br></br>
 
 									<p:commandButton id="toggler" type="button" value="Columns"
@@ -439,29 +452,16 @@
 
 						<p:column rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{gestionPersona.getEstado(personas)}" />
-								</f:facet>
-								<f:facet name="input" class="col-10">
+							<div class="grid ui-fluid">
+							
 
-									<p:selectOneMenu id="groupEstadoMod"
-										validatorMessage="Debe Seleccionar una opcion"
-										converter="omnifaces.SelectItemsConverter">
-										<f:selectItem itemLabel="Selecciona uno" itemValue="" />
-										<f:selectItem itemLabel="Validado" itemValue="Validado" />
-										<f:selectItem itemLabel="Eliminado" itemValue="Eliminado" />
-										<f:selectItem itemLabel="Sin Validar" itemValue="Sin Validar" />
 
-										<f:validateRequired></f:validateRequired>
-									</p:selectOneMenu>
 
-									<small class="block ui-state-error"><h:message
-											style="color:red;" for="groupEstadoMod" /></small>
-								</f:facet>
-							</p:cellEditor>
+								<p:commandButton icon="pi pi-info-circle"
+									styleClass="rounded-button ui-button-secondary ui-button-flat"
+									immediate="true"
+									action="#{gestionPersona.abrirModificarEstado(personas)}"></p:commandButton>
+							</div>
 						</p:column>
 						<p:column style="width:6rem;" headerText="Editar"
 							rendered="#{gestionPersona.esAnalistaLogeado()}">
