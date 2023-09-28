@@ -16,6 +16,7 @@ import com.persistencia.dao.DepartamentoDAO;
 import com.persistencia.dao.EstadosEventosDAO;
 import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ItrDAO;
+import com.persistencia.dao.ModalidadesEventosDAO;
 import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.UsuarioDAO;
@@ -61,6 +62,9 @@ public class GestionPersonaService implements Serializable {
 	
 	@EJB
 	TipoActividadDAO tipoActividadDAO;
+	
+	@EJB
+	ModalidadesEventosDAO modalidadEventosDAO;
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -379,13 +383,36 @@ public class GestionPersonaService implements Serializable {
 			
 			
 			
-			tipoActividadDAO.crearTipoActividad("Presencial", true, false);;
+			ModalidadesEventos md=new ModalidadesEventos();
+			
+			md.setActivo(true);
+			md.setNombre("Presencial");
+			modalidadEventosDAO.crearModalidadEvento(md);
+			
+			ModalidadesEventos md1=new ModalidadesEventos();
+			md1.setActivo(true);
+			md1.setNombre("Semipresencial");
+			modalidadEventosDAO.crearModalidadEvento(md1);
+			
+			ModalidadesEventos md2=new ModalidadesEventos();
+			md2.setActivo(true);
+			md2.setNombre("Virtual");
+			modalidadEventosDAO.crearModalidadEvento(md2);
+
+			tipoActividadDAO.crearTipoActividad("Examen", true, true);
+			
+			tipoActividadDAO.crearTipoActividad("Jornada presencial", true, false);
+			
+			tipoActividadDAO.crearTipoActividad("Prueba final", true, true);
+
+			tipoActividadDAO.crearTipoActividad("Defensa de proyecto", true, true);
+
 			
 			Evento evento = new Evento();
 			evento.setTitulo("Demo");
 			evento.setCreditos(2);
-			evento.setFechaInicio(new Timestamp(2023, 10, 7, 17, 0, 0, 0));
-			evento.setFechaFin(new Timestamp(2023, 10, 7, 17, 0, 0, 0));
+			evento.setFechaInicio(new Timestamp(2023-1900, 10, 7, 9, 0, 0, 0));
+			evento.setFechaFin(new Timestamp(2023-1900, 10, 7, 17, 0, 0, 0));
 			evento.setItr(itrDAO.buscarItrPorId((long)1));
 			evento.setLocalizacion("Demo");
 			evento.setSemestre(4);
@@ -393,6 +420,7 @@ public class GestionPersonaService implements Serializable {
 			evento.addTutor((Tutor)usuarioDAO.buscarNombre("demo.tutor"));
 			evento.setEstado(estadosEventoDAO.buscarNombreEstadoEvento("Futuro"));
 			evento.setTipoActividad(tipoActividadDAO.buscarTipoActividadPorId((long)1));
+			evento.setModalidad(modalidadEventosDAO.buscarModalidadEventoPorId((long)1));
 			eventoDAO.crearEvento(evento);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block

@@ -19,20 +19,6 @@
 
 		<h1>Gestion de Eventos</h1>
 
-
-		<div class="card">
-			<div class="grid formgrid">
-				<div class="field col-12">
-					<h3>
-						<span class="pi pi-exclamation-triangle"></span> En Desarollo
-					</h3>
-					<p:skeleton class="mb-2" />
-					<p:skeleton class="mb-2" />
-					<p:skeleton width="15rem" class="mb-2" />
-
-				</div>
-			</div>
-		</div>
 		<h:form>
 			<p:dataTable var="evento" value="#{dtFilterView.eventos}"
 				widgetVar="eventoTable"
@@ -109,8 +95,19 @@
 								value="#{evento.tipoActividad.nombre}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.tipoActividad.nombre}" />
+							<p:selectOneMenu id="groupTipoActividad"
+								value="#{evento.tipoActividad}"
+								validatorMessage="Debe Seleccionar una opcion"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+								<c:forEach var="ta" items="#{gestionEventos.tiposActividades}">
+									<f:selectItem itemLabel="#{ta.nombre}" itemValue="#{ta}" />
+								</c:forEach>
+
+								<f:validateRequired></f:validateRequired>
+							</p:selectOneMenu>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="groupTipoActividad" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -124,8 +121,16 @@
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.fechaInicio}" />
+							<p:datePicker id="spanish" value="#{evento.fechaInicio}"
+									locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:KK:ss" showTime="true"
+									yearNavigator="true" yearRange="1950:2023" required="true"
+									requiredMessage="Debe ingresar una fecha de nacimiento"
+									validatorMessage="Formato incorrecto de la Fecha" converter="timestampConverter">
+
+
+								</p:datePicker>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="spanish" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -139,8 +144,16 @@
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.fechaFin}" />
+							<p:datePicker id="fechaFin" value="#{evento.fechaFin}"
+									locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:KK:ss" showTime="true"
+									yearNavigator="true" yearRange="1950:2023" required="true"
+									requiredMessage="Debe ingresar una fecha de nacimiento"
+									validatorMessage="Formato incorrecto de la Fecha" converter="timestampConverter">
+
+
+								</p:datePicker>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="fechaFin" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -153,9 +166,19 @@
 								value="#{evento.modalidad.nombre}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
+							<p:selectOneMenu id="groupModalidad"
+								value="#{evento.modalidad}"
+								validatorMessage="Debe Seleccionar una opcion"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+								<c:forEach var="mo" items="#{gestionEventos.modalidadesEvento}">
+									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo}" />
+								</c:forEach>
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.modalidad.nombre}" />
+								<f:validateRequired></f:validateRequired>
+							</p:selectOneMenu>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="groupModalidad" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -169,8 +192,19 @@
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.itr.nombre}" />
+							<p:selectOneMenu id="groupITR"
+								value="#{evento.itr}"
+								validatorMessage="Debe Seleccionar una opcion"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+								<c:forEach var="itr" items="#{gestionPersona.itrs}">
+									<f:selectItem itemLabel="#{itr.nombre}" itemValue="#{itr}" />
+								</c:forEach>
+
+								<f:validateRequired></f:validateRequired>
+							</p:selectOneMenu>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="groupITR" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -184,8 +218,18 @@
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.localizacion}" />
+							<p:inputText
+								style="width:100%;vertical-align: middle; margin-left: .5rem"
+								value="#{evento.localizacion}"
+								requiredMessage="Debe ingresar la Localizacion del Evento"
+								maxlength="50"
+								validatorMessage="No puede contener solo espacios vacios"
+								id="localizacion">
+								<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+							</p:inputText>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="localizacion" /></small>
 
 						</f:facet>
 					</p:cellEditor>

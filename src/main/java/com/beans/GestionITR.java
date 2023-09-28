@@ -63,6 +63,7 @@ public class GestionITR implements Serializable {
 		itrSeleccionado=new ITR();
 		gestionPersona.updateITRs();
 		closeVentana();
+		
 	}
 	
 	

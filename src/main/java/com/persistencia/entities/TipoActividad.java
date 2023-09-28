@@ -2,6 +2,8 @@ package com.persistencia.entities;
 
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -53,6 +55,24 @@ public class TipoActividad implements Serializable {
 	@Override
 	public String toString() {
 		return "TipoActividad [id=" + id + ", nombre=" + nombre + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(esCalificado, id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		TipoActividad other = (TipoActividad) obj;
+		return Objects.equals(esCalificado, other.esCalificado) && Objects.equals(id, other.id)
+				&& Objects.equals(nombre, other.nombre);
 	}
 	
 	

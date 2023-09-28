@@ -84,10 +84,7 @@ public class DFView {
 	  
 	  
 	  public void closeResponsive() {
-		  
-		 
 		  PrimeFaces.current().dialog().closeDynamic(null);
-		  updateMantenimientoITR();
 	  }
 	  
 	  

@@ -1,6 +1,8 @@
 package com.persistencia.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -52,6 +54,24 @@ public class ModalidadesEventos implements Serializable {
 	@Override
 	public String toString() {
 		return "Estado [id_modalidad=" + id_modalidad + ", nombreModalidadEvento=" + nombreModalidadEvento + ", activo=" + activo + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(activo, id_modalidad, nombreModalidadEvento);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ModalidadesEventos other = (ModalidadesEventos) obj;
+		return Objects.equals(activo, other.activo) && Objects.equals(id_modalidad, other.id_modalidad)
+				&& Objects.equals(nombreModalidadEvento, other.nombreModalidadEvento);
 	}
 	
 	
