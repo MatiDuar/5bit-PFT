@@ -20,8 +20,8 @@
 		<div class="flex flex-column card-container green-container">
 			<ui:repeat var="button" value="#{gestionPersona.bottonesMenu}">
 				<div class="bordeBtn">
-					<p:button value="#{button}" styleClass="ui-button-flat w-full "
-						icon="pi pi-check" />
+					<p:commandButton value="#{button}" styleClass="ui-button-flat w-full "
+						icon="pi pi-check" action="#{gestionPersona.getActionBottonesMenu(button)}"/>
 				</div>
 			</ui:repeat>
 

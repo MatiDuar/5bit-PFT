@@ -52,6 +52,7 @@ public class Tutor extends Usuario implements Serializable {
 		this.tipoTutor = tipoTutor;
 	}
 
+
 	
 	
 	

@@ -9,12 +9,15 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
+import java.util.LinkedList;
 
 import com.logicaNegocio.GestionEventoService;
+import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.TipoActividad;
+import com.persistencia.entities.Tutor;
 
 @Named(value = "gestionEventos") // JEE8
 @SessionScoped // JEE8
@@ -24,12 +27,28 @@ public class GestionEventos implements Serializable {
 
 	@Inject
 	GestionEventoService persistenciaBean;
+	
+	@Inject
+	DFView dfView;
+	
+	@Inject
+	PickListView pickListView;
+	
+	private Evento eventoSeleccionado;
 
 	private List<Evento> eventos;
 	
 	private List<TipoActividad>tiposActividades;
 	
 	private List<ModalidadesEventos>modalidadesEvento;
+	
+	private List<EstadosEventos> estadosEvento;
+	
+	
+	private List<Tutor>tutoresSeleccionados;
+	
+	
+	
 	
 	
 
@@ -38,6 +57,27 @@ public class GestionEventos implements Serializable {
 		eventos = persistenciaBean.listarEventos();
 		tiposActividades = persistenciaBean.listarTiposActividad();
 		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
+		estadosEvento = persistenciaBean.listarEstadosEventos();
+		eventoSeleccionado=new Evento();
+		tutoresSeleccionados=new LinkedList<>();
+		
+		
+				
+	
+	}
+	public void asignarTutores() {
+		pickListView.setEventoSeleccionado(eventoSeleccionado);
+		dfView.viewAsignarTutores();
+	}
+	
+	
+	public void altaEvento() {
+		
+
+		
+		eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
+		persistenciaBean.crearEvento(eventoSeleccionado);
+		eventoSeleccionado=new Evento();
 	}
 
 	public void onRowEdit(RowEditEvent<Evento> evento) {
@@ -73,5 +113,39 @@ public class GestionEventos implements Serializable {
 	public void setModalidadesEvento(List<ModalidadesEventos> modalidadesEvento) {
 		this.modalidadesEvento = modalidadesEvento;
 	}
+
+	public Evento getEventoSeleccionado() {
+		return eventoSeleccionado;
+	}
+
+	public void setEventoSeleccionado(Evento eventoSeleccionado) {
+		this.eventoSeleccionado = eventoSeleccionado;
+	}
+
+
+	public List<EstadosEventos> getEstadosEvento() {
+		return estadosEvento;
+	}
+
+
+	public void setEstadosEvento(List<EstadosEventos> estadosEvento) {
+		this.estadosEvento = estadosEvento;
+	}
+
+
+	public List<Tutor> getTutoresSeleccionados() {
+		return tutoresSeleccionados;
+	}
+
+
+	public void setTutoresSeleccionados(List<Tutor> tutoresSeleccionados) {
+		this.tutoresSeleccionados = tutoresSeleccionados;
+	}
+	
+	
+
+
+	
+	
 
 }

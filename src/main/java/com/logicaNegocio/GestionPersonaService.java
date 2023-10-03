@@ -19,6 +19,7 @@ import com.persistencia.dao.ItrDAO;
 import com.persistencia.dao.ModalidadesEventosDAO;
 import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TipoTutorDAO;
+import com.persistencia.dao.TutorDAO;
 import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.entities.*;
 import com.persistencia.exception.ServicesException;
@@ -65,6 +66,8 @@ public class GestionPersonaService implements Serializable {
 	
 	@EJB
 	ModalidadesEventosDAO modalidadEventosDAO;
+	
+	
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -107,6 +110,8 @@ public class GestionPersonaService implements Serializable {
 	public List<Evento>listarEventos()throws Exception{
 		return eventoDAO.obtenerEvento();
 	}
+	
+	
 
 	public Departamento buscarDepartamento(String nombre) {
 		try {
@@ -410,12 +415,12 @@ public class GestionPersonaService implements Serializable {
 			
 			Evento evento = new Evento();
 			evento.setTitulo("Demo");
-			evento.setCreditos(2);
+			evento.setCreditos("2");
 			evento.setFechaInicio(new Timestamp(2023-1900, 10, 7, 9, 0, 0, 0));
 			evento.setFechaFin(new Timestamp(2023-1900, 10, 7, 17, 0, 0, 0));
 			evento.setItr(itrDAO.buscarItrPorId((long)1));
 			evento.setLocalizacion("Demo");
-			evento.setSemestre(4);
+			evento.setSemestre("4");
 			evento.addAnalista((Analista)usuarioDAO.buscarNombre("demo"));
 			evento.addTutor((Tutor)usuarioDAO.buscarNombre("demo.tutor"));
 			evento.setEstado(estadosEventoDAO.buscarNombreEstadoEvento("Futuro"));

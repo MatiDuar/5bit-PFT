@@ -24,6 +24,7 @@ import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Usuario;
 import com.persistencia.entities.ITR;
+import com.persistencia.entities.Tutor;
 
 @Named("dtFilterView")
 @ViewScoped
@@ -37,6 +38,7 @@ public class FilterView implements Serializable {
 	@Inject
 	private GestionPersonaService service;
 
+	// filtros para Usuarios
 	private String carreraSel;
 
 	private String itrSeleccionado;
@@ -44,40 +46,64 @@ public class FilterView implements Serializable {
 	private String tipoUsuarioSeleccionado;
 
 	private String anoIngresoSeleccionado;
-	
+
 	private String estadoSeleccionado;
 
 	private List<Usuario> personas;
 
 	private List<Usuario> filteredPersonas;
-	
+
 	private List<ITR> itrs;
 
 	private List<ITR> filteredItrs;
 
-	
-	private List<Evento> eventos;
-
-	private List<Evento> filteredEventos;
-	
-	
 	private List<FilterMeta> filterBy;
 
 	private boolean globalFilterOnly;
 
 	private int currentYear;
 
+	// filtros Evento
+	private String tipoEventoSelccionado;
+
+	private String estadoEvento;
+	private String itrEventoSelccionado;
+
+	private String modalidadEventoSeleccionada;
+
+	private List<Evento> eventos;
+
+	private List<Evento> filteredEventos;
+	
+	
+	//filtros para tutores
+	
+	
+
+
+
 	@PostConstruct
 	public void init() {
 		globalFilterOnly = true;
 		try {
 			personas = service.listarPersonas();
-			itrs=service.listarITRs();
-			eventos=service.listarEventos();
+			itrs = service.listarITRs();
+			eventos = service.listarEventos();
+			
+			
+			// filtros para Usuario
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
 			anoIngresoSeleccionado = "";
-			estadoSeleccionado= "";
+			estadoSeleccionado = "";
+
+			// filtros para Eventos
+
+			tipoEventoSelccionado = "";
+			modalidadEventoSeleccionada = "";
+			estadoEvento = "";
+			itrEventoSelccionado = "";
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -112,7 +138,7 @@ public class FilterView implements Serializable {
 		if (!persona.getItr().getNombre().equalsIgnoreCase(itrSeleccionado) && !itrSeleccionado.isBlank()) {
 			return false;
 		}
-		
+
 		if (!persona.getClass().toString().toLowerCase().contains(tipoUsuarioSeleccionado)
 				&& !tipoUsuarioSeleccionado.isBlank()) {
 			return false;
@@ -123,20 +149,17 @@ public class FilterView implements Serializable {
 		if (!anoIngresoSeleccionado.isBlank()) {
 			return (((Estudiante) persona).getAnoIngreso() + "").equals(anoIngresoSeleccionado);
 		}
-	
-		
-		if(estadoSeleccionado.equalsIgnoreCase("Sin Validar") && !(persona.getActivo() && !persona.getValidado()) ) {
+
+		if (estadoSeleccionado.equalsIgnoreCase("Sin Validar") && !(persona.getActivo() && !persona.getValidado())) {
 			return false;
 		}
-		
-		if(estadoSeleccionado.equalsIgnoreCase("Eliminado") && persona.getActivo()) {
+
+		if (estadoSeleccionado.equalsIgnoreCase("Eliminado") && persona.getActivo()) {
 			return false;
 		}
-		if(estadoSeleccionado.equalsIgnoreCase("Validados") && !(persona.getValidado() && persona.getActivo())) {
+		if (estadoSeleccionado.equalsIgnoreCase("Validados") && !(persona.getValidado() && persona.getActivo())) {
 			return false;
 		}
-		
-		
 
 		return (persona.getNombre1().toLowerCase().contains(filterText)
 				|| persona.getApellido1().toLowerCase().contains(filterText)
@@ -145,56 +168,55 @@ public class FilterView implements Serializable {
 				|| persona.getLocalidad().toLowerCase().contains(filterText));
 
 	}
-	
+
 	public boolean globalFilterFunctionITR(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		if (LangUtils.isBlank(filterText) ) {
+		if (LangUtils.isBlank(filterText)) {
 			return true;
 		}
 
 		ITR itr = (ITR) value;
-		
+
 		return (itr.getNombre().toLowerCase().contains(filterText)
 				|| itr.getDepartamento().getNombre().toLowerCase().contains(filterText));
 
 	}
-	
-	
+
 	public boolean globalFilterFunctionEventos(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		if (LangUtils.isBlank(filterText) ) {
+		if (LangUtils.isBlank(filterText) && tipoEventoSelccionado.isBlank() && estadoEvento.isBlank()
+				&& itrEventoSelccionado.isBlank() && modalidadEventoSeleccionada.isBlank()) {
 			return true;
 		}
 
-		Evento itr = (Evento) value;
-		
-		return (itr.getTitulo().toLowerCase().contains(filterText));
+		Evento evento = (Evento) value;
+
+		if (!evento.getTipoActividad().getNombre().equalsIgnoreCase(tipoEventoSelccionado)
+				&& !tipoEventoSelccionado.isBlank()) {
+			return false;
+		}
+
+		if (!evento.getEstado().getNombre().equalsIgnoreCase(estadoEvento) && !estadoEvento.isBlank()) {
+			return false;
+		}
+
+		if (!evento.getItr().getNombre().equalsIgnoreCase(itrEventoSelccionado) && !itrEventoSelccionado.isBlank()) {
+			return false;
+		}
+
+		if (!evento.getModalidad().getNombre().equalsIgnoreCase(modalidadEventoSeleccionada)
+				&& !modalidadEventoSeleccionada.isBlank()) {
+			return false;
+		}
+
+		return (evento.getTitulo().toLowerCase().contains(filterText))
+				|| evento.getLocalizacion().toLowerCase().contains(filterText);
 
 	}
 
 	public void toggleGlobalFilter() {
 		setGlobalFilterOnly(!isGlobalFilterOnly());
 	}
-
-//	public boolean esAlumno(Persona p) {
-//		return service.buscarAlumno(p.getId())!=null;
-//	}
-
-	private int getInteger(String string) {
-		try {
-			return Integer.parseInt(string);
-		} catch (NumberFormatException ex) {
-			return 0;
-		}
-	}
-
-//	public void buscarCarrera(Alumno a,String carrera) {
-//		a.setCarrera(service.buscarCarrera(carrera));
-//	}
-//	
-//	public Carrera buscarCarrera(String nombre) {
-//		return service.buscarCarrera(nombre);
-//	}
 
 	public Usuario buscar(long id) {
 		return service.buscarUsuario(id);
@@ -205,28 +227,6 @@ public class FilterView implements Serializable {
 
 		return currentYear - Integer.parseInt(str[0]);
 	}
-
-//	public List<PersonaAlumnoDTO> getPersonas() {
-//		try {
-//			personas=service.listarPersonasDTO();
-//		} catch (Exception e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		return personas;
-//	}
-//
-//	public void setPersonas(List<PersonaAlumnoDTO> personas) {
-//		this.personas = personas;
-//	}
-//
-//	public List<PersonaAlumnoDTO> getFilteredPersonas() {
-//		return filteredPersonas;
-//	}
-//
-//	public void setFilteredPersonas(List<PersonaAlumnoDTO> filteredPersonas) {
-//		this.filteredPersonas = filteredPersonas;
-//	}
 
 	public void setFilterBy(List<FilterMeta> filterBy) {
 		this.filterBy = filterBy;
@@ -276,8 +276,6 @@ public class FilterView implements Serializable {
 		this.filteredPersonas = filteredPersonas;
 	}
 
-	
-	
 	public List<ITR> getItrs() {
 		return itrs;
 	}
@@ -341,5 +339,41 @@ public class FilterView implements Serializable {
 	public void setFilteredEventos(List<Evento> filteredEventos) {
 		this.filteredEventos = filteredEventos;
 	}
+
+	public String getTipoEventoSelccionado() {
+		return tipoEventoSelccionado;
+	}
+
+	public void setTipoEventoSelccionado(String tipoEventoSelccionado) {
+		this.tipoEventoSelccionado = tipoEventoSelccionado;
+	}
+
+	public String getEstadoEvento() {
+		return estadoEvento;
+	}
+
+	public void setEstadoEvento(String estadoEvento) {
+		this.estadoEvento = estadoEvento;
+	}
+
+	public String getItrEventoSelccionado() {
+		return itrEventoSelccionado;
+	}
+
+	public void setItrEventoSelccionado(String itrEventoSelccionado) {
+		this.itrEventoSelccionado = itrEventoSelccionado;
+	}
+
+	public String getModalidadEventoSeleccionada() {
+		return modalidadEventoSeleccionada;
+	}
+
+	public void setModalidadEventoSeleccionada(String modalidadEventoSeleccinada) {
+		this.modalidadEventoSeleccionada = modalidadEventoSeleccinada;
+	}
+
+	
+	
+	
 
 }

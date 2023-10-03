@@ -804,6 +804,12 @@ public class GestionPersona implements Serializable {
 
 		if(viewId.equals("/index.xhtml")  || viewId.equals("/editarPerfil.xhtml")) {
 			bottonesMenu=new LinkedList<>();
+		}else if(viewId.equals("/eventos.xhtml") || viewId.contains("altaEvento.xhtml")) {
+			
+			bottonesMenu=new LinkedList<>();
+			bottonesMenu.add("Listado de Eventos");
+			bottonesMenu.add("Alta Evento");
+			
 		}else{
 			bottonesMenu=new LinkedList<>();
 			bottonesMenu.add("Boton 1");
@@ -812,6 +818,19 @@ public class GestionPersona implements Serializable {
 			bottonesMenu.add("Boton 4");			
 		}
 		return bottonesMenu;
+	}
+	
+	public String getActionBottonesMenu(String boton) {
+		System.out.println(boton);
+		switch(boton) {
+		case "Alta Evento":
+			return "altaEvento.xhtml";
+			
+		case "Listado de Eventos":
+			return "eventos.xhtml";
+		default:
+			return "";		
+		}
 	}
 
 	public void setBottonesMenu(List<String> bottonesMenu) {

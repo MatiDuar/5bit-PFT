@@ -33,35 +33,89 @@
 					listener="#{gestionEventos.onRowCancel}" update="dataTable" />
 
 				<f:facet name="header">
-					<h4>Filtros</h4>
-					<div class="col-12 md:col-2">
-						<br></br>
-						<p:inputText id="globalFilter"
-							onkeyup="PF('eventoTable').filter()" style="width:250px"
-							placeholder="Buscardor global..." />
+
+
+					<div class="grid ui-fluid">
+						<div class="col-12 md:col-2">
+							<br></br>
+							<p:inputText id="globalFilter"
+								onkeyup="PF('eventoTable').filter()" style="width:250px"
+								placeholder="Buscardor global..." />
+						</div>
+
+						<div class="col-12 md:col-2">
+
+							<p:outputLabel>Tipo Evento</p:outputLabel>
+							<p:selectOneMenu id="groupTipoEvento"
+								value="#{dtFilterView.tipoEventoSelccionado}"
+								onchange="PF('eventoTable').filter()">
+								<f:selectItem itemLabel="-" itemValue=" " />
+								<c:forEach var="ta" items="#{gestionEventos.tiposActividades}">
+									<f:selectItem itemLabel="#{ta.nombre}" itemValue="#{ta.nombre}" />
+								</c:forEach>
+
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-12 md:col-2">
+
+
+
+							<p:outputLabel>Estado</p:outputLabel>
+							<p:selectOneMenu id="groupEstado"
+								value="#{dtFilterView.estadoEvento}"
+								onchange="PF('eventoTable').filter()">
+								<f:selectItem itemLabel="-" itemValue=" " />
+								<c:forEach var="es" items="#{gestionEventos.estadosEvento}">
+									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es.nombre}" />
+								</c:forEach>
+
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-12 md:col-2">
+
+							<p:outputLabel>ITR</p:outputLabel>
+							<p:selectOneMenu id="groupItr"
+								value="#{dtFilterView.itrEventoSelccionado}"
+								onchange="PF('eventoTable').filter()">
+
+								<f:selectItem itemLabel="-" itemValue=" " />
+								<c:forEach var="itr" items="#{gestionPersona.itrs}">
+									<f:selectItem itemLabel="#{itr.nombre}"
+										itemValue="#{itr.nombre}" />
+								</c:forEach>
+
+
+							</p:selectOneMenu>
+						</div>
+
+						<div class="col-12 md:col-2">
+
+							<p:outputLabel>Modalidad</p:outputLabel>
+							<p:selectOneMenu id="groupModalidad"
+								value="#{dtFilterView.modalidadEventoSeleccionada}"
+								onchange="PF('eventoTable').filter()">
+
+								<f:selectItem itemLabel="-" itemValue=" " />
+								<c:forEach var="mo" items="#{gestionEventos.modalidadesEvento}">
+									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" />
+								</c:forEach>
+
+
+							</p:selectOneMenu>
+						</div>
+
+
+
+
+
+
+
+
 					</div>
-					<p:panelGrid columns="4" layout="grid">
-						<p:outputLabel value="Tipo Evento"></p:outputLabel>
-						<p:outputLabel value="Estado"></p:outputLabel>
-						<p:outputLabel value="ITR"></p:outputLabel>
-						<p:outputLabel value="Modalidad"></p:outputLabel>
-						<p:selectOneMenu disabled="true" style="width:80%;">
-							<f:selectItem itemLabel="" itemValue="" />
-						</p:selectOneMenu>
-
-						<p:selectOneMenu disabled="true" style="width:80%;">
-							<f:selectItem itemLabel="" itemValue="" />
-						</p:selectOneMenu>
-
-
-						<p:selectOneMenu disabled="true" style="width:80%;">
-							<f:selectItem itemLabel="" itemValue="" />
-						</p:selectOneMenu>
-						<p:selectOneMenu disabled="true" style="width:80%;">
-							<f:selectItem itemLabel="" itemValue="" />
-						</p:selectOneMenu>
-
-					</p:panelGrid>
 				</f:facet>
 
 				<p:column field="titulo" headerText="Titulo"
@@ -122,15 +176,17 @@
 						<f:facet name="input" class="col-10">
 
 							<p:datePicker id="spanish" value="#{evento.fechaInicio}"
-									locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:KK:ss" showTime="true"
-									yearNavigator="true" yearRange="1950:2023" required="true"
-									requiredMessage="Debe ingresar una fecha de nacimiento"
-									validatorMessage="Formato incorrecto de la Fecha" converter="timestampConverter">
+								locale="es" monthNavigator="true" pattern="yyyy-dd-MM HH:mm:ss"
+								showTime="true" yearNavigator="true" yearRange="1950:2023"
+								required="true"
+								requiredMessage="Debe ingresar una fecha de nacimiento"
+								validatorMessage="Formato incorrecto de la Fecha"
+								converter="timestampConverter">
 
 
-								</p:datePicker>
-								<small class="block ui-state-error"><h:message
-										style="color:red;" for="spanish" /></small>
+							</p:datePicker>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="spanish" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -145,15 +201,16 @@
 						<f:facet name="input" class="col-10">
 
 							<p:datePicker id="fechaFin" value="#{evento.fechaFin}"
-									locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:KK:ss" showTime="true"
-									yearNavigator="true" yearRange="1950:2023" required="true"
-									requiredMessage="Debe ingresar una fecha de nacimiento"
-									validatorMessage="Formato incorrecto de la Fecha" converter="timestampConverter">
+								pattern="yyyy-dd-MM HH:mm:ss" showTime="true"
+								yearRange="1950:2023" required="true"
+								requiredMessage="Debe ingresar una fecha de nacimiento"
+								validatorMessage="Formato incorrecto de la Fecha"
+								converter="timestampConverter">
 
 
-								</p:datePicker>
-								<small class="block ui-state-error"><h:message
-										style="color:red;" for="fechaFin" /></small>
+							</p:datePicker>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="fechaFin" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -166,7 +223,7 @@
 								value="#{evento.modalidad.nombre}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
-							<p:selectOneMenu id="groupModalidad"
+							<p:selectOneMenu id="groupModalidadEdit"
 								value="#{evento.modalidad}"
 								validatorMessage="Debe Seleccionar una opcion"
 								converter="omnifaces.SelectItemsConverter">
@@ -178,7 +235,7 @@
 								<f:validateRequired></f:validateRequired>
 							</p:selectOneMenu>
 							<small class="block ui-state-error"><h:message
-									style="color:red;" for="groupModalidad" /></small>
+									style="color:red;" for="groupModalidadEdit" /></small>
 
 						</f:facet>
 					</p:cellEditor>
@@ -192,8 +249,7 @@
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
-							<p:selectOneMenu id="groupITR"
-								value="#{evento.itr}"
+							<p:selectOneMenu id="groupITR" value="#{evento.itr}"
 								validatorMessage="Debe Seleccionar una opcion"
 								converter="omnifaces.SelectItemsConverter">
 								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
@@ -217,7 +273,6 @@
 								value="#{evento.localizacion}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
-
 							<p:inputText
 								style="width:100%;vertical-align: middle; margin-left: .5rem"
 								value="#{evento.localizacion}"
@@ -230,6 +285,32 @@
 							</p:inputText>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="localizacion" /></small>
+
+						</f:facet>
+					</p:cellEditor>
+				</p:column>
+				<p:column headerText="Estado" filterable="false">
+					<p:cellEditor>
+						<f:facet name="output">
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{evento.estado.nombre}" />
+						</f:facet>
+						<f:facet name="input" class="col-10">
+
+
+
+							<p:selectOneMenu id="groupEstadoEvento" value="#{evento.estado}"
+								validatorMessage="Debe Seleccionar una opcion"
+								converter="omnifaces.SelectItemsConverter">
+								<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+								<c:forEach var="es" items="#{gestionEventos.estadosEvento}">
+									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es}" />
+								</c:forEach>
+
+								<f:validateRequired></f:validateRequired>
+							</p:selectOneMenu>
+							<small class="block ui-state-error"><h:message
+									style="color:red;" for="groupEstadoEvento" /></small>
 
 						</f:facet>
 					</p:cellEditor>

@@ -21,6 +21,8 @@ public class DFView {
 	@Inject
 	GestionITR gestionITR;
 	
+
+	
 	
 	  public void viewResponsive() {
 		  
@@ -81,7 +83,25 @@ public class DFView {
 	    }
 	  
 	  
-	  
+		public void viewAsignarTutores() {
+		  
+		  
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("1300px")
+	                .height("80%")
+	                .contentWidth("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("asignarTutores", options, null);
+	    }
 	  
 	  public void closeResponsive() {
 		  PrimeFaces.current().dialog().closeDynamic(null);

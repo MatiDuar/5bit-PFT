@@ -52,11 +52,11 @@ public class Evento implements Serializable {
 	@ManyToOne
 	private ModalidadesEventos modalidad;
 
-	@Column(nullable = true)
-	private int creditos;
+	@Column(nullable = true,length = 2)
+	private String creditos;
 
-	@Column(nullable = true)
-	private int semestre;
+	@Column(nullable = true,length = 2)
+	private String semestre;
 	
 	@Column()
 	private String localizacion;
@@ -70,7 +70,7 @@ public class Evento implements Serializable {
 	private EstadosEventos estado;
 
 	@JoinTable(name = "RESP_TUTOR_EVENTO", joinColumns = @JoinColumn(name = "FK_EVENTO", nullable = false), 
-			inverseJoinColumns = @JoinColumn(name = "FK_TUTOR_EVENTO", nullable = false))
+			inverseJoinColumns = @JoinColumn(name = "FK_TUTOR_EVENTO", nullable = true))
 	@ManyToMany( fetch = FetchType.EAGER)
 
 	private List<Tutor> tutores;
@@ -80,12 +80,12 @@ public class Evento implements Serializable {
 			this.tutores = new ArrayList<>();
 		}
 
-		this.tutores.add(tutor);
+		this.tutores.add(tutor); 
 	}
 
 	@JoinTable(name = "ANALIST_GEST_EVENT", 
 			joinColumns = @JoinColumn(name = "FK_EVENTO_GESTION", nullable = false), 
-			inverseJoinColumns =@JoinColumn(name = "FK_ANALISTA_EVENTO", nullable = false))
+			inverseJoinColumns =@JoinColumn(name = "FK_ANALISTA_EVENTO", nullable = true))
 	@ManyToMany( fetch = FetchType.EAGER)
 
 	private Set<Analista> analistas;
@@ -174,24 +174,34 @@ public class Evento implements Serializable {
 		this.tipoActividad = tipoActividad;
 	}
 
-	public int getCreditos() {
+	
+
+	
+	
+	public String getCreditos() {
 		return creditos;
 	}
 
-	public void setCreditos(int creditos) {
+
+
+	public void setCreditos(String creditos) {
 		this.creditos = creditos;
 	}
 
-	public int getSemestre() {
+
+
+	public String getSemestre() {
 		return semestre;
 	}
 
-	public void setSemestre(int semestre) {
+
+
+	public void setSemestre(String semestre) {
 		this.semestre = semestre;
 	}
 
-	
-	
+
+
 	public ITR getItr() {
 		return itr;
 	}
