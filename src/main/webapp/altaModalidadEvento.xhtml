@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:o="http://omnifaces.org/ui"
+	xmlns:of="http://omnifaces.org/functions">
+
+
+
+<h:head>
+	<link type="text/css" rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
+	<title>Agregar Modalidad Evento</title>
+</h:head>
+
+<h:body>
+
+	<div class="box">
+		<div style="padding: 20px;">
+			<h:form>
+				<p:growl id="messages" life="4000" closable="true" />
+
+
+				<p:inputText id="nombreModalidadEvento"
+					value="#{gestionMantenimientoEvento.modalidadEventoSeleccionado.nombre}" styleClass="mb-3"
+					placeholder="Nombre de Modalidad" required="true"
+					requiredMessage="El campo no puede estar vacio" />
+				<small class="block ui-state-error"><h:message
+						style="color:red;" for="nombreModalidadEvento" /></small>
+
+
+			
+
+				<div style="margin-top:20px;">
+					<div class="flex card-container">
+						<div
+							class="flex-none flex align-items-center justify-content-center">
+							<p:commandButton value="Cancelar"
+								styleClass="ui-button-raised  ui-button-flat" action="#{dfView.closeResponsive}"
+								 immediate="true" />
+						</div>
+
+						<div
+							class="flex-grow-1 flex align-items-center justify-content-center "></div>
+						<div
+							class="flex-none flex align-items-center justify-content-center">
+							<p:commandButton value="Guardar" action="#{gestionMantenimientoEvento.crearModalidadEvento}"
+								 />
+						</div>
+					</div>
+				</div>
+			</h:form>
+		</div>
+
+	</div>
+</h:body>
+</html>

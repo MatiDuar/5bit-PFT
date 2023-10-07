@@ -32,7 +32,7 @@ public class ModalidadesEventosDAO {
    		
    		try {
    			
-   			em.persist(modalidad);
+   			em.merge(modalidad);
    			em.flush();		
    			
    		}catch(PersistenceException e) {

@@ -63,6 +63,45 @@ public class DFView {
 	        PrimeFaces.current().dialog().openDynamic("mantenimientoITR", options, null);
 	    }
 	  
+	  public void viewMantenimientoEstadosEventos() {
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("1100px")
+	                .height("700px")
+	                .contentWidth("100%")
+	                .contentHeight("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("mantenimientoEstadoEventos", options, null);
+	    }
+	  public void viewMantenimientoModalidadEventos() {
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("1100px")
+	                .height("700px")
+	                .contentWidth("100%")
+	                .contentHeight("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("mantenimientoModalidadEvento", options, null);
+	    }
+	  
 	  public void viewEstadoUsuario() {
 	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
 	                .modal(true)
@@ -102,6 +141,45 @@ public class DFView {
 
 	        PrimeFaces.current().dialog().openDynamic("asignarTutores", options, null);
 	    }
+		
+		 public void viewAltaEstadoEvento() {
+			  
+			  
+		        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+		                .modal(true)
+		                .fitViewport(true)
+		                .responsive(true)
+		                .width("700px")
+		                .contentWidth("100%")
+		                .resizeObserver(true)
+		                .resizeObserverCenter(true)
+		                .resizable(false)
+		                .styleClass("max-w-screen")
+		                .iframeStyleClass("max-w-screen")
+		                .build();
+
+		        PrimeFaces.current().dialog().openDynamic("altaEstadoEvento", options, null);
+		    }
+		 
+		 public void viewAltaModalidadEvento() {
+			  
+			  
+		        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+		                .modal(true)
+		                .fitViewport(true)
+		                .responsive(true)
+		                .width("700px")
+		                .contentWidth("100%")
+		                .resizeObserver(true)
+		                .resizeObserverCenter(true)
+		                .resizable(false)
+		                .styleClass("max-w-screen")
+		                .iframeStyleClass("max-w-screen")
+		                .build();
+
+		        PrimeFaces.current().dialog().openDynamic("altaModalidadEvento", options, null);
+		    }
+	  
 	  
 	  public void closeResponsive() {
 		  PrimeFaces.current().dialog().closeDynamic(null);

@@ -2,8 +2,10 @@ package com.beans;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.inject.Alternative;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -16,10 +18,12 @@ import org.primefaces.model.DualListModel;
 import com.logicaNegocio.GestionEventoService;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Tutor;
+import com.persistencia.exception.ServicesException;
 
 import java.util.List;
 import java.util.ArrayList;
 import java.util.LinkedList;
+
 
 @Named
 @RequestScoped
@@ -34,26 +38,31 @@ public class PickListView {
 	@Inject
 	private DFView dfView;
 
+	public static PickListView instance;
+
 	private DualListModel<Tutor> tutores;
 
 	private Evento eventoSeleccionado;
 
 	@PostConstruct
 	public void init() {
+		List<Tutor> tutoresSource=new ArrayList<>();
+		List<Tutor> tutoresTarget = new ArrayList<>();
+		tutores = new DualListModel<>(tutoresSource, tutoresTarget);
+		instance=this;
 		tutores = new DualListModel<>();
-		if(eventoSeleccionado==null) {
-			eventoSeleccionado=new Evento();
+		if (eventoSeleccionado == null) {
+			eventoSeleccionado = new Evento();
 		}
-		List<Tutor> tutoresSource;
-		List<Tutor> tutoresTarget=new LinkedList<>();
+		
 		try {
-			tutoresSource = service.listarTutores();
-			if (eventoSeleccionado.getTutores()!=null) {
-				System.out.println(eventoSeleccionado.getTutores());
-				tutoresTarget = eventoSeleccionado.getTutores();
+			
+			tutores.setSource(new ArrayList<>(service.listarTutores()));
+			if (eventoSeleccionado.getTutores() != null) {
+				tutores.setTarget(eventoSeleccionado.getTutores());
 			}
 
-			tutores = new DualListModel<>(tutoresSource, tutoresTarget);
+			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -105,10 +114,25 @@ public class PickListView {
 	}
 
 	public void guardarCambios() {
+		System.out.println(tutores.getTarget() + " tutores Get");
 		eventoSeleccionado.setTutores(tutores.getTarget());
 		gestionEventos.setTutoresSeleccionados(tutores.getTarget());
+		System.out.println(gestionEventos.getTutoresSeleccionados() + " tutores gestion de eventos");
+		System.out.println("///////////");
+	
+
 		dfView.closeResponsive();
 
+	}
+
+	public Tutor buscarTutorPorId(long id) {
+		try {
+			return service.buscarTutorPorId(id);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	public Evento getEventoSeleccionado() {
@@ -117,6 +141,14 @@ public class PickListView {
 
 	public void setEventoSeleccionado(Evento eventoSeleccionado) {
 		this.eventoSeleccionado = eventoSeleccionado;
+	}
+
+	public static PickListView getInstance() {
+		return instance;
+	}
+
+	public static void setInstance(PickListView instance) {
+		PickListView.instance = instance;
 	}
 
 }

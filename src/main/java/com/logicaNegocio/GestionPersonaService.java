@@ -2,6 +2,7 @@ package com.logicaNegocio;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.ArrayList;
@@ -13,10 +14,12 @@ import javax.ejb.Stateless;
 import com.persistencia.dao.AreaTutorDAO;
 import com.persistencia.dao.CarreraDAO;
 import com.persistencia.dao.DepartamentoDAO;
+import com.persistencia.dao.EstadoDAO;
 import com.persistencia.dao.EstadosEventosDAO;
 import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ItrDAO;
 import com.persistencia.dao.ModalidadesEventosDAO;
+import com.persistencia.dao.ReclamoDAO;
 import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.TutorDAO;
@@ -56,18 +59,27 @@ public class GestionPersonaService implements Serializable {
 
 	@EJB
 	DepartamentoDAO departamentoDAO;
-	
-	
+
 	@EJB
 	EstadosEventosDAO estadosEventoDAO;
-	
+
 	@EJB
 	TipoActividadDAO tipoActividadDAO;
-	
+
 	@EJB
 	ModalidadesEventosDAO modalidadEventosDAO;
+
+	@EJB
+	TutorDAO tutorDAO;
 	
+	@EJB
+	ReclamoDAO reclamoDAO;
 	
+	@EJB
+	EstadoDAO estadoDAO;
+	
+	@EJB
+	EstadosEventosDAO estadosEventosDAO;
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -95,7 +107,19 @@ public class GestionPersonaService implements Serializable {
 
 		return listaTipoTutor;
 	}
+	
+	public List<ModalidadesEventos> listarModalidadesEventos() throws Exception {
 
+		
+
+		return modalidadEventosDAO.obtenerModalidadesEventos();
+	}
+
+
+	
+	public List<EstadosEventos> listarEstadosEventos() throws Exception{
+		return estadosEventosDAO.obtenerEstadosEventos();
+	}
 	public List<AreaTutor> listarAreaTutor() throws Exception {
 		List<AreaTutor> listaAreaTutor = areaTutorDAO.obtenerAreaTutor();
 
@@ -106,12 +130,10 @@ public class GestionPersonaService implements Serializable {
 		List<Departamento> listaDepartamento = departamentoDAO.obtenerDepartamento();
 		return listaDepartamento;
 	}
-	
-	public List<Evento>listarEventos()throws Exception{
+
+	public List<Evento> listarEventos() throws Exception {
 		return eventoDAO.obtenerEvento();
 	}
-	
-	
 
 	public Departamento buscarDepartamento(String nombre) {
 		try {
@@ -130,6 +152,15 @@ public class GestionPersonaService implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return null;
+		}
+	}
+
+	public void agregarDep(Departamento dep) {
+		try {
+			departamentoDAO.crearDepartamento(dep.getNombre(), dep.getActivo());
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -292,8 +323,8 @@ public class GestionPersonaService implements Serializable {
 			p.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
 
 			usuarioDAO.crearUsuario(p);
-			
-			Tutor t=new Tutor();
+
+			Tutor t = new Tutor();
 			t.setActivo(true);
 			t.setDocumento("50329199");
 			t.setApellido1("demo");
@@ -308,17 +339,34 @@ public class GestionPersonaService implements Serializable {
 			t.setTelefono("09999999");
 			t.setValidado(true);
 			t.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
-			t.setTipoTutor(tipoTutorDAO.buscarTipoTutorPorId((long)1));
-			t.setAreaTutor(areaTutorDAO.buscarAreaTutorPorId((long)1));
+			t.setTipoTutor(tipoTutorDAO.buscarTipoTutorPorId((long) 1));
+			t.setAreaTutor(areaTutorDAO.buscarAreaTutorPorId((long) 1));
 
 			usuarioDAO.crearUsuario(t);
-			
-			
+
+			Estudiante e = new Estudiante();
+			e.setActivo(true);
+			e.setDocumento("50329190");
+			e.setApellido1("demo");
+			e.setNombre1("demo");
+			e.setNombreUsuario("demo.estudiante");
+			e.setContrasena("demo");
+			e.setDepartamento(depDAO.obtenerDepPorNombre("Durazno"));
+			e.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
+			e.setLocalidad("demo");
+			e.setMail("demo@demo.com");
+			e.setMailInstitucional("demo@demo.com");
+			e.setTelefono("09999999");
+			e.setValidado(true);
+			e.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
+			e.setAnoIngreso(2022);
+			usuarioDAO.crearUsuario(e);
+
 			initEventos();
+			initReclamo();
 		} catch (ServicesException e) {
 			e.printStackTrace();
 		}
-
 
 	}
 
@@ -381,56 +429,79 @@ public class GestionPersonaService implements Serializable {
 
 	public void initEventos() {
 		try {
-			EstadosEventos ee=new EstadosEventos();
+			EstadosEventos ee = new EstadosEventos();
 			ee.setActivo(true);
 			ee.setNombre("Futuro");
 			estadosEventoDAO.crearEstadoEvento(ee);
-			
-			
-			
-			ModalidadesEventos md=new ModalidadesEventos();
-			
+
+			ModalidadesEventos md = new ModalidadesEventos();
+
 			md.setActivo(true);
 			md.setNombre("Presencial");
 			modalidadEventosDAO.crearModalidadEvento(md);
-			
-			ModalidadesEventos md1=new ModalidadesEventos();
+
+			ModalidadesEventos md1 = new ModalidadesEventos();
 			md1.setActivo(true);
 			md1.setNombre("Semipresencial");
 			modalidadEventosDAO.crearModalidadEvento(md1);
-			
-			ModalidadesEventos md2=new ModalidadesEventos();
+
+			ModalidadesEventos md2 = new ModalidadesEventos();
 			md2.setActivo(true);
 			md2.setNombre("Virtual");
 			modalidadEventosDAO.crearModalidadEvento(md2);
 
 			tipoActividadDAO.crearTipoActividad("Examen", true, true);
-			
+
 			tipoActividadDAO.crearTipoActividad("Jornada presencial", true, false);
-			
+
 			tipoActividadDAO.crearTipoActividad("Prueba final", true, true);
 
 			tipoActividadDAO.crearTipoActividad("Defensa de proyecto", true, true);
 
-			
 			Evento evento = new Evento();
 			evento.setTitulo("Demo");
 			evento.setCreditos("2");
-			evento.setFechaInicio(new Timestamp(2023-1900, 10, 7, 9, 0, 0, 0));
-			evento.setFechaFin(new Timestamp(2023-1900, 10, 7, 17, 0, 0, 0));
-			evento.setItr(itrDAO.buscarItrPorId((long)1));
+			evento.setFechaInicio(new Timestamp(2023 - 1900, 10, 7, 9, 0, 0, 0));
+			evento.setFechaFin(new Timestamp(2023 - 1900, 10, 7, 17, 0, 0, 0));
+			evento.setItr(itrDAO.buscarItrPorId((long) 1));
 			evento.setLocalizacion("Demo");
 			evento.setSemestre("4");
-			evento.addAnalista((Analista)usuarioDAO.buscarNombre("demo"));
-			evento.addTutor((Tutor)usuarioDAO.buscarNombre("demo.tutor"));
+			evento.addAnalista((Analista) usuarioDAO.buscarNombre("demo"));
+			evento.addTutor((Tutor) usuarioDAO.buscarNombre("demo.tutor"));
 			evento.setEstado(estadosEventoDAO.buscarNombreEstadoEvento("Futuro"));
-			evento.setTipoActividad(tipoActividadDAO.buscarTipoActividadPorId((long)1));
-			evento.setModalidad(modalidadEventosDAO.buscarModalidadEventoPorId((long)1));
+			evento.setTipoActividad(tipoActividadDAO.buscarTipoActividadPorId((long) 1));
+			evento.setModalidad(modalidadEventosDAO.buscarModalidadEventoPorId((long) 1));
 			eventoDAO.crearEvento(evento);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	public void initReclamo() {
+		Reclamo reclamo = new Reclamo();
+		Estado estado=new Estado();
+		estado.setActivo(true);
+		estado.setNombre("demo");
+		
+		try {
+			estadoDAO.crearEstado(estado);
+
+			
+			reclamo.setDetalle("demo");
+			reclamo.setFechaHora(new Timestamp(2022, 7, 20, 15, 0, 0, 0));
+
+			reclamo.setEvento(eventoDAO.buscarEventoPorId((long) 1));
+			reclamo.setEstudiante((Estudiante) usuarioDAO.buscarNombre("demo.estudiante"));
+			reclamo.setEstado(estadoDAO.buscarEstadoPorId((long)1));
+			
+			reclamoDAO.crearReclamo(reclamo);
+			
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 //	private void initCarreras() {

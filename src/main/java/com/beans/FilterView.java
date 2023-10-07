@@ -20,10 +20,12 @@ import org.primefaces.util.LangUtils;
 import com.logicaNegocio.GestionPersonaService;
 
 import com.persistencia.entities.Carrera;
+import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Usuario;
 import com.persistencia.entities.ITR;
+import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.Tutor;
 
 @Named("dtFilterView")
@@ -74,13 +76,20 @@ public class FilterView implements Serializable {
 	private List<Evento> eventos;
 
 	private List<Evento> filteredEventos;
-	
-	
-	//filtros para tutores
-	
-	
 
+	// filtros Estado Evento
 
+	private List<EstadosEventos> estadoEventos;
+
+	private List<EstadosEventos> filteredestadoEventos;
+
+	// filtros Modalidades Evento
+
+	private List<ModalidadesEventos> modalidadEventos;
+
+	private List<ModalidadesEventos> filteredModalidadEventos;
+
+	// filtros para tutores
 
 	@PostConstruct
 	public void init() {
@@ -89,8 +98,9 @@ public class FilterView implements Serializable {
 			personas = service.listarPersonas();
 			itrs = service.listarITRs();
 			eventos = service.listarEventos();
-			
-			
+			estadoEventos = service.listarEstadosEventos();
+			modalidadEventos=service.listarModalidadesEventos();
+
 			// filtros para Usuario
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
@@ -212,6 +222,49 @@ public class FilterView implements Serializable {
 		return (evento.getTitulo().toLowerCase().contains(filterText))
 				|| evento.getLocalizacion().toLowerCase().contains(filterText);
 
+	}
+
+	public boolean globalFilterFunctionEstadoEventos(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText)) {
+			return true;
+		}
+
+		EstadosEventos es = (EstadosEventos) value;
+
+		return (es.getNombre().toLowerCase().contains(filterText));
+
+	}
+	
+	public boolean globalFilterFunctionModalidadEventos(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText)) {
+			return true;
+		}
+
+		ModalidadesEventos me = (ModalidadesEventos) value;
+
+		return (me.getNombre().toLowerCase().contains(filterText));
+
+	}
+	
+	
+	public void updateModalidadEvento() {
+		try {
+			modalidadEventos=service.listarModalidadesEventos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateEstadoEvento() {
+		try {
+			estadoEventos=service.listarEstadosEventos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void toggleGlobalFilter() {
@@ -372,8 +425,38 @@ public class FilterView implements Serializable {
 		this.modalidadEventoSeleccionada = modalidadEventoSeleccinada;
 	}
 
-	
-	
+	public List<EstadosEventos> getEstadoEventos() {
+		return estadoEventos;
+	}
+
+	public void setEstadoEventos(List<EstadosEventos> estadoEventos) {
+		this.estadoEventos = estadoEventos;
+	}
+
+	public List<EstadosEventos> getFilteredestadoEventos() {
+		return filteredestadoEventos;
+	}
+
+	public void setFilteredestadoEventos(List<EstadosEventos> filteredestadoEventos) {
+		this.filteredestadoEventos = filteredestadoEventos;
+	}
+
+	public List<ModalidadesEventos> getModalidadEventos() {
+		return modalidadEventos;
+	}
+
+	public void setModalidadEventos(List<ModalidadesEventos> modalidadEventos) {
+		this.modalidadEventos = modalidadEventos;
+	}
+
+	public List<ModalidadesEventos> getFilteredModalidadEventos() {
+		return filteredModalidadEventos;
+	}
+
+	public void setFilteredModalidadEventos(List<ModalidadesEventos> filteredModalidadEventos) {
+		this.filteredModalidadEventos = filteredModalidadEventos;
+	}
+
 	
 
 }

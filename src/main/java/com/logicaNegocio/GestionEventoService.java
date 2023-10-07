@@ -78,6 +78,10 @@ public class GestionEventoService {
 			return null;
 		}
 	}
+	
+	public Tutor buscarTutorPorId(Long id) throws ServicesException {
+		return tutorDAO.buscarTutorPorId(id);
+	}
 
 	public List<EstadosEventos> listarEstadosEventos() {
 		try {

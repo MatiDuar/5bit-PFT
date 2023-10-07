@@ -9,6 +9,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -29,6 +30,7 @@ import com.persistencia.entities.ITR;
 import com.persistencia.entities.TipoTutor;
 import com.persistencia.entities.Tutor;
 import com.persistencia.entities.Usuario;
+import com.persistencia.exception.ServicesException;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -49,6 +51,8 @@ public class GestionPersona implements Serializable {
 	
 	@Inject
 	LoginBeanJWT jwt;
+	
+   
 
 //	private List<Alumno> personasMod;
 	private Usuario usuarioLogeado;
@@ -180,11 +184,6 @@ public class GestionPersona implements Serializable {
 		}
 	}
 	
-//	public String verificarUsuario() {
-//		
-//		persistenciaBean.verificarUsuario(personaSeleccionada.getNombreUsuario(), personaSeleccionada.getContrasena());
-//		return "index.xhtml";
-//	}
 
 	/**
 	 * este metodo se encarga de crear una persona en la base de datos
@@ -648,14 +647,7 @@ public class GestionPersona implements Serializable {
 		this.toRegistro = toRegistro;
 	}
 
-//	public Persona getPersonaLogeada() {
-//		return personaLogeada;
-//	}
-//
-//	public void setPersonaLogeada(Persona personaLogeada) {
-//		this.personaLogeada = personaLogeada;
-//	}
-//
+
 	public Usuario getPersonaSeleccionada() {
 		return personaSeleccionada;
 	}
@@ -679,23 +671,6 @@ public class GestionPersona implements Serializable {
 	public void setAlumno(boolean isAlumno) {
 		this.isAlumno = isAlumno;
 	}
-
-//	public Alumno getAlumnoSeleccionado() {
-//		return alumnoSeleccionado;
-//	}
-//
-//	public void setAlumnoSeleccionado(Alumno alumnoSeleccionado) {
-//		this.alumnoSeleccionado = alumnoSeleccionado;
-//	}
-//
-//	public String getCarreraSeleccionada() {
-//		return carreraSeleccionada;
-//	}
-//
-//	public void setCarreraSeleccionada(String carreraSeleccionada) {
-//		alumnoSeleccionado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionada));
-//		this.carreraSeleccionada = carreraSeleccionada;
-//	}
 
 	public List<ITR> getItrs() {
 		return itrs;
@@ -723,36 +698,6 @@ public class GestionPersona implements Serializable {
 
 		this.fechaNacLog = fechaNacLog;
 	}
-//
-//	public String getCarreraSeleccionadaLog() {
-//		carreraSeleccionadaLog = alumnoLogeado.getCarrera().getNombre();
-//		return carreraSeleccionadaLog;
-//	}
-//
-//	public void setCarreraSeleccionadaLog(String carreraSeleccionadaLog) {
-//		alumnoLogeado.setCarrera(persistenciaBean.buscarCarrera(carreraSeleccionadaLog));
-//		this.carreraSeleccionadaLog = carreraSeleccionadaLog;
-//	}
-//
-//	public String getItrSeleccionadoLog() {
-//		itrSeleccionadoLog = alumnoLogeado.getItr().getNombre();
-//		return itrSeleccionadoLog;
-//	}
-//
-//	public void setItrSeleccionadoLog(String itrSeleccionadoLog) {
-//
-//		alumnoLogeado.setItr(persistenciaBean.buscarITR(itrSeleccionadoLog));
-//
-//		this.itrSeleccionadoLog = itrSeleccionadoLog;
-//	}
-//
-//	public Alumno getAlumnoLogeado() {
-//		return alumnoLogeado;
-//	}
-//
-//	public void setAlumnoLogeado(Alumno alumnoLogeada) {
-//		this.alumnoLogeado = alumnoLogeada;
-//	}
 
 	public String getContrasenaModificar() {
 		return contrasenaModificar;
@@ -809,6 +754,8 @@ public class GestionPersona implements Serializable {
 			bottonesMenu=new LinkedList<>();
 			bottonesMenu.add("Listado de Eventos");
 			bottonesMenu.add("Alta Evento");
+			bottonesMenu.add("Mantenimiento Estados");
+			bottonesMenu.add("Mantenimiento Modalidades");
 			
 		}else{
 			bottonesMenu=new LinkedList<>();
@@ -821,13 +768,19 @@ public class GestionPersona implements Serializable {
 	}
 	
 	public String getActionBottonesMenu(String boton) {
-		System.out.println(boton);
+		
 		switch(boton) {
 		case "Alta Evento":
 			return "altaEvento.xhtml";
 			
 		case "Listado de Eventos":
 			return "eventos.xhtml";
+		case "Mantenimiento Estados":
+			dfView.viewMantenimientoEstadosEventos();
+			return "";
+		case "Mantenimiento Modalidades":
+			dfView.viewMantenimientoModalidadEventos();
+			return "";
 		default:
 			return "";		
 		}
@@ -971,6 +924,7 @@ public class GestionPersona implements Serializable {
 	public void setUsuarioModificar(Usuario usuarioModificar) {
 		this.usuarioModificar = usuarioModificar;
 	}
+
 
 	
 	

@@ -31,13 +31,12 @@
 
 
 				<p:pickList id="pojoPickList" value="#{pickListView.tutores}"
-					var="tutores" itemValue="#{tutores}"
-					itemLabel="#{pickListView.tutorToString(tutores)}"
+					var="tutores" itemValue="#{tutores}" itemLabel="#{pickListView.tutorToString(tutores)}"
 					showSourceFilter="true" showTargetFilter="true"
 					sourceFilterPlaceholder="Filter available countries"
 					targetFilterPlaceholder="Filter starting countries"
-					filterMatchMode="contains" converter="#{tutorConverter}"
-					responsive="true">
+					filterMatchMode="contains" converter="tutorConverter" responsive="true">
+				
 
 					<f:facet name="sourceCaption">
 						<h4>Asignados</h4>
@@ -79,14 +78,7 @@
 
 
 
-					<p:ajax event="transfer" listener="#{pickListView.onTransfer}"
-						update="msg" />
-					<p:ajax event="select" listener="#{pickListView.onSelect}"
-						update="msg" />
-					<p:ajax event="unselect" listener="#{pickListView.onUnselect}"
-						update="msg" />
-					<p:ajax event="reorder" listener="#{pickListView.onReorder}"
-						update="msg" />
+					
 
 					<p:column field="nombre1" headerText="Nombre">
 						<div class="flex align-items-center">
@@ -117,7 +109,7 @@
 					</p:column>
 				</p:pickList>
 				<div>
-					<div class="flex card-container" style="margin-top:20px;">
+					<div class="flex card-container" style="margin-top: 20px;">
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 
@@ -128,7 +120,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar"
-								action="#{pickListView.guardarCambios}"  />
+								action="#{pickListView.guardarCambios}" />
 						</div>
 
 

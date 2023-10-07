@@ -28,27 +28,44 @@
 		<servlet-name>Faces Servlet</servlet-name>
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
-<!-- #####################	JWT ##############################-->
+
+
+	<!-- ##################### JWT ############################## -->
 	<filter>
-	    <filter-name>JWTFilter</filter-name>
-	    <filter-class>com.beans.JWTFilter</filter-class>
+		<filter-name>JWTFilter</filter-name>
+		<filter-class>com.beans.JWTFilter</filter-class>
 	</filter>
-<!-- Paginas en las que se aplica el filtro del JWT  -->
+	<!-- Paginas en las que se aplica el filtro del JWT -->
 	<filter-mapping>
-	    <filter-name>JWTFilter</filter-name>
-	    <url-pattern>index.xhtml</url-pattern>
+		<filter-name>JWTFilter</filter-name>
+		<url-pattern>index.xhtml</url-pattern>
 	</filter-mapping>
 	<filter-mapping>
-	    <filter-name>JWTFilter</filter-name>
-	    <url-pattern>listarPersonas.xhtml</url-pattern>
+		<filter-name>JWTFilter</filter-name>
+		<url-pattern>listarPersonas.xhtml</url-pattern>
 	</filter-mapping>
-<!-- ##################### Fin JWT ##############################-->
+	<!-- ##################### Fin JWT ############################## -->
+	<!-- ##################### Dependencias para Rest ############################## -->
 
 	<context-param>
-	<param-name>primefaces.THEME</param-name>
-	<param-value>saga</param-value>
+		<param-name>resteasy.scan</param-name>
+		<param-value>true</param-value>
 	</context-param>
-	
-	
-	
+
+	<context-param>
+		<param-name>resteasy.servlet.mapping.prefix</param-name>
+		<param-value>/rest</param-value>
+	</context-param>
+	<listener>
+		<listener-class>org.jboss.resteasy.plugins.server.servlet.ResteasyBootstrap</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<servlet-class>org.jboss.resteasy.plugins.server.servlet.HttpServletDispatcher</servlet-class>
+	</servlet>
+
+	<servlet-mapping>
+		<servlet-name>resteasy-servlet</servlet-name>
+		<url-pattern>/rest/*</url-pattern>
+	</servlet-mapping>
 </web-app>

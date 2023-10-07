@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -18,6 +19,7 @@ import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.TipoActividad;
 import com.persistencia.entities.Tutor;
+import com.persistencia.exception.ServicesException;
 
 @Named(value = "gestionEventos") // JEE8
 @SessionScoped // JEE8
@@ -33,6 +35,9 @@ public class GestionEventos implements Serializable {
 	
 	@Inject
 	PickListView pickListView;
+	
+	
+	
 	
 	private Evento eventoSeleccionado;
 
@@ -59,17 +64,26 @@ public class GestionEventos implements Serializable {
 		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
 		estadosEvento = persistenciaBean.listarEstadosEventos();
 		eventoSeleccionado=new Evento();
-		tutoresSeleccionados=new LinkedList<>();
-		
-		
-				
+		tutoresSeleccionados=new LinkedList<>();		
 	
 	}
+	
+	
 	public void asignarTutores() {
 		pickListView.setEventoSeleccionado(eventoSeleccionado);
 		dfView.viewAsignarTutores();
 	}
 	
+	
+	public Tutor buscarTutorPorId(long id) {
+		try {
+			return persistenciaBean.buscarTutorPorId(id);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public void altaEvento() {
 		
@@ -88,6 +102,12 @@ public class GestionEventos implements Serializable {
 
 	public void onRowCancel(RowEditEvent<Evento> evento) {
 
+	}
+	
+	public void updateListas() {
+		eventos=persistenciaBean.listarEventos();
+		modalidadesEvento=persistenciaBean.listarModadlidadesEvento();
+		estadosEvento=persistenciaBean.listarEstadosEventos();
 	}
 
 	public List<Evento> getEventos() {
@@ -141,6 +161,7 @@ public class GestionEventos implements Serializable {
 	public void setTutoresSeleccionados(List<Tutor> tutoresSeleccionados) {
 		this.tutoresSeleccionados = tutoresSeleccionados;
 	}
+	
 	
 	
 
