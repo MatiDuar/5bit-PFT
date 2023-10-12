@@ -6,13 +6,19 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.persistencia.dao.ConvocatoriaAsistenciaDAO;
+import com.persistencia.dao.EstadoAsistenciaDAO;
 import com.persistencia.dao.EstadosEventosDAO;
+import com.persistencia.dao.EstudianteDAO;
 import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ModalidadesEventosDAO;
 import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TutorDAO;
 import com.persistencia.dao.UsuarioDAO;
+import com.persistencia.entities.ConvocatoriaAsistencia;
+import com.persistencia.entities.EstadoAsistencia;
 import com.persistencia.entities.EstadosEventos;
+import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.TipoActividad;
@@ -41,7 +47,16 @@ public class GestionEventoService {
 	
 	@EJB
 	TutorDAO tutorDAO;
+	
+	@EJB
+	EstudianteDAO estudianteDAO;
+	
+	@EJB
+	EstadoAsistenciaDAO estadoAsistenciaDAO;
 
+	@EJB
+	ConvocatoriaAsistenciaDAO convocatoriaAsistenciaDAO;
+	
 	public void crearEvento(Evento evento) {
 		try {
 			eventoDAO.crearEvento(evento);
@@ -82,10 +97,24 @@ public class GestionEventoService {
 	public Tutor buscarTutorPorId(Long id) throws ServicesException {
 		return tutorDAO.buscarTutorPorId(id);
 	}
+	
+	public Estudiante buscarEstudiantePorId(Long id) throws ServicesException {
+		return estudianteDAO.buscarEstudiantePorId(id);
+	}
 
 	public List<EstadosEventos> listarEstadosEventos() {
 		try {
 			return estadosEventosDAO.obtenerEstadosEventos();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<Estudiante> listarEstudiantes() {
+		try {
+			return estudianteDAO.obtenerEstudiantes();
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -115,5 +144,13 @@ public class GestionEventoService {
 	
 	public List<Tutor>listarTutores()throws Exception{
 		return tutorDAO.obtenerTutor();
+	}
+	
+	public EstadoAsistencia buscarEstadoAsistenciaPorNombre(String nombre) throws ServicesException {
+		return estadoAsistenciaDAO.obtenerPorNombre(nombre);
+	}
+	
+	public void crearConvocatoriaAsistencia(ConvocatoriaAsistencia ca) throws ServicesException {
+		convocatoriaAsistenciaDAO.crear(ca);
 	}
 }

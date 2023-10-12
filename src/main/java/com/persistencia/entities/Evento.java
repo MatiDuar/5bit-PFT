@@ -239,7 +239,7 @@ public class Evento implements Serializable {
 	@Override
 	public String toString() {
 		return "Evento [id=" + id + ", FechaInicio=" + FechaInicio + ", FechaFin=" + FechaFin + ", titulo=" + titulo
-				+ ", tipoActividad=" + tipoActividad + ", creditos=" + creditos + ", semestre=" + semestre + "]";
+				+ ", tipoActividad=" + tipoActividad + ", creditos=" + creditos + ", semestre=" + semestre + "tutores:"+tutores+"]";
 	}
 
 }

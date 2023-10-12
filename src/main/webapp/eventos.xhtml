@@ -317,7 +317,13 @@
 				</p:column>
 
 				<p:column headerText="Tutores encargados" filterable="false">
-
+					<p:commandButton value="Tutores"
+						 action="#{gestionEventos.tutoresAsignadosMod(evento)}"/>
+				</p:column>
+				
+				<p:column headerText="Convocatoria" filterable="false">
+					<p:commandButton value="convocatoria"
+						 action="#{gestionEventos.convocatoriaEvento(evento)}"/>
 				</p:column>
 
 				<p:column style="width:6rem;" headerText="Editar">

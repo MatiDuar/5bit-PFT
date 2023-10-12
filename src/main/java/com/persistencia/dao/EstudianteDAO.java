@@ -10,6 +10,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import com.persistencia.entities.Estudiante;
+import com.persistencia.entities.Tutor;
 import com.persistencia.exception.ServicesException;
 
 
@@ -68,5 +69,18 @@ public class EstudianteDAO {
 			 
 		}
 	}
+	
+	public Estudiante buscarEstudiantePorId(Long id) throws ServicesException {
+			
+			try {
+				
+				Estudiante tp= em.find(Estudiante.class, id);
+				
+				return tp;
+				
+			}catch(PersistenceException e) {
+				throw new ServicesException("No se encontro el Estudiante"); 
+			}
+		}
 
 }

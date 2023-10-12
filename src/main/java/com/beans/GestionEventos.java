@@ -14,6 +14,7 @@ import java.util.LinkedList;
 
 import com.logicaNegocio.GestionEventoService;
 import com.persistencia.entities.EstadosEventos;
+import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
@@ -41,6 +42,8 @@ public class GestionEventos implements Serializable {
 	
 	private Evento eventoSeleccionado;
 
+private Evento eventoSeleccionadoMod;
+
 	private List<Evento> eventos;
 	
 	private List<TipoActividad>tiposActividades;
@@ -48,13 +51,10 @@ public class GestionEventos implements Serializable {
 	private List<ModalidadesEventos>modalidadesEvento;
 	
 	private List<EstadosEventos> estadosEvento;
-	
-	
+		
 	private List<Tutor>tutoresSeleccionados;
 	
-	
-	
-	
+	private List<Tutor>tutoresSeleccionadosMod;
 	
 
 	@PostConstruct
@@ -65,12 +65,13 @@ public class GestionEventos implements Serializable {
 		estadosEvento = persistenciaBean.listarEstadosEventos();
 		eventoSeleccionado=new Evento();
 		tutoresSeleccionados=new LinkedList<>();		
-	
+		eventoSeleccionadoMod=new Evento();
 	}
 	
 	
 	public void asignarTutores() {
 		pickListView.setEventoSeleccionado(eventoSeleccionado);
+		
 		dfView.viewAsignarTutores();
 	}
 	
@@ -86,10 +87,11 @@ public class GestionEventos implements Serializable {
 	}
 	
 	public void altaEvento() {
-		
-
+	
 		
 		eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
+		eventoSeleccionado.setTutores(tutoresSeleccionados);
+		System.out.println(eventoSeleccionado.toString());
 		persistenciaBean.crearEvento(eventoSeleccionado);
 		eventoSeleccionado=new Evento();
 	}
@@ -99,9 +101,29 @@ public class GestionEventos implements Serializable {
 		persistenciaBean.crearEvento(evento.getObject());
 
 	}
+	
+	public void guardarCambios(Evento evento) {
+
+		persistenciaBean.crearEvento(evento);
+
+	}
 
 	public void onRowCancel(RowEditEvent<Evento> evento) {
 
+	}
+	
+	public void tutoresAsignadosMod(Evento evento) {
+		pickListView.setEventoSeleccionado(evento);
+		eventoSeleccionadoMod=evento;
+		System.out.println(evento.toString()+" en gestion eVento");
+		dfView.viewAsignarTutoresMod();
+	}
+	
+	public void convocatoriaEvento(Evento evento) {
+//		pickListView.setEventoSeleccionado(evento);
+//		eventoSeleccionadoMod=evento;
+//		System.out.println(evento.toString()+" en gestion eVento");
+		dfView.viewEstudiantesConvocados();
 	}
 	
 	public void updateListas() {
@@ -160,6 +182,26 @@ public class GestionEventos implements Serializable {
 
 	public void setTutoresSeleccionados(List<Tutor> tutoresSeleccionados) {
 		this.tutoresSeleccionados = tutoresSeleccionados;
+	}
+
+
+	public List<Tutor> getTutoresSeleccionadosMod() {
+		return tutoresSeleccionadosMod;
+	}
+
+
+	public void setTutoresSeleccionadosMod(List<Tutor> tutoresSeleccionadosMod) {
+		this.tutoresSeleccionadosMod = tutoresSeleccionadosMod;
+	}
+
+
+	public Evento getEventoSeleccionadoMod() {
+		return eventoSeleccionadoMod;
+	}
+
+
+	public void setEventoSeleccionadoMod(Evento eventoSeleccionadoMod) {
+		this.eventoSeleccionadoMod = eventoSeleccionadoMod;
 	}
 	
 	

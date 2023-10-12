@@ -13,7 +13,9 @@ import javax.ejb.Stateless;
 
 import com.persistencia.dao.AreaTutorDAO;
 import com.persistencia.dao.CarreraDAO;
+import com.persistencia.dao.ConvocatoriaAsistenciaDAO;
 import com.persistencia.dao.DepartamentoDAO;
+import com.persistencia.dao.EstadoAsistenciaDAO;
 import com.persistencia.dao.EstadoDAO;
 import com.persistencia.dao.EstadosEventosDAO;
 import com.persistencia.dao.EventoDAO;
@@ -71,15 +73,21 @@ public class GestionPersonaService implements Serializable {
 
 	@EJB
 	TutorDAO tutorDAO;
-	
+
 	@EJB
 	ReclamoDAO reclamoDAO;
-	
+
 	@EJB
 	EstadoDAO estadoDAO;
-	
+
 	@EJB
 	EstadosEventosDAO estadosEventosDAO;
+
+	@EJB
+	ConvocatoriaAsistenciaDAO convocatoriaAsistenciaDAO;
+
+	@EJB
+	EstadoAsistenciaDAO estadoAsistenciaDAO;
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -107,19 +115,16 @@ public class GestionPersonaService implements Serializable {
 
 		return listaTipoTutor;
 	}
-	
-	public List<ModalidadesEventos> listarModalidadesEventos() throws Exception {
 
-		
+	public List<ModalidadesEventos> listarModalidadesEventos() throws Exception {
 
 		return modalidadEventosDAO.obtenerModalidadesEventos();
 	}
 
-
-	
-	public List<EstadosEventos> listarEstadosEventos() throws Exception{
+	public List<EstadosEventos> listarEstadosEventos() throws Exception {
 		return estadosEventosDAO.obtenerEstadosEventos();
 	}
+
 	public List<AreaTutor> listarAreaTutor() throws Exception {
 		List<AreaTutor> listaAreaTutor = areaTutorDAO.obtenerAreaTutor();
 
@@ -362,8 +367,29 @@ public class GestionPersonaService implements Serializable {
 			e.setAnoIngreso(2022);
 			usuarioDAO.crearUsuario(e);
 
+			Tutor t2 = new Tutor();
+			t2.setActivo(true);
+			t2.setDocumento("50329199");
+			t2.setApellido1("demo");
+			t2.setNombre1("demoTutor2");
+			t2.setNombreUsuario("demo.tutor2");
+			t2.setContrasena("demo");
+			t2.setDepartamento(depDAO.obtenerDepPorNombre("Durazno"));
+			t2.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
+			t2.setLocalidad("demo");
+			t2.setMail("demo@demo.com");
+			t2.setMailInstitucional("demo@demo.com");
+			t2.setTelefono("09999999");
+			t2.setValidado(true);
+			t2.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
+			t2.setTipoTutor(tipoTutorDAO.buscarTipoTutorPorId((long) 1));
+			t2.setAreaTutor(areaTutorDAO.buscarAreaTutorPorId((long) 1));
+
+			usuarioDAO.crearUsuario(t2);
+
 			initEventos();
 			initReclamo();
+			initEstadosAsistencia();
 		} catch (ServicesException e) {
 			e.printStackTrace();
 		}
@@ -401,6 +427,39 @@ public class GestionPersonaService implements Serializable {
 //		deps.add(new Departamento("Treinta y Tres", true));
 //
 //		depDAO.agregarDepartamento(deps);
+	}
+
+	private void initEstadosAsistencia() {
+//		Asistencia, Media Asistencia -
+//		Matutina/Vespertina - Ausencia, Ausencia Justificada
+		try {
+			EstadoAsistencia ca = new EstadoAsistencia();
+			ca.setNombre("Asistencia");
+
+			estadoAsistenciaDAO.crear(ca);
+			
+			EstadoAsistencia ca1 = new EstadoAsistencia();
+			ca1.setNombre("Media Asistencia");
+
+			estadoAsistenciaDAO.crear(ca1);
+			EstadoAsistencia ca2 = new EstadoAsistencia();
+			ca2.setNombre("Ausencia");
+
+			estadoAsistenciaDAO.crear(ca2);
+			EstadoAsistencia ca3 = new EstadoAsistencia();
+			ca3.setNombre("Ausencia Justificada");
+
+			estadoAsistenciaDAO.crear(ca3);
+			EstadoAsistencia ca4 = new EstadoAsistencia();
+			ca4.setNombre("Sin Registrar");
+
+			estadoAsistenciaDAO.crear(ca4);
+			
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 	}
 
 	private void initItrs() {
@@ -480,23 +539,22 @@ public class GestionPersonaService implements Serializable {
 
 	public void initReclamo() {
 		Reclamo reclamo = new Reclamo();
-		Estado estado=new Estado();
+		Estado estado = new Estado();
 		estado.setActivo(true);
 		estado.setNombre("demo");
-		
+
 		try {
 			estadoDAO.crearEstado(estado);
 
-			
 			reclamo.setDetalle("demo");
 			reclamo.setFechaHora(new Timestamp(2022, 7, 20, 15, 0, 0, 0));
 
 			reclamo.setEvento(eventoDAO.buscarEventoPorId((long) 1));
 			reclamo.setEstudiante((Estudiante) usuarioDAO.buscarNombre("demo.estudiante"));
-			reclamo.setEstado(estadoDAO.buscarEstadoPorId((long)1));
-			
+			reclamo.setEstado(estadoDAO.buscarEstadoPorId((long) 1));
+
 			reclamoDAO.crearReclamo(reclamo);
-			
+
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

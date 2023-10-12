@@ -130,7 +130,7 @@ public class DFView {
 	                .fitViewport(true)
 	                .responsive(true)
 	                .width("1300px")
-	                .height("80%")
+	                .height("55%")
 	                .contentWidth("100%")
 	                .resizeObserver(true)
 	                .resizeObserverCenter(true)
@@ -142,6 +142,45 @@ public class DFView {
 	        PrimeFaces.current().dialog().openDynamic("asignarTutores", options, null);
 	    }
 		
+		public void viewAsignarTutoresMod() {
+			  
+			  
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("1300px")
+	                .height("55%")
+	                .contentWidth("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("asignarTutoresMod", options, null);
+	    }
+		
+		public void viewEstudiantesConvocados() {
+			  
+			  
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("1300px")
+	                .height("55%")
+	                .contentWidth("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("convocatoriaEvento", options, null);
+	    }
 		 public void viewAltaEstadoEvento() {
 			  
 			  
