@@ -433,6 +433,11 @@ public class GestionPersonaService implements Serializable {
 //		Asistencia, Media Asistencia -
 //		Matutina/Vespertina - Ausencia, Ausencia Justificada
 		try {
+			
+			EstadoAsistencia ca4 = new EstadoAsistencia();
+			ca4.setNombre("Sin Registrar");
+
+			estadoAsistenciaDAO.crear(ca4);
 			EstadoAsistencia ca = new EstadoAsistencia();
 			ca.setNombre("Asistencia");
 
@@ -450,10 +455,7 @@ public class GestionPersonaService implements Serializable {
 			ca3.setNombre("Ausencia Justificada");
 
 			estadoAsistenciaDAO.crear(ca3);
-			EstadoAsistencia ca4 = new EstadoAsistencia();
-			ca4.setNombre("Sin Registrar");
-
-			estadoAsistenciaDAO.crear(ca4);
+			
 			
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block

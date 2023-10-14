@@ -40,6 +40,7 @@ public class GestionITR implements Serializable {
 		
 		persistenciaBean.crearITR(itr.getObject());
 		gestionPersona.updateITRs();
+	
 			
 	}
 	
@@ -62,6 +63,7 @@ public class GestionITR implements Serializable {
 		persistenciaBean.crearITR(itrSeleccionado);
 		itrSeleccionado=new ITR();
 		gestionPersona.updateITRs();
+		
 		closeVentana();
 		
 	}

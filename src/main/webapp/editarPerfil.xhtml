@@ -356,7 +356,11 @@
 										class="flex-none flex align-items-center justify-content-center">
 										<p:commandButton value="Guardar Cambios"
 											action="#{gestionPersona.modificarUsuario()}"
-											update="grid grid2 messages" />
+											update="grid grid2 messages">
+											<p:confirm header="Estas Seguro?"
+												message="Los datos modificados quedaran guardados"
+												icon="pi pi-info-circle" />
+										</p:commandButton>
 									</div>
 
 
@@ -377,6 +381,15 @@
 								</p:confirmDialog>
 							</p:outputPanel>
 
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade" responsive="true" width="350"
+								widgetVar="confirm" header="Estas Seguro?">
+								<p:commandButton value="Cancelar" type="button"
+									styleClass="ui-confirmdialog-no ui-button-flat" />
+								<p:commandButton value="Confirmar" type="button"
+									styleClass="ui-confirmdialog-yes" />
+							</p:confirmDialog>
 						</h:form>
 
 					</div>

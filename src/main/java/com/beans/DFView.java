@@ -219,6 +219,25 @@ public class DFView {
 		        PrimeFaces.current().dialog().openDynamic("altaModalidadEvento", options, null);
 		    }
 	  
+		 public void viewRegistroAsistencia() {
+			  
+			  
+		        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+		        		 .modal(true)
+			                .fitViewport(true)
+			                .responsive(true)
+			                .width("1300px")
+			                .height("55%")
+			                .contentWidth("100%")
+			                .resizeObserver(true)
+			                .resizeObserverCenter(true)
+			                .resizable(false)
+			                .styleClass("max-w-screen")
+			                .iframeStyleClass("max-w-screen")
+			                .build();
+
+		        PrimeFaces.current().dialog().openDynamic("RegistroAsistencia", options, null);
+		    }
 	  
 	  public void closeResponsive() {
 		  PrimeFaces.current().dialog().closeDynamic(null);

@@ -1,6 +1,8 @@
 package com.persistencia.entities;
 
 import java.io.Serializable;
+import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -41,6 +43,23 @@ public class EstadoAsistencia implements Serializable {
 	@Override
 	public String toString() {
 		return "EstadoAsistencia [id=" + id + ", nombre=" + nombre + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, nombre);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		EstadoAsistencia other = (EstadoAsistencia) obj;
+		return Objects.equals(id, other.id) && Objects.equals(nombre, other.nombre);
 	}
 	
 	

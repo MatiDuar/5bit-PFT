@@ -101,6 +101,16 @@ public class GestionEventoService {
 	public Estudiante buscarEstudiantePorId(Long id) throws ServicesException {
 		return estudianteDAO.buscarEstudiantePorId(id);
 	}
+	
+	public boolean borrarEvento(Evento e) {
+		try {
+			return eventoDAO.borrarEvento(e.getId());
+		} catch (ServicesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+			return false;
+		}
+	}
 
 	public List<EstadosEventos> listarEstadosEventos() {
 		try {
@@ -152,5 +162,27 @@ public class GestionEventoService {
 	
 	public void crearConvocatoriaAsistencia(ConvocatoriaAsistencia ca) throws ServicesException {
 		convocatoriaAsistenciaDAO.crear(ca);
+	}
+	
+	
+	public List<Estudiante>buscarEstudiantesPorEvento(Evento e) throws ServicesException{
+		return convocatoriaAsistenciaDAO.buscarPorEvento(e);
+	}
+	
+	public List<ConvocatoriaAsistencia>buscarConvocatoriaPorEvento(Evento e) throws ServicesException{
+		return convocatoriaAsistenciaDAO.buscarConvocatoriasPorEvento(e);
+	}
+	
+	public void borrarConvocatoria(Estudiante e,Evento evento) throws ServicesException {
+		convocatoriaAsistenciaDAO.borrar(e, evento);
+	}
+	
+	
+	public List<EstadoAsistencia> listarEstadosAsistencia() throws ServicesException{
+		return estadoAsistenciaDAO.obtenerTodos();
+	}
+	
+	public void modificarConvocatoriaAsistencia(List<ConvocatoriaAsistencia>convocatorias) throws ServicesException {
+		convocatoriaAsistenciaDAO.modificar(convocatorias);
 	}
 }

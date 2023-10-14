@@ -284,23 +284,7 @@ public class GestionPersona implements Serializable {
 		return "";
 	}
 
-	/**
-	 * La funcion se encarga de modificar una persona en la lista
-	 * 
-	 * @param p recibe la persona a modificar
-	 * @return
-	 */
 
-//	public String modificarPersonaOnLista(Persona p) {
-//
-//		persistenciaBean.modificarUsuario(p);
-//
-//		String msg1 = "Se modifico correctamente el usuario";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		return "";
-//	}
 
 	/**
 	 * La funcion se encarga de dar de baja a una persona en la base de datos
@@ -413,85 +397,23 @@ public class GestionPersona implements Serializable {
 		usuarioModificar=usuario;
 		dfView.viewEstadoUsuario();
 	}
-	/**
-	 * Copia todos los datos de la Persona al Alumno
-	 * 
-	 * @param p Persona con los datos originales
-	 * @param a Alumno a modificar los datos
-	 */
-//	public void parsePersona(Persona p, Alumno a) {
-//		a.setId(p.getId());
-//		a.setActivo(p.getActivo());
-//		a.setNombre1(p.getNombre1());
-//		a.setNombre2(p.getApellido2());
-//		a.setApellido1(p.getApellido1());
-//		a.setApellido2(p.getApellido2());
-//		a.setNombreUsuario(p.getNombreUsuario());
-//		a.setContrasena(p.getContrasena());
-//		a.setMail(p.getMail());
-//		a.setDireccion(p.getDireccion());
-//		a.setFechaNacimiento(p.getFechaNacimiento());
-//	}
 
 	/**
 	 * Funcion que al terminar de editar la persona en la tabla realiza los cambios
 	 * realizados
 	 * 
-	 * @param persona Persona con los datos a modificar
+	 * @param Usuario Persona con los datos a modificar
 	 */
 	public void onRowEdit(RowEditEvent<Usuario> persona) {
 
-//		if (persona.getObject().getCarrera() == null) {
-//			Persona modPersona = parsePersonaFromDTO(persona.getObject());
-//			modificarPersonaOnLista(modPersona);
-//		} else {
-//			Alumno modAlumno = parseAlumnoFromDTO(persona.getObject());
-//			modificarPersonaOnLista(modAlumno);
-//		}
 		
 		persistenciaBean.modificarUsuario(persona.getObject());
 			
 	}
 
-	/**
-	 * Funcion que permite parsear un objeto PersonaAlumnoDTO a un objeto Persona
-	 * 
-	 * @param pdto Objeto que tiene los datos
-	 * @return Persona con todos los datos de pdto
-	 */
-//	public Persona parsePersonaFromDTO(PersonaAlumnoDTO pdto) {
-//		Persona p = persistenciaBean.buscarPersona(pdto.getId());
-//		p.setActivo(pdto.getActivo());
-//		p.setNombre1(pdto.getNombre1());
-//		p.setApellido1(pdto.getApellido1());
-//		p.setMail(pdto.getMail());
-//		p.setNombreUsuario(pdto.getNombreUsuario());
-//		p.setDireccion(pdto.getDireccion());
-//
-//		return p;
-//
-//	}
 
-	/**
-	 * Funcion que permite parsear un objeto PersonaAlumnoDTO a un objeto Alumno
-	 * 
-	 * @param pdto Objeto que tiene los datos
-	 * @return Alumno con todos los datos de pdto
-	 */
-//	public Alumno parseAlumnoFromDTO(PersonaAlumnoDTO pdto) {
-//		Alumno a = persistenciaBean.buscarAlumno(pdto.getId());
-//		a.setActivo(pdto.getActivo());
-//		a.setNombre1(pdto.getNombre1());
-//		a.setApellido1(pdto.getApellido1());
-//		a.setMail(pdto.getMail());
-//		a.setNombreUsuario(pdto.getNombreUsuario());
-//		a.setDireccion(pdto.getDireccion());
-//		a.setIdEstudiantil(pdto.getIdEstudiantil());
-//		a.setCarrera(persistenciaBean.buscarCarrera(pdto.getCarrera()));
-//
-//		return a;
-//
-//	}
+
+	
 
 	public void onRowCancel(RowEditEvent<Usuario> persona) {
 
@@ -504,30 +426,12 @@ public class GestionPersona implements Serializable {
 		return "";
 	}
 
-//	public Alumno esAlumnoLogeado() {
-//		return persistenciaBean.buscarAlumno(personaLogeada.getId());
-//	}
+
 
 	public java.util.Date getFechaNacSel() {
 		return fechaNacSel;
 	}
 
-	/**
-	 * Funcion que da de baja al usuario Logeado
-	 * 
-	 * @return
-	 */
-//	public String darDeBaja() {
-//
-//		personaLogeada.setActivo(false);
-//		persistenciaBean.modificarUsuario(personaLogeada);
-//		reset();
-//		String msg1 = "Se dio de baja al Usuario";
-//		// mensaje de actualizacion correcta
-//		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
-//		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-//		return "login.xhtml?facesRedirect=true";
-//	}
 
 	public String cerrarSesion() {
 		reset();
@@ -715,16 +619,6 @@ public class GestionPersona implements Serializable {
 		this.isModContraseña = isModContraseña;
 	}
 
-
-
-//	public List<Alumno> getPersonasMod() {
-//		return personasMod;
-//	}
-//
-//	public void setPersonasMod(List<Alumno> personasMod) {
-//		this.personasMod = personasMod;
-//	}
-
 	public boolean isKicked() {
 		return isKicked;
 	}
@@ -747,9 +641,9 @@ public class GestionPersona implements Serializable {
 		// Obtener la ruta de la vista actual
 		String viewId = FacesContext.getCurrentInstance().getViewRoot().getViewId();
 
-		if(viewId.equals("/index.xhtml")  || viewId.equals("/editarPerfil.xhtml")) {
+		if(viewId.equals("/index.xhtml")  || viewId.equals("/editarPerfil.xhtml") || viewId.equals("/listarPersonas.xhtml")) {
 			bottonesMenu=new LinkedList<>();
-		}else if(viewId.equals("/eventos.xhtml") || viewId.contains("altaEvento.xhtml")) {
+		}else if((viewId.equals("/eventos.xhtml") || viewId.contains("altaEvento.xhtml")) && esAnalistaLogeado()) {
 			
 			bottonesMenu=new LinkedList<>();
 			bottonesMenu.add("Listado de Eventos");
@@ -759,10 +653,7 @@ public class GestionPersona implements Serializable {
 			
 		}else{
 			bottonesMenu=new LinkedList<>();
-			bottonesMenu.add("Boton 1");
-			bottonesMenu.add("Boton 2");
-			bottonesMenu.add("Boton 3");
-			bottonesMenu.add("Boton 4");			
+					
 		}
 		return bottonesMenu;
 	}
@@ -771,10 +662,23 @@ public class GestionPersona implements Serializable {
 		
 		switch(boton) {
 		case "Alta Evento":
-			return "altaEvento.xhtml";
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("altaEvento.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "";
+			
 			
 		case "Listado de Eventos":
-			return "eventos.xhtml";
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			return "";
 		case "Mantenimiento Estados":
 			dfView.viewMantenimientoEstadosEventos();
 			return "";

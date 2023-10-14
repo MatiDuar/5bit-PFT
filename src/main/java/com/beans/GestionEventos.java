@@ -1,10 +1,13 @@
 package com.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -13,6 +16,8 @@ import org.primefaces.event.RowEditEvent;
 import java.util.LinkedList;
 
 import com.logicaNegocio.GestionEventoService;
+import com.persistencia.entities.ConvocatoriaAsistencia;
+import com.persistencia.entities.EstadoAsistencia;
 import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
@@ -30,52 +35,56 @@ public class GestionEventos implements Serializable {
 
 	@Inject
 	GestionEventoService persistenciaBean;
-	
+
 	@Inject
 	DFView dfView;
-	
+
 	@Inject
 	PickListView pickListView;
-	
-	
-	
-	
+
 	private Evento eventoSeleccionado;
 
-private Evento eventoSeleccionadoMod;
+	private Evento eventoSeleccionadoMod;
 
 	private List<Evento> eventos;
-	
-	private List<TipoActividad>tiposActividades;
-	
-	private List<ModalidadesEventos>modalidadesEvento;
-	
+
+	private List<TipoActividad> tiposActividades;
+
+	private List<ModalidadesEventos> modalidadesEvento;
+
 	private List<EstadosEventos> estadosEvento;
-		
-	private List<Tutor>tutoresSeleccionados;
-	
-	private List<Tutor>tutoresSeleccionadosMod;
-	
+
+	private List<Tutor> tutoresSeleccionados;
+
+	private List<Tutor> tutoresSeleccionadosMod;
+
+	private List<ConvocatoriaAsistencia> convocatoriasSeleccionadas;
+
+	private List<EstadoAsistencia> estadosAsistencia;
 
 	@PostConstruct
 	public void init() {
-		eventos = persistenciaBean.listarEventos();
-		tiposActividades = persistenciaBean.listarTiposActividad();
-		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
-		estadosEvento = persistenciaBean.listarEstadosEventos();
-		eventoSeleccionado=new Evento();
-		tutoresSeleccionados=new LinkedList<>();		
-		eventoSeleccionadoMod=new Evento();
+		try {
+			eventos = persistenciaBean.listarEventos();
+			tiposActividades = persistenciaBean.listarTiposActividad();
+			modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
+			estadosEvento = persistenciaBean.listarEstadosEventos();
+			estadosAsistencia = persistenciaBean.listarEstadosAsistencia();
+			eventoSeleccionado = new Evento();
+			tutoresSeleccionados = new LinkedList<>();
+			eventoSeleccionadoMod = new Evento();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	
-	
+
 	public void asignarTutores() {
 		pickListView.setEventoSeleccionado(eventoSeleccionado);
-		
+
 		dfView.viewAsignarTutores();
 	}
-	
-	
+
 	public Tutor buscarTutorPorId(long id) {
 		try {
 			return persistenciaBean.buscarTutorPorId(id);
@@ -85,15 +94,34 @@ private Evento eventoSeleccionadoMod;
 			return null;
 		}
 	}
-	
+
 	public void altaEvento() {
-	
-		
+
 		eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
 		eventoSeleccionado.setTutores(tutoresSeleccionados);
-		System.out.println(eventoSeleccionado.toString());
 		persistenciaBean.crearEvento(eventoSeleccionado);
-		eventoSeleccionado=new Evento();
+		eventoSeleccionado = new Evento();
+	}
+
+	public void darDeBajaEvento(Evento e) {
+		try {
+			if (persistenciaBean.buscarConvocatoriaPorEvento(e).isEmpty()) {
+				persistenciaBean.borrarEvento(e);
+
+				FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
+
+			} else {
+				String msg1 = "Para poder eliminar un evento no tiene que contener estudiantes convocados.";
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+			}
+		} catch (ServicesException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	public void onRowEdit(RowEditEvent<Evento> evento) {
@@ -101,7 +129,7 @@ private Evento eventoSeleccionadoMod;
 		persistenciaBean.crearEvento(evento.getObject());
 
 	}
-	
+
 	public void guardarCambios(Evento evento) {
 
 		persistenciaBean.crearEvento(evento);
@@ -111,25 +139,59 @@ private Evento eventoSeleccionadoMod;
 	public void onRowCancel(RowEditEvent<Evento> evento) {
 
 	}
-	
+
+	public void onRowEditRegistroAsistencia(RowEditEvent<Evento> evento) {
+
+		persistenciaBean.crearEvento(evento.getObject());
+
+	}
+
+	public void onRowCancelRegistroAsistencia(RowEditEvent<Evento> evento) {
+
+	}
+
 	public void tutoresAsignadosMod(Evento evento) {
 		pickListView.setEventoSeleccionado(evento);
-		eventoSeleccionadoMod=evento;
-		System.out.println(evento.toString()+" en gestion eVento");
+		eventoSeleccionadoMod = evento;
+		System.out.println(evento.toString() + " en gestion eVento");
 		dfView.viewAsignarTutoresMod();
 	}
-	
+
 	public void convocatoriaEvento(Evento evento) {
-//		pickListView.setEventoSeleccionado(evento);
-//		eventoSeleccionadoMod=evento;
-//		System.out.println(evento.toString()+" en gestion eVento");
+		eventoSeleccionadoMod = evento;
+
 		dfView.viewEstudiantesConvocados();
 	}
-	
+
+	public void registroAsistencia(Evento evento) {
+		try {
+			convocatoriasSeleccionadas = persistenciaBean.buscarConvocatoriaPorEvento(evento);
+			eventoSeleccionadoMod = evento;
+			dfView.viewRegistroAsistencia();
+
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public void guardarCambiosRegistroAsistencias() {
+		try {
+			persistenciaBean.modificarConvocatoriaAsistencia(convocatoriasSeleccionadas);
+
+			convocatoriasSeleccionadas = new LinkedList<ConvocatoriaAsistencia>();
+
+			dfView.closeResponsive();
+		} catch (ServicesException e) {
+
+			e.printStackTrace();
+		}
+	}
+
 	public void updateListas() {
-		eventos=persistenciaBean.listarEventos();
-		modalidadesEvento=persistenciaBean.listarModadlidadesEvento();
-		estadosEvento=persistenciaBean.listarEstadosEventos();
+		eventos = persistenciaBean.listarEventos();
+		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
+		estadosEvento = persistenciaBean.listarEstadosEventos();
 	}
 
 	public List<Evento> getEventos() {
@@ -164,51 +226,52 @@ private Evento eventoSeleccionadoMod;
 		this.eventoSeleccionado = eventoSeleccionado;
 	}
 
-
 	public List<EstadosEventos> getEstadosEvento() {
 		return estadosEvento;
 	}
-
 
 	public void setEstadosEvento(List<EstadosEventos> estadosEvento) {
 		this.estadosEvento = estadosEvento;
 	}
 
-
 	public List<Tutor> getTutoresSeleccionados() {
 		return tutoresSeleccionados;
 	}
-
 
 	public void setTutoresSeleccionados(List<Tutor> tutoresSeleccionados) {
 		this.tutoresSeleccionados = tutoresSeleccionados;
 	}
 
-
 	public List<Tutor> getTutoresSeleccionadosMod() {
 		return tutoresSeleccionadosMod;
 	}
-
 
 	public void setTutoresSeleccionadosMod(List<Tutor> tutoresSeleccionadosMod) {
 		this.tutoresSeleccionadosMod = tutoresSeleccionadosMod;
 	}
 
-
 	public Evento getEventoSeleccionadoMod() {
 		return eventoSeleccionadoMod;
 	}
 
-
 	public void setEventoSeleccionadoMod(Evento eventoSeleccionadoMod) {
 		this.eventoSeleccionadoMod = eventoSeleccionadoMod;
 	}
-	
-	
-	
 
+	public List<ConvocatoriaAsistencia> getConvocatoriasSeleccionadas() {
+		return convocatoriasSeleccionadas;
+	}
 
-	
-	
+	public void setConvocatoriasSeleccionadas(List<ConvocatoriaAsistencia> convocatoriasSeleccionadas) {
+		this.convocatoriasSeleccionadas = convocatoriasSeleccionadas;
+	}
+
+	public List<EstadoAsistencia> getEstadosAsistencia() {
+		return estadosAsistencia;
+	}
+
+	public void setEstadosAsistencia(List<EstadoAsistencia> estadosAsistencia) {
+		this.estadosAsistencia = estadosAsistencia;
+	}
 
 }

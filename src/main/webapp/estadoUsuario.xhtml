@@ -64,7 +64,8 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Cancelar"
-								styleClass="ui-button-raised  ui-button-flat" immediate="true" action="#{dfView.closeResponsive()}"/>
+								styleClass="ui-button-raised  ui-button-flat" immediate="true"
+								action="#{dfView.closeResponsive()}" />
 						</div>
 
 						<div
@@ -72,10 +73,23 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar"
-								action="#{gestionPersona.modificarUsuarioEstado}"  />
+								action="#{gestionPersona.modificarUsuarioEstado}">
+								<p:confirm header="Estas Seguro?"
+									message="El estado del usuario se cambiara permanetemente"
+									icon="pi pi-info-circle" />
+							</p:commandButton>
 						</div>
 					</div>
 				</div>
+
+				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+					responsive="true" width="350" widgetVar="confirm"
+					header="Estas Seguro?">
+					<p:commandButton value="Cancelar" type="button"
+						styleClass="ui-confirmdialog-no ui-button-flat" />
+					<p:commandButton value="Confirmar" type="button"
+						styleClass="ui-confirmdialog-yes" />
+				</p:confirmDialog>
 			</h:form>
 		</div>
 

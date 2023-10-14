@@ -75,16 +75,21 @@ public class PickListView {
 			tutoresMod.setSource(new ArrayList<>(service.listarTutores()));
 
 			estudiantesConvocados.setSource(new ArrayList<>(service.listarEstudiantes()));
+
 			if (gestionEventos.getTutoresSeleccionados() != null) {
 				tutores.setTarget(gestionEventos.getTutoresSeleccionados());
 			}
 			if (gestionEventos.getEventoSeleccionadoMod().getTutores() != null) {
 				tutoresMod.setTarget(gestionEventos.getEventoSeleccionadoMod().getTutores());
+				estudiantesConvocados
+						.setTarget(service.buscarEstudiantesPorEvento(gestionEventos.getEventoSeleccionadoMod()));
 			}
 
-			filtrarTutores(tutores.getSource(), tutores.getTarget());
+			filtrarTutor(tutores.getSource(), tutores.getTarget());
 
-			filtrarTutores(tutoresMod.getSource(), tutoresMod.getTarget());
+			filtrarTutor(tutoresMod.getSource(), tutoresMod.getTarget());
+
+			estudiantesConvocados.getSource().removeAll(estudiantesConvocados.getTarget());
 
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -151,25 +156,33 @@ public class PickListView {
 	}
 
 	public void guardarCambiosConvocatoria() {
-
 		Evento evento = gestionEventos.getEventoSeleccionadoMod();
-		for (Estudiante e : estudiantesConvocados.getTarget()) {
-			try {
-				ConvocatoriaAsistencia ca = new ConvocatoriaAsistencia();
-				ca.setEstudiante(e);
-				ca.setEvento(evento);
-				ca.setCalificacion(0);
-
-				ca.setEstadoAsistencia(service.buscarEstadoAsistenciaPorNombre("Sin Registrar"));
+		
+		try {
+			List<Estudiante>currentConvocados=service.buscarEstudiantesPorEvento(evento);
 				
-				service.crearConvocatoriaAsistencia(ca);
-			} catch (ServicesException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			
+		
+		for (Estudiante e : estudiantesConvocados.getTarget()) {				
+				if(!currentConvocados.contains(e)) {
+					ConvocatoriaAsistencia ca = new ConvocatoriaAsistencia();
+					ca.setEstudiante(e);
+					ca.setEvento(evento);
+					ca.setCalificacion(0);
+					ca.setEstadoAsistencia(service.buscarEstadoAsistenciaPorNombre("Sin Registrar"));		
+					service.crearConvocatoriaAsistencia(ca);
+				}		
 		}
-		System.out.println(evento + " en guardarCambiuos");
-
+		
+		currentConvocados.removeAll(estudiantesConvocados.getTarget());
+		
+		for(Estudiante e:currentConvocados) {
+			service.borrarConvocatoria(e, evento);
+		}
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		gestionEventos.guardarCambios(evento);
 
 		eventoSeleccionado = new Evento();
@@ -197,7 +210,7 @@ public class PickListView {
 		}
 	}
 
-	public void filtrarTutores(List<Tutor> tutores, List<Tutor> tutoresSeleccionado) {
+	public void filtrarTutor(List<Tutor> tutores, List<Tutor> tutoresSeleccionado) {
 
 		tutores.removeAll(tutoresSeleccionado);
 

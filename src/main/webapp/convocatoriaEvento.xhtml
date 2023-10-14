@@ -31,10 +31,9 @@
 
 
 				<p:pickList id="pojoPickList" value="#{pickListView.estudiantesConvocados}"
-					var="estudiante" itemValue="{estudiante}" itemLabel="#{pickListView.estudianteToString(estudiante)}"
+					var="estudiante" itemValue="#{estudiante}" itemLabel="#{pickListView.estudianteToString(estudiante)}"
 					showSourceFilter="true" showTargetFilter="true"
-					sourceFilterPlaceholder="Filter available countries"
-					targetFilterPlaceholder="Filter starting countries"
+					
 					filterMatchMode="contains" converter="estudianteConverter"  responsive="true">
 				
 
@@ -42,30 +41,38 @@
 						<h4>Asignados</h4>
 						<hr></hr>
 						<div class="grid ui-fluid">
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Nombre" />
 							</div>
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Documento" />
 							</div>
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Ano ingreso" />
+							</div>
+							<div class="col-12 md:col-3">
+								<h:outputText value="ITR" />
 							</div>
 							
 						</div>
 					</f:facet>
+					
+					
 					<f:facet name="targetCaption">
 						<h4>No Asignados</h4>
 						<hr></hr>
 						<div class="grid ui-fluid">
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Nombre" />
 							</div>
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Documento" />
 							</div>
-							<div class="col-12 md:col-4">
+							<div class="col-12 md:col-3">
 								<h:outputText value="Ano ingreso" />
+							</div>
+							<div class="col-12 md:col-3">
+								<h:outputText value="ITR" />
 							</div>
 							
 						</div>
@@ -89,6 +96,20 @@
 						</div>
 					</p:column>
 					
+					<p:column headerText="Año ingreso">
+						<div class="flex align-items-center">
+
+							<h:outputText value="#{estudiante.anoIngreso}" />
+						</div>
+					</p:column>
+					
+					<p:column headerText="ITR">
+						<div class="flex align-items-center">
+
+							<h:outputText value="#{estudiante.itr.nombre}" />
+						</div>
+					</p:column>
+					
 					
 					
 
@@ -106,7 +127,7 @@
 							class="flex-grow-1 flex align-items-center justify-content-center "></div>
 						<div
 							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Guardar"
+							<p:commandButton value="Registrar"
 								 action="#{pickListView.guardarCambiosConvocatoria}"/>
 						</div>
 

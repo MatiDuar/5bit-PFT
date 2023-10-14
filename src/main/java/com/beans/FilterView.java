@@ -39,6 +39,9 @@ public class FilterView implements Serializable {
 
 	@Inject
 	private GestionPersonaService service;
+	
+	@Inject
+	private GestionPersona gestionPersona;
 
 	// filtros para Usuarios
 	private String carreraSel;
@@ -194,12 +197,22 @@ public class FilterView implements Serializable {
 
 	public boolean globalFilterFunctionEventos(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		
+		Evento evento = (Evento) value;
+		if(!gestionPersona.esAnalistaLogeado()) {
+			if(!evento.getTutores().contains(gestionPersona.getUsuarioLogeado())) {
+				return false;
+			}
+		}
 		if (LangUtils.isBlank(filterText) && tipoEventoSelccionado.isBlank() && estadoEvento.isBlank()
 				&& itrEventoSelccionado.isBlank() && modalidadEventoSeleccionada.isBlank()) {
+			
 			return true;
 		}
 
-		Evento evento = (Evento) value;
+		
+		
+		
 
 		if (!evento.getTipoActividad().getNombre().equalsIgnoreCase(tipoEventoSelccionado)
 				&& !tipoEventoSelccionado.isBlank()) {
@@ -261,6 +274,16 @@ public class FilterView implements Serializable {
 	public void updateEstadoEvento() {
 		try {
 			estadoEventos=service.listarEstadosEventos();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+
+	public void updateItr() {
+		try {
+			itrs=service.listarITRs();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

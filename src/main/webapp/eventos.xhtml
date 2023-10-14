@@ -20,6 +20,7 @@
 		<h1>Gestion de Eventos</h1>
 
 		<h:form>
+
 			<p:dataTable var="evento" value="#{dtFilterView.eventos}"
 				widgetVar="eventoTable"
 				emptyMessage="Eventos no encontradas con este criterio"
@@ -28,13 +29,16 @@
 				editable="true" id="dataTable">
 
 				<p:ajax event="rowEdit" listener="#{gestionEventos.onRowEdit}"
-					update="dataTable" />
+					update="dataTable" >
+					
+				</p:ajax>
 				<p:ajax event="rowEditCancel"
 					listener="#{gestionEventos.onRowCancel}" update="dataTable" />
 
 				<f:facet name="header">
 
-
+					<p:remoteCommand oncomplete="PF('eventoTable').filter()"
+						autoRun="true"></p:remoteCommand>
 					<div class="grid ui-fluid">
 						<div class="col-12 md:col-2">
 							<br></br>
@@ -316,17 +320,25 @@
 					</p:cellEditor>
 				</p:column>
 
-				<p:column headerText="Tutores encargados" filterable="false">
+				<p:column headerText="Tutores encargados" filterable="false"
+					rendered="#{gestionPersona.esAnalistaLogeado()}">
 					<p:commandButton value="Tutores"
-						 action="#{gestionEventos.tutoresAsignadosMod(evento)}"/>
-				</p:column>
-				
-				<p:column headerText="Convocatoria" filterable="false">
-					<p:commandButton value="convocatoria"
-						 action="#{gestionEventos.convocatoriaEvento(evento)}"/>
+						action="#{gestionEventos.tutoresAsignadosMod(evento)}" />
 				</p:column>
 
-				<p:column style="width:6rem;" headerText="Editar">
+				<p:column headerText="Convocatoria" filterable="false"
+					rendered="#{gestionPersona.esAnalistaLogeado()}">
+					<p:commandButton value="Convocatoria"
+						action="#{gestionEventos.convocatoriaEvento(evento)}" />
+				</p:column>
+
+				<p:column headerText="Asistencia" filterable="false">
+					<p:commandButton value="Asistencia"
+						action="#{gestionEventos.registroAsistencia(evento)}" />
+				</p:column>
+
+				<p:column style="width:6rem;" headerText="Editar"
+					rendered="#{gestionPersona.esAnalistaLogeado()}">
 
 					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 						saveTitle="Save Row">
@@ -334,9 +346,34 @@
 					</p:rowEditor>
 				</p:column>
 
+				<p:column filterable="false" rendered="#{gestionPersona.esAnalistaLogeado()}">
+					<p:growl id="mensajes" life="4000" closable="true"
+						globalOnly="true" />
+
+					<p:commandButton value="Baja"
+						action="#{gestionEventos.darDeBajaEvento(evento)}"
+						update="mensajes dataTable">
+						<p:confirm header="Estas Seguro?"
+							message="El evento quedara borrado completamente, eliminando todos los datos"
+							icon="pi pi-info-circle" />
+					</p:commandButton>
+
+
+
+
+				</p:column>
+
 
 
 			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350" widgetVar="confirm" header="Estas Seguro?">
+				<p:commandButton value="Cancelar" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Confirmar" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
 		</h:form>
 
 
