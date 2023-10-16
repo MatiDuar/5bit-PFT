@@ -26,6 +26,7 @@ import com.persistencia.entities.Evento;
 import com.persistencia.entities.Usuario;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
+import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.Tutor;
 
 @Named("dtFilterView")
@@ -61,6 +62,11 @@ public class FilterView implements Serializable {
 	private List<ITR> itrs;
 
 	private List<ITR> filteredItrs;
+	
+	
+	private List<Reclamo> reclamos;
+
+	private List<Reclamo> filteredReclamos;
 
 	private List<FilterMeta> filterBy;
 
@@ -192,6 +198,19 @@ public class FilterView implements Serializable {
 
 		return (itr.getNombre().toLowerCase().contains(filterText)
 				|| itr.getDepartamento().getNombre().toLowerCase().contains(filterText));
+
+	}
+	
+	public boolean globalFilterFunctionReclamo(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText)) {
+			return true;
+		}
+
+		Reclamo reclamo = (Reclamo) value;
+
+		return (reclamo.getEstudiante().getNombre1().toLowerCase().contains(filterText)
+				|| reclamo.getEvento().getTitulo().toLowerCase().contains(filterText));
 
 	}
 
@@ -478,6 +497,22 @@ public class FilterView implements Serializable {
 
 	public void setFilteredModalidadEventos(List<ModalidadesEventos> filteredModalidadEventos) {
 		this.filteredModalidadEventos = filteredModalidadEventos;
+	}
+
+	public List<Reclamo> getReclamos() {
+		return reclamos;
+	}
+
+	public void setReclamos(List<Reclamo> reclamos) {
+		this.reclamos = reclamos;
+	}
+
+	public List<Reclamo> getFilteredReclamos() {
+		return filteredReclamos;
+	}
+
+	public void setFilteredReclamos(List<Reclamo> filteredReclamos) {
+		this.filteredReclamos = filteredReclamos;
 	}
 
 	

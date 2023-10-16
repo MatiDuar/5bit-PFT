@@ -23,6 +23,7 @@ import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
+import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.TipoActividad;
 import com.persistencia.entities.Tutor;
 import com.persistencia.exception.ServicesException;
@@ -127,6 +128,21 @@ public class GestionEventos implements Serializable {
 	public void onRowEdit(RowEditEvent<Evento> evento) {
 
 		persistenciaBean.crearEvento(evento.getObject());
+
+	}
+	
+	public void onRowEditReclamo(RowEditEvent<Reclamo> reclamo) {
+
+		try {
+			persistenciaBean.modificarReclamo(reclamo.getObject());
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+	public void onRowCancelReclamo(RowEditEvent<Reclamo> reclamo) {
 
 	}
 

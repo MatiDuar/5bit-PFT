@@ -12,6 +12,7 @@ import com.persistencia.dao.EstadosEventosDAO;
 import com.persistencia.dao.EstudianteDAO;
 import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ModalidadesEventosDAO;
+import com.persistencia.dao.ReclamoDAO;
 import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TutorDAO;
 import com.persistencia.dao.UsuarioDAO;
@@ -21,6 +22,7 @@ import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.ModalidadesEventos;
+import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.TipoActividad;
 import com.persistencia.entities.Tutor;
 import com.persistencia.entities.Usuario;
@@ -56,6 +58,9 @@ public class GestionEventoService {
 
 	@EJB
 	ConvocatoriaAsistenciaDAO convocatoriaAsistenciaDAO;
+	
+	@EJB
+	ReclamoDAO reclamoDAO;
 	
 	public void crearEvento(Evento evento) {
 		try {
@@ -184,5 +189,9 @@ public class GestionEventoService {
 	
 	public void modificarConvocatoriaAsistencia(List<ConvocatoriaAsistencia>convocatorias) throws ServicesException {
 		convocatoriaAsistenciaDAO.modificar(convocatorias);
+	}
+	
+	public void modificarReclamo(Reclamo r) throws ServicesException {
+		reclamoDAO.modificarReclamo(r);
 	}
 }
