@@ -1,6 +1,7 @@
 package com.persistencia.entities;
 
 import java.io.Serializable;
+import java.sql.Date;
 import java.sql.Time;
 import java.sql.Timestamp;
 
@@ -11,30 +12,48 @@ public class Reclamo implements Serializable {
 
 	public Reclamo() {
 		super();
-	} 
-	private static final long serialVersionUID = 1L;	
-	
-	
+	}
+
+	private static final long serialVersionUID = 1L;
+
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RECLAMO" )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RECLAMO")
 	@SequenceGenerator(name = "SEQ_RECLAMO", initialValue = 1, allocationSize = 1)
 	private Long id;
-	
-	
-	@Column(nullable=true)
+
+	@Column(nullable = false)
+	private String titulo;
+
+	@Column(nullable = true)
 	private Timestamp fechaHora;
-	
-	@Column(nullable=false)
+
+	@Column(nullable = false)
 	private String detalle;
-	
-	@ManyToOne(optional=false)
+
+	@ManyToOne(optional = false)
 	private Estudiante estudiante;
 
-	@ManyToOne(optional=false)
-	private Evento evento;
-	
-	@ManyToOne(optional=false)
+	@ManyToOne(optional = false)
 	private Estado estado;
+	
+	@Column(nullable = true)
+	private String nombreEventoVME;
+	
+	@Column(nullable = true)
+	private String nombreActividad;
+	
+	@Column(nullable = true)
+	private int semestre;
+	
+	@Column(nullable = true)
+	private Date fechaEvento;
+	
+	@Column(nullable = true)
+	private String nombreDocente;
+	
+	@Column(nullable = true)
+	private int creditos;
+
 
 	public Long getId() {
 		return id;
@@ -43,8 +62,6 @@ public class Reclamo implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	
 
 	public Timestamp getFechaHora() {
 		return fechaHora;
@@ -62,14 +79,7 @@ public class Reclamo implements Serializable {
 		this.estudiante = estudiante;
 	}
 
-	public Evento getEvento() {
-		return evento;
-	}
-
-	public void setEvento(Evento evento) {
-		this.evento = evento;
-	}
-
+	
 	public Estado getEstado() {
 		return estado;
 	}
@@ -77,8 +87,6 @@ public class Reclamo implements Serializable {
 	public void setEstado(Estado estado) {
 		this.estado = estado;
 	}
-	
-	
 
 	public String getDetalle() {
 		return detalle;
@@ -88,14 +96,70 @@ public class Reclamo implements Serializable {
 		this.detalle = detalle;
 	}
 
+	public String getTitulo() {
+		return titulo;
+	}
+
+	public void setTitulo(String titulo) {
+		this.titulo = titulo;
+	}
+
+	public String getNombreEventoVME() {
+		return nombreEventoVME;
+	}
+
+	public void setNombreEventoVME(String nombreEventoVME) {
+		this.nombreEventoVME = nombreEventoVME;
+	}
+
+	public String getNombreActividad() {
+		return nombreActividad;
+	}
+
+	public void setNombreActividad(String nombreActividad) {
+		this.nombreActividad = nombreActividad;
+	}
+
+	public int getSemestre() {
+		return semestre;
+	}
+
+	public void setSemestre(int semestre) {
+		this.semestre = semestre;
+	}
+
+	public Date getFechaEvento() {
+		return fechaEvento;
+	}
+
+	public void setFechaEvento(Date fechaEvento) {
+		this.fechaEvento = fechaEvento;
+	}
+
+	public String getNombreDocente() {
+		return nombreDocente;
+	}
+
+	public void setNombreDocente(String nombreDocente) {
+		this.nombreDocente = nombreDocente;
+	}
+
+	public int getCreditos() {
+		return creditos;
+	}
+
+	public void setCreditos(int creditos) {
+		this.creditos = creditos;
+	}
+
 	@Override
 	public String toString() {
-		return "Reclamo [id=" + id + ", fechaHora=" + fechaHora + ", estudiante=" + estudiante + ", evento=" + evento
-				+ ", estado=" + estado + "]";
+		return "Reclamo [id=" + id + ", titulo=" + titulo + ", fechaHora=" + fechaHora + ", detalle=" + detalle
+				+ ", estudiante=" + estudiante + ", estado=" + estado + ", nombreEventoVME="
+				+ nombreEventoVME + ", nombreActividad=" + nombreActividad + ", semestre=" + semestre + ", fechaEvento="
+				+ fechaEvento + ", nombreDocente=" + nombreDocente + ", creditos=" + creditos + "]";
 	}
+
 	
-	
-	
-	
-   
+
 }
