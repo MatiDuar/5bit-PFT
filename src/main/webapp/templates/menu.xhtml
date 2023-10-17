@@ -21,7 +21,8 @@
 			<ui:repeat var="button" value="#{gestionPersona.bottonesMenu}">
 				<div class="bordeBtn">
 					<p:commandButton value="#{button}" styleClass="ui-button-flat w-full "
-						icon="pi pi-check" action="#{gestionPersona.getActionBottonesMenu(button)}"/>
+						action="#{gestionPersona.getActionBottonesMenu(button)}"
+						style="text-align: start;"/>
 				</div>
 			</ui:repeat>
 

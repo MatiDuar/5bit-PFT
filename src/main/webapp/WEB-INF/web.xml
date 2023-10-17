@@ -29,6 +29,10 @@
 		<url-pattern>/faces/*</url-pattern>
 	</servlet-mapping>
 
+	<context-param>
+		<param-name>primefaces.THEME</param-name>
+		<param-value>saga</param-value>
+	</context-param>
 
 	<!-- ##################### JWT ############################## -->
 	<filter>

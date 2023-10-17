@@ -30,16 +30,14 @@
 						emptyMessage="Personas no encontradas con este criterio"
 						filteredValue="#{dtFilterView.filteredPersonas}"
 						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
-						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable">
+						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable"
+						paginator="true" rows="10">
 
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
 							update="dateTable" />
 						<p:ajax event="rowEditCancel"
 							listener="#{gestionPersona.onRowCancel}" update="dateTable" />
-
 						<f:facet name="header">
-
-
 							<div class="grid ui-fluid">
 								<div class="col-12 md:col-2">
 									<br></br>
@@ -47,54 +45,37 @@
 										onkeyup="PF('personasTable').filter()" style="width:250px"
 										placeholder="Buscardor global..." />
 								</div>
-
 								<div class="col-12 md:col-2">
-
 									<p:outputLabel>Tipo Usuario</p:outputLabel>
 									<p:selectOneMenu id="groupTipoUsuario"
 										value="#{dtFilterView.tipoUsuarioSeleccionado}"
 										onchange="PF('personasTable').filter()">
 										<f:selectItem itemLabel="-" itemValue=" " />
-
 										<f:selectItem itemLabel="Estudiante" itemValue="estudiante" />
 										<f:selectItem itemLabel="Tutor" itemValue="tutor" />
 										<f:selectItem itemLabel="Analista" itemValue="analista" />
-
-
 									</p:selectOneMenu>
 								</div>
-
 								<div class="col-12 md:col-2">
-
 									<p:outputLabel>ITR</p:outputLabel>
 									<p:selectOneMenu id="groupItr"
 										value="#{dtFilterView.itrSeleccionado}"
 										onchange="PF('personasTable').filter()">
-
 										<f:selectItem itemLabel="-" itemValue=" " />
 										<c:forEach var="itr" items="#{gestionPersona.itrs}">
 											<f:selectItem itemLabel="#{itr.nombre}"
 												itemValue="#{itr.nombre}" />
 										</c:forEach>
-
-
 									</p:selectOneMenu>
 								</div>
-
 								<div class="col-12 md:col-2">
-
 									<p:outputLabel>Generacion</p:outputLabel>
 									<p:inputText id="anoIngreso" type="number"
 										value="#{dtFilterView.anoIngresoSeleccionado}"
 										onkeyup="PF('personasTable').filter()">
-
 									</p:inputText>
 								</div>
-
 								<div class="col-12 md:col-2">
-
-
-
 									<p:outputLabel>Estado</p:outputLabel>
 									<p:selectOneMenu id="groupEstado"
 										value="#{dtFilterView.estadoSeleccionado}"
@@ -103,25 +84,13 @@
 										<f:selectItem itemLabel="Sin Validar" itemValue="Sin Validar" />
 										<f:selectItem itemLabel="Validados" itemValue="Validados" />
 										<f:selectItem itemLabel="Eliminado" itemValue="Eliminado" />
-
-
 									</p:selectOneMenu>
 								</div>
-
 								<div class="col-12 md:col-1">
-
-
-
 									<br></br>
 									<p:commandButton value="ITR"
 										action="#{dfView.viewMantenimientoITR}" />
-
-
-
 								</div>
-
-
-
 								<div class="col-12 md:col-1">
 									<br></br>
 
@@ -133,7 +102,6 @@
 								</div>
 							</div>
 						</f:facet>
-
 						<p:column field="nombre1" headerText="Nombre"
 							sortBy="#{personas.nombre1}" filterable="false">
 							<p:cellEditor>
@@ -158,7 +126,6 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column field="apellido1" headerText="Apellido"
 							filterable="false">
 							<p:cellEditor>
@@ -183,7 +150,6 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column field="mail" headerText="Email" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -205,7 +171,6 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column field="mailInstitucional" headerText="Email Utec"
 							filterable="false">
 							<p:cellEditor>
@@ -228,7 +193,6 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column field="nombreUsuario" headerText="Nombre de Usuario"
 							filterable="false">
 							<p:cellEditor>
@@ -244,16 +208,12 @@
 										requiredMessage="Debe ingresar el Nombre de Usuario"
 										id="nombreUsuario"
 										validator="#{validatorPersona.validateOnLista}">
-
-
 									</p:inputText>
-
 									<small class="block ui-state-error"><h:message
 											style="color:red;" for="nombreUsuario" /></small>
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column headerText="Tipo de Usuario" filterable="false">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{gestionPersona.tipoUsuario(personas)}" />
@@ -266,7 +226,6 @@
 										value="#{personas.localidad}" />
 								</f:facet>
 								<f:facet name="input" class="col-10">
-
 									<p:inputText id="localidad"
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.localidad}" required="true"
@@ -279,7 +238,6 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column headerText="Telefono" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -288,7 +246,6 @@
 										value="#{personas.telefono}" />
 								</f:facet>
 								<f:facet name="input" class="col-10">
-
 									<p:inputText id="telefono"
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.telefono}" required="true"
@@ -301,20 +258,16 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Edad" filterable="false">
+						<p:column width="37" headerText="Edad" filterable="false">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{dtFilterView.getEdad(personas.fechaNacimiento)}" />
-
 						</p:column>
-
 						<p:column headerText="ITR" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
-
 									<h:outputText
 										style="vertical-align: middle; margin-left: .5rem"
 										value="#{personas.itr.nombre}" />
-
 								</f:facet>
 								<f:facet name="input" class="col-10">
 									<p:selectOneMenu id="groupITR" value="#{personas.itr}"
@@ -324,23 +277,19 @@
 										<c:forEach var="itr" items="#{gestionPersona.itrs}">
 											<f:selectItem itemLabel="#{itr.nombre}" itemValue="#{itr}" />
 										</c:forEach>
-
 										<f:validateRequired></f:validateRequired>
 									</p:selectOneMenu>
 									<small class="block ui-state-error"><h:message
 											style="color:red;" for="groupITR" /></small>
-
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
 						<p:column headerText="Departamento" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
-
 									<h:outputText
 										style="vertical-align: middle; margin-left: .5rem"
 										value="#{personas.departamento.nombre}" />
-
 								</f:facet>
 								<f:facet name="input" class="col-10">
 									<p:selectOneMenu id="groupDep" value="#{personas.departamento}"
@@ -350,16 +299,13 @@
 										<c:forEach var="dep" items="#{gestionPersona.departamentos}">
 											<f:selectItem itemLabel="#{dep.nombre}" itemValue="#{dep}" />
 										</c:forEach>
-
 										<f:validateRequired></f:validateRequired>
 									</p:selectOneMenu>
 									<small class="block ui-state-error"><h:message
 											style="color:red;" for="groupDep" /></small>
-
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
 						<p:column headerText="Generacion" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -368,9 +314,7 @@
 										<h:outputText
 											style="vertical-align: middle; margin-left: .5rem"
 											value="#{gestionPersona.usuarioToEstudiante(personas).anoIngreso}" />
-
 									</h:panelGroup>
-
 								</f:facet>
 								<f:facet name="input" class="col-10">
 
@@ -380,19 +324,16 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-						<p:column headerText="Area Tutor" filterable="false">
+						<p:column width="95" headerText="Area Tutor" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:panelGroup rendered="#{gestionPersona.esTutorMod(personas)}">
 										<h:outputText
 											style="vertical-align: middle; margin-left: .5rem"
 											value="#{gestionPersona.usuarioToTutor(personas).areaTutor.nombre}" />
-
 									</h:panelGroup>
 								</f:facet>
 								<f:facet name="input" class="col-10">
-
 									<h:panelGroup rendered="#{gestionPersona.esTutorMod(personas)}">
 										<p:selectOneMenu id="groupAreaTutor"
 											value="#{gestionPersona.usuarioToTutor(personas).areaTutor}"
@@ -402,15 +343,11 @@
 											<c:forEach var="at" items="#{gestionPersona.areasTutor}">
 												<f:selectItem itemLabel="#{at.nombre}" itemValue="#{at}" />
 											</c:forEach>
-
 											<f:validateRequired></f:validateRequired>
 										</p:selectOneMenu>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="groupAreaTutor" /></small>
-
 									</h:panelGroup>
-
-
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
@@ -421,11 +358,9 @@
 										<h:outputText
 											style="vertical-align: middle; margin-left: .5rem"
 											value="#{gestionPersona.usuarioToTutor(personas).tipoTutor.nombre}" />
-
 									</h:panelGroup>
 								</f:facet>
 								<f:facet name="input" class="col-10">
-
 									<h:panelGroup rendered="#{gestionPersona.esTutorMod(personas)}">
 										<p:selectOneMenu id="groupRolTutor"
 											value="#{gestionPersona.usuarioToTutor(personas).tipoTutor}"
@@ -440,46 +375,27 @@
 										</p:selectOneMenu>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="groupRolTutor" /></small>
-
 									</h:panelGroup>
-
-
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-
-
-
-						<p:column rendered="#{gestionPersona.esAnalistaLogeado()}"
+						<p:column width="35" rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
 							<div class="grid ui-fluid">
-							
-
-
-
 								<p:commandButton icon="pi pi-info-circle"
 									styleClass="rounded-button ui-button-secondary ui-button-flat"
 									immediate="true"
 									action="#{gestionPersona.abrirModificarEstado(personas)}"></p:commandButton>
 							</div>
 						</p:column>
-						<p:column style="width:6rem;" headerText="Editar"
+						<p:column width="35" style="width:6rem;" headerText="Editar"
 							rendered="#{gestionPersona.esAnalistaLogeado()}">
-
 							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 								saveTitle="Save Row">
-
 							</p:rowEditor>
 						</p:column>
-
-
-
 					</p:dataTable>
-
-
-
 				</p:panel>
-
 				<p:confirmDialog global="true" showEffect="fade" responsive="true"
 					width="350" class="dialog" appendTo="contenido">
 					<p:commandButton value="No" type="button"
@@ -489,9 +405,5 @@
 				</p:confirmDialog>
 			</h:form>
 		</div>
-
-
 	</ui:define>
-
-
 </ui:composition>

@@ -16,27 +16,20 @@
 	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 
 	<ui:define name="contenidoPrincipal">
-
 		<h1>Gestion de Eventos</h1>
-
 		<h:form>
-
 			<p:dataTable var="evento" value="#{dtFilterView.eventos}"
 				widgetVar="eventoTable"
 				emptyMessage="Eventos no encontradas con este criterio"
 				filteredValue="#{dtFilterView.filteredEventos}"
 				globalFilterFunction="#{dtFilterView.globalFilterFunctionEventos}"
-				editable="true" id="dataTable">
-
+				editable="true" id="dataTable" paginator="true" rows="10">
 				<p:ajax event="rowEdit" listener="#{gestionEventos.onRowEdit}"
-					update="dataTable" >
-					
+					update="dataTable">
 				</p:ajax>
 				<p:ajax event="rowEditCancel"
 					listener="#{gestionEventos.onRowCancel}" update="dataTable" />
-
 				<f:facet name="header">
-
 					<p:remoteCommand oncomplete="PF('eventoTable').filter()"
 						autoRun="true"></p:remoteCommand>
 					<div class="grid ui-fluid">
@@ -46,9 +39,7 @@
 								onkeyup="PF('eventoTable').filter()" style="width:250px"
 								placeholder="Buscardor global..." />
 						</div>
-
 						<div class="col-12 md:col-2">
-
 							<p:outputLabel>Tipo Evento</p:outputLabel>
 							<p:selectOneMenu id="groupTipoEvento"
 								value="#{dtFilterView.tipoEventoSelccionado}"
@@ -57,15 +48,9 @@
 								<c:forEach var="ta" items="#{gestionEventos.tiposActividades}">
 									<f:selectItem itemLabel="#{ta.nombre}" itemValue="#{ta.nombre}" />
 								</c:forEach>
-
-
 							</p:selectOneMenu>
 						</div>
-
 						<div class="col-12 md:col-2">
-
-
-
 							<p:outputLabel>Estado</p:outputLabel>
 							<p:selectOneMenu id="groupEstado"
 								value="#{dtFilterView.estadoEvento}"
@@ -74,30 +59,21 @@
 								<c:forEach var="es" items="#{gestionEventos.estadosEvento}">
 									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es.nombre}" />
 								</c:forEach>
-
-
 							</p:selectOneMenu>
 						</div>
-
 						<div class="col-12 md:col-2">
-
 							<p:outputLabel>ITR</p:outputLabel>
 							<p:selectOneMenu id="groupItr"
 								value="#{dtFilterView.itrEventoSelccionado}"
 								onchange="PF('eventoTable').filter()">
-
 								<f:selectItem itemLabel="-" itemValue=" " />
 								<c:forEach var="itr" items="#{gestionPersona.itrs}">
 									<f:selectItem itemLabel="#{itr.nombre}"
 										itemValue="#{itr.nombre}" />
 								</c:forEach>
-
-
 							</p:selectOneMenu>
 						</div>
-
 						<div class="col-12 md:col-2">
-
 							<p:outputLabel>Modalidad</p:outputLabel>
 							<p:selectOneMenu id="groupModalidad"
 								value="#{dtFilterView.modalidadEventoSeleccionada}"
@@ -107,21 +83,10 @@
 								<c:forEach var="mo" items="#{gestionEventos.modalidadesEvento}">
 									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" />
 								</c:forEach>
-
-
 							</p:selectOneMenu>
 						</div>
-
-
-
-
-
-
-
-
 					</div>
 				</f:facet>
-
 				<p:column field="titulo" headerText="Titulo"
 					sortBy="#{evento.titulo}" filterable="false">
 					<p:cellEditor>
@@ -145,7 +110,6 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
 				<p:column headerText="Tipo de Evento" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -165,17 +129,17 @@
 								<f:validateRequired></f:validateRequired>
 							</p:selectOneMenu>
 							<small class="block ui-state-error"><h:message
-									style="color:red;" for="groupTipoActividad" /></small>
-
+									style="color:red;" for="groupTipoActividad"/></small>
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Fecha Inicio" filterable="false">
+				<p:column width="130" headerText="Fecha Inicio" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.fechaInicio}" />
+								value="#{evento.fechaInicio}" >
+								<f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+							</h:outputText>
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
@@ -186,40 +150,33 @@
 								requiredMessage="Debe ingresar una fecha de nacimiento"
 								validatorMessage="Formato incorrecto de la Fecha"
 								converter="timestampConverter">
-
-
 							</p:datePicker>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="spanish" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
-				<p:column headerText="Fecha Final" filterable="false">
+				<p:column width="130" headerText="Fecha Final" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{evento.fechaFin}" />
+								value="#{evento.fechaFin}">
+								<f:convertDateTime pattern="dd.MM.yyyy HH:mm"/>
+							</h:outputText>
 						</f:facet>
 						<f:facet name="input" class="col-10">
-
 							<p:datePicker id="fechaFin" value="#{evento.fechaFin}"
 								pattern="yyyy-dd-MM HH:mm:ss" showTime="true"
 								yearRange="1950:2023" required="true"
 								requiredMessage="Debe ingresar una fecha de nacimiento"
 								validatorMessage="Formato incorrecto de la Fecha"
 								converter="timestampConverter">
-
-
 							</p:datePicker>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="fechaFin" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
 				<p:column headerText="Modalidad" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -235,16 +192,13 @@
 								<c:forEach var="mo" items="#{gestionEventos.modalidadesEvento}">
 									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo}" />
 								</c:forEach>
-
 								<f:validateRequired></f:validateRequired>
 							</p:selectOneMenu>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="groupModalidadEdit" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
 				<p:column headerText="ITR" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -252,7 +206,6 @@
 								value="#{evento.itr.nombre}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
-
 							<p:selectOneMenu id="groupITR" value="#{evento.itr}"
 								validatorMessage="Debe Seleccionar una opcion"
 								converter="omnifaces.SelectItemsConverter">
@@ -260,16 +213,13 @@
 								<c:forEach var="itr" items="#{gestionPersona.itrs}">
 									<f:selectItem itemLabel="#{itr.nombre}" itemValue="#{itr}" />
 								</c:forEach>
-
 								<f:validateRequired></f:validateRequired>
 							</p:selectOneMenu>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="groupITR" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
 				<p:column headerText="Localización" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
@@ -289,7 +239,6 @@
 							</p:inputText>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="localizacion" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
@@ -300,9 +249,6 @@
 								value="#{evento.estado.nombre}" />
 						</f:facet>
 						<f:facet name="input" class="col-10">
-
-
-
 							<p:selectOneMenu id="groupEstadoEvento" value="#{evento.estado}"
 								validatorMessage="Debe Seleccionar una opcion"
 								converter="omnifaces.SelectItemsConverter">
@@ -315,69 +261,54 @@
 							</p:selectOneMenu>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="groupEstadoEvento" /></small>
-
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-
 				<p:column headerText="Tutores encargados" filterable="false"
 					rendered="#{gestionPersona.esAnalistaLogeado()}">
-					<p:commandButton value="Tutores"
+					<p:commandButton value="Tutores" class="ui-button-flat"
 						action="#{gestionEventos.tutoresAsignadosMod(evento)}" />
 				</p:column>
-
-				<p:column headerText="Convocatoria" filterable="false"
+				<p:column width="120" headerText="Convocatoria" filterable="false"
 					rendered="#{gestionPersona.esAnalistaLogeado()}">
-					<p:commandButton value="Convocatoria"
+					<p:commandButton value="Convocatoria" class="ui-button-flat"
 						action="#{gestionEventos.convocatoriaEvento(evento)}" />
 				</p:column>
-
 				<p:column headerText="Asistencia" filterable="false">
-					<p:commandButton value="Asistencia"
+					<p:commandButton value="Asistencia" class="ui-button-flat"
 						action="#{gestionEventos.registroAsistencia(evento)}" />
 				</p:column>
-
-				<p:column style="width:6rem;" headerText="Editar"
-					rendered="#{gestionPersona.esAnalistaLogeado()}">
-
+				<p:column width="30" headerText="Editar"
+					rendered="#{gestionPersona.esAnalistaLogeado()}"
+					style="padding-right: 0; padding-left: 20px;">
 					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 						saveTitle="Save Row">
 
 					</p:rowEditor>
 				</p:column>
-
-				<p:column filterable="false" rendered="#{gestionPersona.esAnalistaLogeado()}">
-					<p:growl id="mensajes" life="4000" closable="true"
-						globalOnly="true" />
-
-					<p:commandButton value="Baja"
+				<p:column width="30"
+				style="padding-left: 5px;">
+					<p:commandButton class="rounded-button ui-button-danger ui-button-flat"
+						icon="pi pi-trash" process="@this"
 						action="#{gestionEventos.darDeBajaEvento(evento)}"
-						update="mensajes dataTable">
+						update="dataTable"
+						style="padding:0">
 						<p:confirm header="Estas Seguro?"
 							message="El evento quedara borrado completamente, eliminando todos los datos"
-							icon="pi pi-info-circle" />
+							icon="pi pi-info-danger" />
+						<f:setPropertyActionListener value="#{product}"
+							target="#{crudView.selectedProduct}" />
 					</p:commandButton>
-
-
-
-
 				</p:column>
-
-
-
 			</p:dataTable>
-
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-				responsive="true" width="350" widgetVar="confirm" header="Estas Seguro?">
+				responsive="true" width="350" widgetVar="confirm"
+				header="Estas Seguro?">
 				<p:commandButton value="Cancelar" type="button"
 					styleClass="ui-confirmdialog-no ui-button-flat" />
 				<p:commandButton value="Confirmar" type="button"
 					styleClass="ui-confirmdialog-yes" />
 			</p:confirmDialog>
 		</h:form>
-
-
 	</ui:define>
-
-
 </ui:composition>

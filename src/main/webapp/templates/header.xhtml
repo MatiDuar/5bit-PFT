@@ -3,7 +3,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
@@ -12,7 +13,6 @@
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 </h:head>
 <body>
-
 	<div class="layout-topbar">
 		<div class="flex">
 			<p:tabMenu activeIndex="#{param.i}">
@@ -26,19 +26,45 @@
 				<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index">
 					<f:param name="i" value="1" />
 				</p:menuitem>
-				
-				
 				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas" rendered="#{gestionPersona.esAnalistaLogeado()}">
-					<f:param name="i" value="2" />
+				<c:choose>
+						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
+							<f:param name="i" value="2" />
+						</c:when>
+						<c:otherwise>
+							<f:param name="i" value="1" />
+						</c:otherwise>
+					</c:choose>					
 				</p:menuitem>
 				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" outcome="eventos">
-					<f:param name="i" value="3" />
+					<c:choose>
+						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
+							<f:param name="i" value="3" />
+						</c:when>
+						<c:otherwise>
+							<f:param name="i" value="2" />
+						</c:otherwise>
+					</c:choose>
 				</p:menuitem>
 				<p:menuitem value="Reportes" icon="pi pi-fw pi-file-o" ajax="false" outcome="reportes">
-					<f:param name="i" value="4" />
+					<c:choose>
+						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
+							<f:param name="i" value="4" />
+						</c:when>
+						<c:otherwise>
+							<f:param name="i" value="3" />
+						</c:otherwise>
+					</c:choose>
 				</p:menuitem>
 				<p:menuitem value="Constancias" icon="pi pi-fw pi-clone" ajax="false" outcome="constancias">
-					<f:param name="i" value="5" />
+					<c:choose>
+						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
+							<f:param name="i" value="5" />
+						</c:when>
+						<c:otherwise>
+							<f:param name="i" value="4" />
+						</c:otherwise>
+					</c:choose>
 				</p:menuitem>
 			</p:tabMenu>
 		</div>

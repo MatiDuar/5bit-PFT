@@ -13,6 +13,8 @@ import javax.faces.convert.FacesConverter;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.primefaces.PrimeFaces;
@@ -88,7 +90,6 @@ public class GestionPersona implements Serializable {
 	private List<Departamento> departamentos;
 	private List<TipoTutor>rolesTutor;
 
-	
 	private List<String> bottonesMenu;
 
 	private java.util.Date fechaNacSel;
