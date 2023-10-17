@@ -703,6 +703,7 @@ public class GestionPersona implements Serializable {
 		this.tipoUsuario = tipoUsuario;
 	}
 
+	
 
 
 	public String getAreaTutorSeleccionado() {

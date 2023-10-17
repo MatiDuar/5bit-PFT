@@ -88,6 +88,9 @@ public class GestionPersonaService implements Serializable {
 
 	@EJB
 	EstadoAsistenciaDAO estadoAsistenciaDAO;
+	
+
+
 
 	/**
 	 * Lista de todas las personas en la base de datos
@@ -140,6 +143,10 @@ public class GestionPersonaService implements Serializable {
 		return eventoDAO.obtenerEvento();
 	}
 
+	
+	public List<Reclamo>listarReclamo() throws ServicesException{
+		return reclamoDAO.obtenerReclamos();
+	}
 	public Departamento buscarDepartamento(String nombre) {
 		try {
 			return departamentoDAO.obtenerDepPorNombre(nombre);
@@ -189,30 +196,7 @@ public class GestionPersonaService implements Serializable {
 			return false;
 		}
 	}
-	/**
-	 * Lista de todas las personas y alumnos en la base de datos
-	 * 
-	 * @return Lista de PersonasAlumnoDTO
-	 * @throws Exception
-	 */
-//	public List<PersonaAlumnoDTO> listarPersonasDTO() throws Exception {
-//
-//		List<PersonaAlumnoDTO> listaPersonas = usuarioDAO.listarPersonasDTO();
-//
-//		return listaPersonas;
-//	}
-
-	/**
-	 * Lista de todos los ITRs
-	 * 
-	 * @return lista de ITR
-	 */
-//	public List<ITR> listarITRs() {
-//
-//		List<ITR> listaPItrs = itrDAO.listarITRs();
-//
-//		return listaPItrs;
-//	}
+	
 
 	/**
 	 * Verifica si el nombreUsuario y contraseña coinciden en la base de datos
@@ -266,32 +250,6 @@ public class GestionPersonaService implements Serializable {
 		}
 	}
 
-	/**
-	 * Modifica los de datos en la base de datos
-	 * 
-	 * @param p Persona a modificar los datos
-	 */
-//	public void modificarUsuario(Persona p) {
-//		personaDAO.modificarPersona(p);
-//	}
-
-	/**
-	 * Borra a un Usuario en la base de datos
-	 * 
-	 * @param id Id de el usuario a borrar
-	 */
-//	public void borrarUsuario(long id) {
-//		personaDAO.borrarPersona(id);
-//	}
-
-	/**
-	 * Lista de Carreras en la base de datos
-	 * 
-	 * @return Lista de Carrera
-	 */
-//	public List<Carrera> listarCarreras() {
-//		return carreraDAO.listarCarreras();
-//	}
 
 	/**
 	 * retorna true si existe un usuario con el nombre ingresado
@@ -309,7 +267,7 @@ public class GestionPersonaService implements Serializable {
 		initDepartamentos();
 		initItrs();
 		initAreaTutor();
-//		initCarreras();
+
 		Analista p = new Analista();
 		try {
 			p.setActivo(true);
@@ -366,6 +324,24 @@ public class GestionPersonaService implements Serializable {
 			e.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
 			e.setAnoIngreso(2022);
 			usuarioDAO.crearUsuario(e);
+			
+			Estudiante e2 = new Estudiante();
+			e2.setActivo(true);
+			e2.setDocumento("50329190");
+			e2.setApellido1("demo");
+			e2.setNombre1("demo");
+			e2.setNombreUsuario("demo.estudiante2");
+			e2.setContrasena("demo");
+			e2.setDepartamento(depDAO.obtenerDepPorNombre("Durazno"));
+			e2.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
+			e2.setLocalidad("demo");
+			e2.setMail("demo@demo.com");
+			e2.setMailInstitucional("demo@demo.com");
+			e2.setTelefono("09999999");
+			e2.setValidado(true);
+			e2.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
+			e2.setAnoIngreso(2022);
+			usuarioDAO.crearUsuario(e2);
 
 			Tutor t2 = new Tutor();
 			t2.setActivo(true);
@@ -543,18 +519,27 @@ public class GestionPersonaService implements Serializable {
 		Reclamo reclamo = new Reclamo();
 		Estado estado = new Estado();
 		estado.setActivo(true);
-		estado.setNombre("demo");
+		estado.setNombre("Ingresado");
+		
+		Estado estado2= new Estado();
+		estado2.setActivo(true);
+		estado2.setNombre("En Proceso");
+		Estado estado3 = new Estado();
+		estado3.setActivo(true);
+		estado3.setNombre("Finalizado");
+		
 
 		try {
 			estadoDAO.crearEstado(estado);
-
+			estadoDAO.crearEstado(estado2);
+			estadoDAO.crearEstado(estado3);
+			reclamo.setTitulo("demo");
 			reclamo.setDetalle("demo");
-			reclamo.setFechaHora(new Timestamp(2022, 7, 20, 15, 0, 0, 0));
+			reclamo.setFechaHora(new Timestamp(2022-1900, 7, 20, 15, 0, 0, 0));
 
-			reclamo.setEvento(eventoDAO.buscarEventoPorId((long) 1));
+			reclamo.setNombreEventoVME("demo");
 			reclamo.setEstudiante((Estudiante) usuarioDAO.buscarNombre("demo.estudiante"));
 			reclamo.setEstado(estadoDAO.buscarEstadoPorId((long) 1));
-
 			reclamoDAO.crearReclamo(reclamo);
 
 		} catch (ServicesException e) {

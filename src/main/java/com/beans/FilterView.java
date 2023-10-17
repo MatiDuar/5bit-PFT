@@ -8,18 +8,20 @@ import java.util.Locale;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+import java.util.LinkedList;
+
 import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import org.primefaces.event.SelectEvent;
 import org.primefaces.model.FilterMeta;
 import org.primefaces.model.MatchMode;
 import org.primefaces.util.LangUtils;
 
 import com.logicaNegocio.GestionPersonaService;
-
-import com.persistencia.entities.Carrera;
+import com.persistencia.entities.Estado;
 import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
@@ -27,7 +29,6 @@ import com.persistencia.entities.Usuario;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.Reclamo;
-import com.persistencia.entities.Tutor;
 
 @Named("dtFilterView")
 @ViewScoped
@@ -40,7 +41,7 @@ public class FilterView implements Serializable {
 
 	@Inject
 	private GestionPersonaService service;
-	
+
 	@Inject
 	private GestionPersona gestionPersona;
 
@@ -62,11 +63,14 @@ public class FilterView implements Serializable {
 	private List<ITR> itrs;
 
 	private List<ITR> filteredItrs;
-	
-	
+
+	// filtros para reclamos
+	private String estadoReclamo;
 	private List<Reclamo> reclamos;
 
 	private List<Reclamo> filteredReclamos;
+
+	private List<Reclamo> reclamosSeleccionados;
 
 	private List<FilterMeta> filterBy;
 
@@ -108,13 +112,16 @@ public class FilterView implements Serializable {
 			itrs = service.listarITRs();
 			eventos = service.listarEventos();
 			estadoEventos = service.listarEstadosEventos();
-			modalidadEventos=service.listarModalidadesEventos();
-
+			modalidadEventos = service.listarModalidadesEventos();
+			reclamos = service.listarReclamo();
+			reclamosSeleccionados = new LinkedList<Reclamo>();
 			// filtros para Usuario
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
 			anoIngresoSeleccionado = "";
 			estadoSeleccionado = "";
+
+			estadoReclamo = "";
 
 			// filtros para Eventos
 
@@ -200,38 +207,50 @@ public class FilterView implements Serializable {
 				|| itr.getDepartamento().getNombre().toLowerCase().contains(filterText));
 
 	}
-	
-	public boolean globalFilterFunctionReclamo(Object value, Object filter, Locale locale) {
-		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		if (LangUtils.isBlank(filterText)) {
-			return true;
-		}
 
+	public boolean globalFilterFunctionReclamo(Object value, Object filter, Locale locale) {
 		Reclamo reclamo = (Reclamo) value;
 
-		return (reclamo.getEstudiante().getNombre1().toLowerCase().contains(filterText)
-				|| reclamo.getEvento().getTitulo().toLowerCase().contains(filterText));
+		if (gestionPersona.esEstudianteLogeado()) {
+			if (!(reclamo.getEstudiante().getId() == gestionPersona.getUsuarioLogeado().getId())) {
+				return false;
+			}
+		}
+
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+
+		if (!reclamo.getEstado().getNombre().contains(estadoReclamo) && !estadoReclamo.isBlank()) {
+			return false;
+		}
+		if (!gestionPersona.esEstudianteLogeado()) {
+			if (LangUtils.isBlank(filterText)) {
+				return true;
+			}
+			String nombreEstudiante = reclamo.getEstudiante().getNombre1() + " "
+					+ reclamo.getEstudiante().getApellido1();
+			return (reclamo.getTitulo().equalsIgnoreCase(filterText)
+					|| (reclamo.getNombreEventoVME().toLowerCase().contains(filterText))
+					|| nombreEstudiante.startsWith(filterText));
+		}
+
+		return true;
 
 	}
 
 	public boolean globalFilterFunctionEventos(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
-		
+
 		Evento evento = (Evento) value;
-		if(!gestionPersona.esAnalistaLogeado()) {
-			if(!evento.getTutores().contains(gestionPersona.getUsuarioLogeado())) {
+		if (!gestionPersona.esAnalistaLogeado()) {
+			if (!evento.getTutores().contains(gestionPersona.getUsuarioLogeado())) {
 				return false;
 			}
 		}
 		if (LangUtils.isBlank(filterText) && tipoEventoSelccionado.isBlank() && estadoEvento.isBlank()
 				&& itrEventoSelccionado.isBlank() && modalidadEventoSeleccionada.isBlank()) {
-			
+
 			return true;
 		}
-
-		
-		
-		
 
 		if (!evento.getTipoActividad().getNombre().equalsIgnoreCase(tipoEventoSelccionado)
 				&& !tipoEventoSelccionado.isBlank()) {
@@ -267,7 +286,7 @@ public class FilterView implements Serializable {
 		return (es.getNombre().toLowerCase().contains(filterText));
 
 	}
-	
+
 	public boolean globalFilterFunctionModalidadEventos(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
 		if (LangUtils.isBlank(filterText)) {
@@ -279,30 +298,28 @@ public class FilterView implements Serializable {
 		return (me.getNombre().toLowerCase().contains(filterText));
 
 	}
-	
-	
+
 	public void updateModalidadEvento() {
 		try {
-			modalidadEventos=service.listarModalidadesEventos();
+			modalidadEventos = service.listarModalidadesEventos();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
+
 	public void updateEstadoEvento() {
 		try {
-			estadoEventos=service.listarEstadosEventos();
+			estadoEventos = service.listarEstadosEventos();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
 
 	public void updateItr() {
 		try {
-			itrs=service.listarITRs();
+			itrs = service.listarITRs();
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -315,6 +332,10 @@ public class FilterView implements Serializable {
 
 	public Usuario buscar(long id) {
 		return service.buscarUsuario(id);
+	}
+
+	public int longConverter(long num) {
+		return (int) num;
 	}
 
 	public int getEdad(String fecha) {
@@ -512,9 +533,26 @@ public class FilterView implements Serializable {
 	}
 
 	public void setFilteredReclamos(List<Reclamo> filteredReclamos) {
+
 		this.filteredReclamos = filteredReclamos;
 	}
 
-	
+	public List<Reclamo> getReclamosSeleccionados() {
+
+		return reclamosSeleccionados;
+	}
+
+	public void setReclamosSeleccionados(List<Reclamo> reclamosSeleccionados) {
+
+		this.reclamosSeleccionados = reclamosSeleccionados;
+	}
+
+	public String getEstadoReclamo() {
+		return estadoReclamo;
+	}
+
+	public void setEstadoReclamo(String estadoReclamo) {
+		this.estadoReclamo = estadoReclamo;
+	}
 
 }
