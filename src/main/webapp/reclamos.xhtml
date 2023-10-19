@@ -32,20 +32,18 @@
 
 
 
-
 				<f:facet name="header">
 
-
+					<p:remoteCommand oncomplete="PF('reclamoTable').filter()"
+						autoRun="true"></p:remoteCommand>
 					<div class="grid ui-fluid">
 
-						<p:remoteCommand action="PF('reclamoTable').filter()"
-							autoRun="true"></p:remoteCommand>
+
 						<div class="col-12 md:col-2">
 							<br></br>
 							<p:inputText id="globalFilter"
 								onkeyup="PF('reclamoTable').filter()" style="width:250px"
-								placeholder="Buscardor global..."
-								rendered="#{gestionPersona.esAnalistaLogeado()}" />
+								placeholder="Buscardor global..." />
 						</div>
 						<div class="col-12 md:col-2">
 
@@ -67,6 +65,16 @@
 							<p:commandButton value="Realizar Reclamo"
 								action="#{gestionReclamos.altaReclamo}"
 								rendered="#{gestionPersona.esEstudianteLogeado()}"></p:commandButton>
+
+
+						</div>
+						<div class="col-12 md:col-2"></div>
+						<div class="col-12 md:col-2"></div>
+						<div class="col-12 md:col-2">
+							<br></br>
+							<p:commandButton value="Estados"
+								action="#{dfView.viewMantenimientoEstadoReclamo}"
+								rendered="#{gestionPersona.esAnalistaLogeado()}"></p:commandButton>
 
 
 						</div>
@@ -112,12 +120,25 @@
 
 				</p:column>
 
-				<p:column filterable="false">
+				<p:column filterable="false" width="30">
 
 					<p:commandButton icon="pi pi-info-circle"
 						styleClass="rounded-button ui-button-secondary ui-button-flat"
 						immediate="true" action="#{gestionReclamos.onRowClick(reclamo)}"></p:commandButton>
 
+				</p:column>
+				
+				<p:column width="30" rendered="#{gestionPersona.esEstudianteLogeado()}">
+					<p:commandButton class="rounded-button ui-button-danger ui-button-flat"
+						icon="pi pi-trash" process="@this"
+						action="#{gestionReclamos.darDeBajaReclamo(reclamo)}"
+						update="dataTable"
+						style="padding:0">
+						<p:confirm header="Estas Seguro?"
+							message="El evento quedara borrado completamente, eliminando todos los datos"
+							icon="pi pi-info-danger" />
+						
+					</p:commandButton>
 				</p:column>
 
 

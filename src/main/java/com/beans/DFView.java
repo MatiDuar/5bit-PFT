@@ -102,6 +102,26 @@ public class DFView {
 	        PrimeFaces.current().dialog().openDynamic("mantenimientoModalidadEvento", options, null);
 	    }
 	  
+	  public void viewMantenimientoEstadoReclamo() {
+	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+	                .modal(true)
+	                .fitViewport(true)
+	                .responsive(true)
+	                .width("80%")
+	                .height("60%")
+	                .contentWidth("100%")
+	                .contentHeight("100%")
+	                .resizeObserver(true)
+	                .resizeObserverCenter(true)
+	                .resizable(false)
+	                .styleClass("max-w-screen")
+	                .iframeStyleClass("max-w-screen")
+
+	                .build();
+
+	        PrimeFaces.current().dialog().openDynamic("mantenimientoEstadoReclamos", options, null);
+	    }
+	  
 	  public void viewEstadoUsuario() {
 	        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
 	                .modal(true)
@@ -200,6 +220,24 @@ public class DFView {
 		        PrimeFaces.current().dialog().openDynamic("altaEstadoEvento", options, null);
 		    }
 		 
+		 public void viewAltaEstadoReclamo() {
+			  
+			  
+		        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+		                .modal(true)
+		                .fitViewport(true)
+		                .responsive(true)
+		                .width("700px")
+		                .contentWidth("100%")
+		                .resizeObserver(true)
+		                .resizeObserverCenter(true)
+		                .resizable(false)
+		                .styleClass("max-w-screen")
+		                .iframeStyleClass("max-w-screen")
+		                .build();
+
+		        PrimeFaces.current().dialog().openDynamic("altaEstadoReclamo", options, null);
+		    }
 		 public void viewAltaModalidadEvento() {
 			  
 			  
@@ -250,11 +288,13 @@ public class DFView {
 		                .width("900px")
 		                .height("70%")
 		                .contentWidth("100%")
+		                .contentHeight("100%")
+		              
 		                .resizeObserver(true)
 		                .resizeObserverCenter(true)
-		                .resizable(false)
-		                .styleClass("max-w-screen")
-		                .iframeStyleClass("max-w-screen")
+		                
+		               
+		                
 		                .build();
 
 		        PrimeFaces.current().dialog().openDynamic("reclamoMod", options, null);
@@ -264,11 +304,33 @@ public class DFView {
 			  
 			  
 			 DialogFrameworkOptions options = DialogFrameworkOptions.builder()
-		                .modal(true)
+					 .modal(true)
 		                .fitViewport(true)
 		                .responsive(true)
 		                .width("900px")
 		                .height("70%")
+		                .contentWidth("100%")
+		                .contentHeight("100%")
+		              
+		                .resizeObserver(true)
+		                .resizeObserverCenter(true)
+		                
+		               
+		                
+		                .build();
+
+		        PrimeFaces.current().dialog().openDynamic("reclamoAlta", options, null);
+		    }
+	  
+		 
+		 public void viewAccionReclamo() {
+			  
+			  
+		        DialogFrameworkOptions options = DialogFrameworkOptions.builder()
+		                .modal(true)
+		                .fitViewport(true)
+		                .responsive(true)
+		                .width("700px")
 		                .contentWidth("100%")
 		                .resizeObserver(true)
 		                .resizeObserverCenter(true)
@@ -277,9 +339,8 @@ public class DFView {
 		                .iframeStyleClass("max-w-screen")
 		                .build();
 
-		        PrimeFaces.current().dialog().openDynamic("reclamoAlta", options, null);
+		        PrimeFaces.current().dialog().openDynamic("reclamoAccion", options, null);
 		    }
-	  
 	  public void closeResponsive() {
 		  PrimeFaces.current().dialog().closeDynamic(null);
 	  }

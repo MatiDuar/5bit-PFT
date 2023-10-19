@@ -89,6 +89,8 @@ public class GestionPersonaService implements Serializable {
 	@EJB
 	EstadoAsistenciaDAO estadoAsistenciaDAO;
 	
+	
+	
 
 
 
@@ -141,6 +143,10 @@ public class GestionPersonaService implements Serializable {
 
 	public List<Evento> listarEventos() throws Exception {
 		return eventoDAO.obtenerEvento();
+	}
+	
+	public List<Estado> listarEstadoReclamo() throws ServicesException{
+		return estadoDAO.obtenerEstados();
 	}
 
 	

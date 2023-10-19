@@ -71,7 +71,7 @@ public class FilterView implements Serializable {
 	private List<Reclamo> filteredReclamos;
 
 	private List<Reclamo> reclamosSeleccionados;
-
+	//////////////////////////////////////
 	private List<FilterMeta> filterBy;
 
 	private boolean globalFilterOnly;
@@ -89,7 +89,7 @@ public class FilterView implements Serializable {
 	private List<Evento> eventos;
 
 	private List<Evento> filteredEventos;
-
+	/////////////////////
 	// filtros Estado Evento
 
 	private List<EstadosEventos> estadoEventos;
@@ -102,6 +102,15 @@ public class FilterView implements Serializable {
 
 	private List<ModalidadesEventos> filteredModalidadEventos;
 
+	
+	// filtros para estado Reclamo
+	private List<Estado> estadosReclamo;
+	
+	private List<EstadosEventos> filteredEstadosReclamo;
+
+
+	
+	
 	// filtros para tutores
 
 	@PostConstruct
@@ -114,6 +123,7 @@ public class FilterView implements Serializable {
 			estadoEventos = service.listarEstadosEventos();
 			modalidadEventos = service.listarModalidadesEventos();
 			reclamos = service.listarReclamo();
+			estadosReclamo=service.listarEstadoReclamo();
 			reclamosSeleccionados = new LinkedList<Reclamo>();
 			// filtros para Usuario
 			itrSeleccionado = "";
@@ -207,12 +217,24 @@ public class FilterView implements Serializable {
 				|| itr.getDepartamento().getNombre().toLowerCase().contains(filterText));
 
 	}
+	
+	public boolean globalFilterFunctionEstadoReclamo(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText)) {
+			return true;
+		}
+
+		Estado estado = (Estado) value;
+
+		return (estado.getNombre().toLowerCase().contains(filterText));
+
+	}
 
 	public boolean globalFilterFunctionReclamo(Object value, Object filter, Locale locale) {
 		Reclamo reclamo = (Reclamo) value;
 
 		if (gestionPersona.esEstudianteLogeado()) {
-			if (!(reclamo.getEstudiante().getId() == gestionPersona.getUsuarioLogeado().getId())) {
+			if ((reclamo.getEstudiante().getId() != gestionPersona.getUsuarioLogeado().getId())) {
 				return false;
 			}
 		}
@@ -553,6 +575,22 @@ public class FilterView implements Serializable {
 
 	public void setEstadoReclamo(String estadoReclamo) {
 		this.estadoReclamo = estadoReclamo;
+	}
+
+	public List<Estado> getEstadosReclamo() {
+		return estadosReclamo;
+	}
+
+	public void setEstadosReclamo(List<Estado> estadosReclamo) {
+		this.estadosReclamo = estadosReclamo;
+	}
+
+	public List<EstadosEventos> getFilteredEstadosReclamo() {
+		return filteredEstadosReclamo;
+	}
+
+	public void setFilteredEstadosReclamo(List<EstadosEventos> filteredEstadosReclamo) {
+		this.filteredEstadosReclamo = filteredEstadosReclamo;
 	}
 
 }

@@ -32,17 +32,15 @@
 		<h:form>
 			<p:panel id="contenido">
 				<p:growl id="messages" life="3000" closable="true" showDetail="true" />
-				<p:fieldset id="grid" 
-					class="fildsetprueba">
+				<p:fieldset id="grid" class="fildsetprueba">
 					<div class="grid ui-fluid">
 
-						<div class="col-12 md:col-4">
+						<div class="col-12 md:col-12">
 							<h5>Titulo *</h5>
 
 							<p:inputText id="titulo"
-								value="#{gestionReclamos.reclamoAlta.titulo}"
-								required="true" requiredMessage="Debe ingresar el titulo"
-								maxlength="50"
+								value="#{gestionReclamos.reclamoAlta.titulo}" required="true"
+								requiredMessage="Debe ingresar el titulo" maxlength="50"
 								validatorMessage="No puede contener solo espacios vacios">
 								<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 							</p:inputText>
@@ -50,103 +48,133 @@
 									style="color:red;" for="titulo" /></small>
 
 						</div>
-						<div class="col-12 md:col-4">
+						<div class="col-12 md:col-12">
 							<h5>Detalle *</h5>
 
-							<p:inputText id="detalle"
+							<p:inputTextarea rows="6" cols="33" id="detalle"
 								value="#{gestionReclamos.reclamoAlta.detalle}"
-								 requiredMessage="Debe ingresar el detalle"
-								maxlength="50" required="true"
+								requiredMessage="Debe ingresar el detalle" maxlength="50"
+								required="true"
 								validatorMessage="No puede contener solo espacios vacios">
-							</p:inputText>
+							</p:inputTextarea>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="detalle" /></small>
 
 						</div>
 
-						<div class="col-12 md:col-4">
-							<h5>Nombre Activiad</h5>
-							<p:inputText id="nombreActividad"
-								value="#{gestionReclamos.reclamoAlta.nombreActividad}"
-								
-								maxlength="50"
-								validatorMessage="No puede contener solo espacios vacios">
-							</p:inputText>
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="nombreActividad" /></small>
+						<div class="col-12 md:col-12">
+							<h5>Tipo</h5>
+							<p:selectOneMenu id="groupTipo"
+								value="#{gestionReclamos.tipoReclamo}"
+								converter="omnifaces.SelectItemsConverter">
+								<p:ajax update="datosVME datosOptativa datosTodo"
+									process="@this" event="change" />
+
+								<f:selectItem itemLabel="VME" itemValue="VME" />
+
+								<f:selectItem itemLabel="APE u Optativa"
+									itemValue="APE u Optativa" />
+								<f:selectItem itemLabel="Otro" itemValue="Otro" />
+
+							</p:selectOneMenu>
 
 						</div>
+						<h:panelGroup layout="block" id="datosTodo">
+							<p:outputPanel rendered="#{!gestionReclamos.renderTodo()}">
+								<div class="grid ui-fluid">
+									<div class="col-12 md:col-12">
+										<h:panelGroup layout="block" id="datosVME">
+											<p:outputPanel
+												rendered="#{!gestionReclamos.renderNombreEvento()}">
 
-						
+												<h5>Nombre Activiad</h5>
+												<p:inputText id="nombreActividad"
+													value="#{gestionReclamos.reclamoAlta.nombreActividad}"
+													maxlength="50"
+													validatorMessage="No puede contener solo espacios vacios">
+												</p:inputText>
+												<small class="block ui-state-error"><h:message
+														style="color:red;" for="nombreActividad" /></small>
 
-						<div class="col-12 md:col-4">
-							<h5>Nombre Evento</h5>
-							<p:inputText id="nombreEvento"
-								value="#{gestionReclamos.reclamoAlta.nombreEventoVME}"
-								 
-								maxlength="50"
-								validatorMessage="No puede contener solo espacios vacios">
-							</p:inputText>
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="nombreEvento" /></small>
 
-						</div>
+											</p:outputPanel>
 
-						<div class="col-12 md:col-4">
-							<h5>Semestre</h5>
-							<p:inputText id="semestre"
-								value="#{gestionReclamos.reclamoAlta.semestre}"
-								
-								maxlength="2"
-								validatorMessage="No puede contener solo espacios vacios"
-								 type="number" converterId="javax.faces.Integer" >
-								
-							
-							</p:inputText>
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="semestre" /></small>
+										</h:panelGroup>
+									</div>
+									<div class="col-12 md:col-12">
+										<h:panelGroup layout="block" id="datosOptativa">
+											<p:outputPanel
+												rendered="#{gestionReclamos.renderNombreEvento()}">
 
-						</div>
+												<h5>Nombre Evento</h5>
+												<p:inputText id="nombreEvento"
+													value="#{gestionReclamos.reclamoAlta.nombreEventoVME}"
+													maxlength="50"
+													validatorMessage="No puede contener solo espacios vacios">
+												</p:inputText>
+												<small class="block ui-state-error"><h:message
+														style="color:red;" for="nombreEvento" /></small>
 
-						<div class="col-12 md:col-4">
-							<h5>Fecha</h5>
-							<p:datePicker id="spanish" value="#{gestionReclamos.fechaAlta}"
-								locale="es" monthNavigator="true" pattern="dd-MM-yyyy"
-								yearNavigator="true" yearRange="2012:2023"
-								requiredMessage="Debe ingresar una fecha de Evento"
-								validatorMessage="Formato incorrecto de la Fecha"
-								styleClass="datePicker" />
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="spanish" /></small>
 
-						</div>
+											</p:outputPanel>
+										</h:panelGroup>
+									</div>
+									<div class="col-12 md:col-6">
+										<h5>Fecha</h5>
+										<p:datePicker id="spanish"
+											value="#{gestionReclamos.fechaAlta}" locale="es"
+											monthNavigator="true" pattern="dd-MM-yyyy"
+											yearNavigator="true" yearRange="2012:2023"
+											requiredMessage="Debe ingresar una fecha de Evento"
+											validatorMessage="Formato incorrecto de la Fecha"
+											styleClass="datePicker" />
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="spanish" /></small>
 
-						<div class="col-12 md:col-4">
-							<h5>Docente</h5>
-							<p:inputText id="docente"
-								value="#{gestionReclamos.reclamoAlta.nombreDocente}"
-								
-								
-								validatorMessage="No puede contener solo espacios vacios">
-							</p:inputText>
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="docente" /></small>
+									</div>
 
-						</div>
 
-						<div class="col-12 md:col-4">
-							<h5>Creditos</h5>
-							<p:inputText id="creditos"
-								value="#{gestionReclamos.reclamoAlta.creditos}"
-								 
-								maxlength="2" type="number"
-								validatorMessage="No puede contener solo espacios vacios"  converterId="javax.faces.Integer">
-							</p:inputText>
-							<small class="block ui-state-error"><h:message
-									style="color:red;" for="creditos" /></small>
 
-						</div>
 
+
+									<div class="col-12 md:col-6">
+										<h5>Docente</h5>
+										<p:inputText id="docente"
+											value="#{gestionReclamos.reclamoAlta.nombreDocente}"
+											validatorMessage="No puede contener solo espacios vacios">
+										</p:inputText>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="docente" /></small>
+
+									</div>
+									<div class="col-12 md:col-6">
+										<h5>Semestre</h5>
+										<p:inputText id="semestre"
+											value="#{gestionReclamos.reclamoAlta.semestre}" maxlength="2"
+											validatorMessage="No puede contener solo espacios vacios"
+											type="number" converterId="javax.faces.Integer">
+
+
+										</p:inputText>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="semestre" /></small>
+
+									</div>
+									<div class="col-12 md:col-6">
+										<h5>Creditos</h5>
+										<p:inputText id="creditos"
+											value="#{gestionReclamos.reclamoAlta.creditos}" maxlength="2"
+											type="number"
+											validatorMessage="No puede contener solo espacios vacios"
+											converterId="javax.faces.Integer">
+										</p:inputText>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="creditos" /></small>
+
+									</div>
+								</div>
+							</p:outputPanel>
+						</h:panelGroup>
 					</div>
 
 
@@ -166,7 +194,7 @@
 							class="flex-grow-1 flex align-items-center justify-content-center "></div>
 						<div
 							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Guardar Cambios"
+							<p:commandButton value="Realizar Reclamo"
 								action="#{gestionReclamos.crearReclamo}" update="messages">
 								<p:confirm header="Estas Seguro?"
 									message="Los datos modificados quedaran guardados"

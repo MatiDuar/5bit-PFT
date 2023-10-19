@@ -55,7 +55,7 @@ public class EstadoDAO {
 			em.flush();
 
 		} catch (PersistenceException e) {
-			throw new ServicesException("No se pudo BORRAR el estado");
+			throw new ServicesException(e.getMessage());
 		}
 	}
 

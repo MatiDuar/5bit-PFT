@@ -6,8 +6,10 @@ import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
+import com.persistencia.dao.AccionReclamoDAO;
 import com.persistencia.dao.EstadoDAO;
 import com.persistencia.dao.ReclamoDAO;
+import com.persistencia.entities.AccionReclamo;
 import com.persistencia.entities.Estado;
 import com.persistencia.entities.Reclamo;
 import com.persistencia.exception.ServicesException;
@@ -21,6 +23,9 @@ public class GestionReclamoService {
 	
 	@EJB
 	EstadoDAO estadoDAO;
+	
+	@EJB
+	AccionReclamoDAO accionReclamoDAO;
 
 	
 	
@@ -38,5 +43,21 @@ public class GestionReclamoService {
 	
 	public Estado buscarEstadoReclamo(String nombre) throws ServicesException {
 		return estadoDAO.buscarNombreEstado(nombre);
+	}
+	
+	public void crearAccionReclamo(AccionReclamo accion) throws ServicesException {
+		accionReclamoDAO.crearAccionReclamo(accion);
+	}
+	
+	public void crearEstadoReclamo(Estado estado) throws ServicesException {
+		estadoDAO.crearEstado(estado);
+	}
+	
+	public void darDeBajaReclamo(Long id) throws ServicesException {
+		reclamoDAO.borrarReclamo(id);
+	}
+	
+	public List<AccionReclamo>buscarAccionesPorReclamo(Reclamo reclamo) throws ServicesException{
+		return accionReclamoDAO.obtenerAccionPorReclamo(reclamo);
 	}
 }

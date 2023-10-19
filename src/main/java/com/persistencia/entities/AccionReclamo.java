@@ -2,6 +2,7 @@ package com.persistencia.entities;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -17,7 +18,7 @@ public class AccionReclamo implements Serializable {
 	private Long id;
 	
 	@Column(nullable=false)
-	private Date fechaHoraReclamo;
+	private Timestamp fechaHoraReclamo;
 	
 	@Column(nullable=false, length=150)
 	private String detalleReclamo;
@@ -35,10 +36,10 @@ public class AccionReclamo implements Serializable {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	public Date getFechaHoraReclamo() {
+	public Timestamp getFechaHoraReclamo() {
 		return fechaHoraReclamo;
 	}
-	public void setFechaHoraReclamo(Date fechaHoraReclamo) {
+	public void setFechaHoraReclamo(Timestamp fechaHoraReclamo) {
 		this.fechaHoraReclamo = fechaHoraReclamo;
 	}
 	public String getDetalleReclamo() {
