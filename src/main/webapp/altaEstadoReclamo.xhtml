@@ -27,14 +27,14 @@
 				<p:inputText id="nombreEstadoReclamo"
 					value="#{gestionReclamos.estadoReclamoAlta.nombre}" styleClass="mb-3"
 					placeholder="Nombre de Estado" required="true"
-					requiredMessage="El campo no puede estar vacio" />
+					requiredMessage="El campo no puede estar vacio" maxlength="50"/>
 				<small class="block ui-state-error"><h:message
-						style="color:red;" for="nombreEstadoReclamo" /></small>
+						style="color:red;" for="nombreEstadoReclamo" id="mensaje"/></small>
 
 
 			
 
-				<div style="margin-top:20px;">
+				<div style="margin-top:20px;" >
 					<div class="flex card-container">
 						<div
 							class="flex-none flex align-items-center justify-content-center">
@@ -48,7 +48,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar" action="#{gestionReclamos.altaEstadoReclamo}"
-								 />
+								update="mensaje" />
 						</div>
 					</div>
 				</div>

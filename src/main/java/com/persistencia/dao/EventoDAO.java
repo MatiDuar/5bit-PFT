@@ -55,6 +55,7 @@ public class EventoDAO {
 			Evento ev= em.find(Evento.class, id);
 			ev.setAnalistas(new HashSet<Analista>());
 			ev.setTutores(new LinkedList<Tutor>());
+			
 			borrarReclamosPorEvento(ev);
 
 			em.merge(ev);
