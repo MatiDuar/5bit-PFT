@@ -7,6 +7,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.FacesConverter;
@@ -14,6 +15,8 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedList;
 
@@ -21,8 +24,7 @@ import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 import com.logicaNegocio.GestionPersonaService;
-
-
+import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.entities.Analista;
 import com.persistencia.entities.AreaTutor;
 import com.persistencia.entities.Carrera;
@@ -107,6 +109,8 @@ public class GestionPersona implements Serializable {
 	private boolean isModContraseña;
 	
 	private boolean editando;
+	
+	private String mailInst;
 
 	// Para saber si entro sin logearse al sistema
 	private boolean isKicked;
@@ -140,7 +144,7 @@ public class GestionPersona implements Serializable {
 		toRegistro = "registro.xhtml?facesRedirect=true";
 //		personasMod = new LinkedList<>();
 		bottonesMenu=new LinkedList<>();
-
+		
 	}
 
 	/**
@@ -185,6 +189,21 @@ public class GestionPersona implements Serializable {
 		}
 	}
 	
+//	public void verificarUsuarioInst(FacesContext context, UIComponent comp, Object value) {
+//		
+//		FacesContext context = FacesContext.getCurrentInstance();
+//		UIInput input = (UIInput) context.getViewRoot().findComponent("form:input");
+//		input.setValid(false);
+//		context.addMessage(input.getClientId(context), message);
+//		context.validationFailed();
+//		
+//		String nombreUsuario=personaSeleccionada.getNombreUsuario();
+//		
+//		Boolean usuarioExiste=persistenciaBean.existeNombreUsuario(nombreUsuario);
+//		
+//		//return usuarioExiste;
+//	}
+	
 
 	/**
 	 * este metodo se encarga de crear una persona en la base de datos
@@ -195,6 +214,7 @@ public class GestionPersona implements Serializable {
 		personaSeleccionada.setActivo(true);
 		personaSeleccionada.setValidado(false);
 		String nombreUsuario=personaSeleccionada.getMailInstitucional().split("@")[0];
+		
 		
 		personaSeleccionada.setNombreUsuario(nombreUsuario);
 		personaSeleccionada.setDepartamento(persistenciaBean.buscarDepartamento(departamentoSeleccionado));
@@ -223,7 +243,7 @@ public class GestionPersona implements Serializable {
 
 		}
 		reset();
-		String msg1 = "Se creo correctamente el usuario";
+		String msg1 = "Se creo correctamente el usuario. En espera por validación";
 		// mensaje de actualizacion correcta
 		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
 		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
@@ -689,6 +709,21 @@ public class GestionPersona implements Serializable {
 		default:
 			return "";		
 		}
+	}
+	
+
+		   
+
+
+	
+	public Date fecMayoriaEdad(){
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(c.getTime());
+		c.add(Calendar.YEAR, -18);
+		Date newDate = c.getTime();
+		
+		return newDate;
 	}
 
 	public void setBottonesMenu(List<String> bottonesMenu) {

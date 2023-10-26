@@ -8,15 +8,18 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
+import javax.faces.validator.FacesValidator;
+import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import com.logicaNegocio.GestionPersonaService;
 
-@Named(value = "validatorPersona") // JEE8
+@ManagedBean
+@FacesValidator(value = "validatorPersona") // JEE8
 @SessionScoped // JEE8
-public class ValidatorPersona implements Serializable {
+public class ValidatorPersona implements Validator<String>,Serializable {
 	/**
 	 * 
 	 */
@@ -27,8 +30,9 @@ public class ValidatorPersona implements Serializable {
 
 	@Inject
 	GestionPersona gestionPersona;
-
-	public void validate(FacesContext arg0, UIComponent arg1, Object arg2) throws ValidatorException {
+	
+	@Override
+	public void validate(FacesContext arg0, UIComponent arg1, String arg2) throws ValidatorException {
 		
 		String patternEmail = "^(?!\\s*$).+";
 		if (persistenciaBean.existeNombreUsuario((String) arg2)
@@ -50,7 +54,8 @@ public class ValidatorPersona implements Serializable {
 		if (!((String) arg2).matches(patternEmail)) {
 			throw new ValidatorException(new FacesMessage("No puede contener solo espacios vacios "));
 		}
-
+		
 	}
+
 
 }
