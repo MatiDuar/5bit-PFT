@@ -36,7 +36,8 @@
 			<div>
 				<h:form>
 					<p:growl id="messages" life="4000" closable="true" />
-
+					<p:remoteCommand autoRun="true" update="messages"></p:remoteCommand>
+					
 					<label for="usuario1" class="block text-900 font-medium mb-2">Usuario</label>
 					<p:inputText id="usuario1"
 						value="#{gestionPersona.personaSeleccionada.nombreUsuario}"

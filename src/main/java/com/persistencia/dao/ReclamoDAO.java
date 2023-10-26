@@ -32,7 +32,7 @@ public class ReclamoDAO {
 			return true;
 
 		} catch (PersistenceException e) {
-			throw new ServicesException("No se pudo CREAR el Reclamo");
+			throw new ServicesException(e.getMessage());
 		}
 	}
 
