@@ -184,11 +184,12 @@
 									value="#{gestionPersona.personaSeleccionada.mail}"
 									required="true" requiredMessage="Debe ingresar el Email"
 									maxlength="50"
-									type="email" validatorMessage="Formato de Email incorrecto">
+									type="email"
+									validatorMessage="Formato de Email incorrecto">
 									<f:validateRegex
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
-
 								</p:inputText>
+								
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="email1" /></small>
 							</div>
@@ -196,12 +197,10 @@
 								<h5>Email Instutucional *</h5>
 								<p:inputText id="email2"
 									value="#{gestionPersona.personaSeleccionada.mailInstitucional}"
-									required="true" requiredMessage="Debe ingresar el Email"
+									required="true" requiredMessage="Debe ingresar el Email Institucional"
 									maxlength="50"
 									validator="#{validatorPersona.validate}"
 									type="email">
-									<f:validateRegex
-										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
 
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
@@ -282,9 +281,9 @@
 										<h5>Año de ingreso *</h5>
 										<p:inputText id="anoIngreso" type="number"
 											value="#{gestionPersona.anoIngresoSeleccionado}"
-											requiredMessage="Debe ingresar el Id Estudiantil"
+											validator="#{validatorEstudiante.validate}"
+											requiredMessage="Debe ingresar el Año de Ingreso"
 											required="true">
-
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="anoIngreso" /></small>
@@ -347,7 +346,7 @@
 							<div
 								class="flex-none flex align-items-center justify-content-center">
 								<p:commandButton value="Guardar"
-									action="#{gestionPersona.agregarUsuario()}" update="grid grid2" >
+									action="#{gestionPersona.agregarUsuario()}" update="grid grid2 datosAlumno datosDocente" >
 									<p:confirm header="Aviso" message="Su solicitud de registro queda a la espera de validación." icon="pi pi-exclamation-triangle"/>
 								</p:commandButton>
 								

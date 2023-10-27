@@ -150,6 +150,7 @@ public class UsuarioDAO {
 					.createQuery("select u from Usuario u where u.nombreUsuario=:nombreUsuario", Usuario.class)
 					.setParameter("nombreUsuario", nombreUsuario);
 			query.getSingleResult();
+			System.out.println("query base: "+query.getSingleResult().toString());
 			return true;
 		} catch (Exception e) {
 			return false;

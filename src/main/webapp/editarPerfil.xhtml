@@ -168,9 +168,12 @@
 										<p:inputText id="email1"
 											value="#{gestionPersona.usuarioLogeado.mail}" required="true"
 											requiredMessage="Debe ingresar el Email" type="email"
-											validatorMessage="Formato de Email incorrecto">
+											validatorMessage="Formato de Email incorrecto"
+											maxlength="50">
+											
 											<f:validateRegex
-												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+											
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="email1" /></small>
@@ -180,11 +183,11 @@
 										<h5>Email Instutucional *</h5>
 										<p:inputText id="email2"
 											value="#{gestionPersona.usuarioLogeado.mailInstitucional}"
-											required="true" requiredMessage="Debe ingresar el Email"
-											type="email" validatorMessage="Formato de Email incorrecto">
-											<f:validateRegex
-												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
-
+											required="true" requiredMessage="Debe ingresar el Email Institucional"
+											type="email" 
+											maxlength="50"
+											disabled="true"
+											validator="#{validatorPersona.validate}">
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="email2" /></small>
