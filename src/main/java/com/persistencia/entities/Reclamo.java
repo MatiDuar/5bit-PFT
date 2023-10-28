@@ -44,7 +44,7 @@ public class Reclamo implements Serializable {
 	
 	@Column(nullable = true)
 	private int semestre;
-	
+
 	@Column(nullable = true)
 	private Date fechaEvento;
 	

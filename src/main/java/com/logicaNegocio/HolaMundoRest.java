@@ -24,6 +24,7 @@ import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.dto.UserDTO;
 
 import com.persistencia.entities.Departamento;
+import com.persistencia.entities.Estado;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Reclamo;
@@ -211,6 +212,23 @@ public class HolaMundoRest {
 		// Implement logic to fetch and return a list of Usuario objects
 		try {
 			Reclamo reclamo = reclamoDAO.buscarReclamoPorId(id);
+
+			return reclamo;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	@GET
+	@Path("obtenerEstadosReclamo")
+	@Produces("application/json")
+	public List<Estado> listaEstadosReclamo() {
+		// Implement logic to fetch and return a list of Usuario objects
+		try {
+			List<Estado> reclamo = gestionPersonas.listarEstadoReclamo();
 
 			return reclamo;
 		} catch (Exception e) {
