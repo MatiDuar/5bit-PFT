@@ -27,9 +27,9 @@
 				<p:inputText id="nombreModalidadEvento"
 					value="#{gestionMantenimientoEvento.modalidadEventoSeleccionado.nombre}" styleClass="mb-3"
 					placeholder="Nombre de Modalidad" required="true"
-					requiredMessage="El campo no puede estar vacio" />
+					requiredMessage="El campo no puede estar vacio"  maxlength="50" />
 				<small class="block ui-state-error"><h:message
-						style="color:red;" for="nombreModalidadEvento" /></small>
+						style="color:red;" for="nombreModalidadEvento" id="mensaje" /></small>
 
 
 			
@@ -48,7 +48,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar" action="#{gestionMantenimientoEvento.crearModalidadEvento}"
-								 />
+								update="mensaje nombreModalidadEvento" />
 						</div>
 					</div>
 				</div>

@@ -97,7 +97,7 @@ public class GestionReclamos implements Serializable {
 
 	public void crearReclamo() {
 		try {
-			if (fechaSeleccionada != null) {
+			if (fechaAlta != null) {
 				reclamoAlta.setFechaEvento(new java.sql.Date(fechaAlta.getTime()));
 			}
 

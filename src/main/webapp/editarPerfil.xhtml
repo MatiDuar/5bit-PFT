@@ -55,8 +55,8 @@
 										<h5>Segundo Nombre</h5>
 										<p:inputText id="nombre2"
 											value="#{gestionPersona.usuarioLogeado.nombre2}"
-											validatorMessage="No puede contener solo espacios vacios">
-											<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
+											validatorMessage="No puede contener solo espacios vacios" maxlength="50">
+											<f:validateRegex pattern="^(|\s*.*\S.*)$" ></f:validateRegex>
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="nombre2" /></small>
@@ -82,7 +82,8 @@
 											value="#{gestionPersona.usuarioLogeado.apellido1}"
 											required="true"
 											requiredMessage="Debe ingresar el primer Apellido"
-											validatorMessage="No puede contener solo espacios vacios">
+											validatorMessage="No puede contener solo espacios vacios"
+											 maxlength="50">
 											<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
@@ -93,7 +94,7 @@
 										<h5>Segundo Apellido</h5>
 										<p:inputText id="apellido2"
 											value="#{gestionPersona.usuarioLogeado.apellido2}"
-											validatorMessage="No puede contener solo espacios vacios">
+											validatorMessage="No puede contener solo espacios vacios" maxlength="50">
 											<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
@@ -103,7 +104,7 @@
 										<h5>Localidad *</h5>
 										<p:inputText id="localidad"
 											value="#{gestionPersona.usuarioLogeado.localidad}"
-											required="true" requiredMessage="Debe ingresar la Direccion"
+											required="true" requiredMessage="Debe ingresar la Localidad"
 											validatorMessage="No puede contener solo espacios vacios">
 											<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 										</p:inputText>
@@ -288,7 +289,7 @@
 												<p:inputText id="anoIngreso" type="number"
 													value="#{gestionPersona.anoIngresoLog}"
 													requiredMessage="Debe ingresar el Id Estudiantil"
-													required="true">
+													required="true" disabled="true">
 
 												</p:inputText>
 												<small class="block ui-state-error"><h:message
@@ -309,7 +310,7 @@
 												<h5>Area Tutor *</h5>
 												<p:selectOneMenu id="groupAreaTutor"
 													value="#{gestionPersona.areaTutorLog}"
-													validatorMessage="Debe Seleccionar una opcion">
+													validatorMessage="Debe Seleccionar una opcion" disabled="true">
 													<f:selectItem itemLabel="Selecciona uno" itemValue="" />
 													<c:forEach var="areas" items="#{gestionPersona.areasTutor}">
 														<f:selectItem itemLabel="#{areas.nombre}"
@@ -326,7 +327,7 @@
 												<h5>Rol *</h5>
 												<p:selectOneMenu id="groupRol"
 													value="#{gestionPersona.rolTutorLog}"
-													validatorMessage="Debe Seleccionar una opcion">
+													validatorMessage="Debe Seleccionar una opcion" disabled="true">
 													<f:selectItem itemLabel="Selecciona uno" itemValue="" />
 													<c:forEach var="rol" items="#{gestionPersona.rolesTutor}">
 														<f:selectItem itemLabel="#{rol.nombre}"

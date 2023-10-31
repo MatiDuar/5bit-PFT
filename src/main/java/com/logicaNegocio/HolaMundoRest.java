@@ -12,6 +12,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
+
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -31,6 +33,7 @@ import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Path("reclamo")
@@ -130,6 +133,7 @@ public class HolaMundoRest {
 	@Path("crearReclamo")
 	public Response crearReclamo(Reclamo reclamo) {
 		try {
+			reclamo.setFechaHora(new Timestamp(System.currentTimeMillis()));
 			boolean result = reclamoDAO.crearReclamo(reclamo);
 			if (result) {
 				return Response.ok().status(Response.Status.ACCEPTED).build();
