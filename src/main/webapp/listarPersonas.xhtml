@@ -94,7 +94,7 @@
 								<div class="col-12 md:col-1">
 									<br></br>
 
-									<p:commandButton id="toggler" type="button" value="Columns"
+									<p:commandButton id="toggler" type="button" value="Columnas"
 										icon="pi pi-align-justify" />
 									<p:columnToggler datasource="dateTable" trigger="toggler">
 										<p:ajax />
@@ -150,6 +150,34 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
+						<p:column field="documento" headerText="Documento"
+							filterable="false">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.documento}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+								
+									<p:inputText
+									
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.documento}" required="true"
+										requiredMessage="Debe ingresar el Documento"
+										validatorMessage="Formato incorrecto"
+										maxlength="8"
+										id="documento">
+										<p:keyFilter for="documento" mask="pnum" />
+										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
+
+									</p:inputText>
+
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="documento" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 						<p:column field="mail" headerText="Email" filterable="false">
 							<p:cellEditor>
 								<f:facet name="output">
@@ -162,7 +190,7 @@
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.mail}"
 										requiredMessage="Debe ingresar el Email" type="email"
-										validatorMessage="Formato de Email incorrecto">
+										validatorMessage="Formato de Email incorrecto" maxlength="50">
 										<f:validateRegex
 											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
 									</p:inputText>
@@ -173,46 +201,18 @@
 						</p:column>
 						<p:column field="mailInstitucional" headerText="Email Utec"
 							filterable="false">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{personas.mailInstitucional}" />
-								</f:facet>
-								<f:facet name="input" class="col-10">
-									<p:inputText id="email3"
-										style="width:100%;vertical-align: middle; margin-left: .5rem"
-										value="#{personas.mailInstitucional}"
-										requiredMessage="Debe ingresar el Email" type="email"
-										validatorMessage="Formato de Email incorrecto">
-										<f:validateRegex
-											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
-									</p:inputText>
-									<small class="block ui-state-error"><h:message
-											style="color:red;" for="email3" /></small>
-								</f:facet>
-							</p:cellEditor>
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{personas.mailInstitucional}" />
+
 						</p:column>
 						<p:column field="nombreUsuario" headerText="Nombre de Usuario"
 							filterable="false">
-							<p:cellEditor>
-								<f:facet name="output">
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{personas.nombreUsuario}" />
-								</f:facet>
-								<f:facet name="input" class="col-10">
-									<p:inputText
-										style="width:100%;vertical-align: middle; margin-left: .5rem"
-										value="#{personas.nombreUsuario}" required="true"
-										requiredMessage="Debe ingresar el Nombre de Usuario"
-										id="nombreUsuario"
-										validator="#{validatorPersona.validateOnLista}">
-									</p:inputText>
-									<small class="block ui-state-error"><h:message
-											style="color:red;" for="nombreUsuario" /></small>
-								</f:facet>
-							</p:cellEditor>
+
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{personas.nombreUsuario}" />
+
 						</p:column>
 						<p:column headerText="Tipo de Usuario" filterable="false">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
@@ -379,7 +379,8 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="35" rendered="#{gestionPersona.esAnalistaLogeado()}"
+						<p:column width="35"
+							rendered="#{gestionPersona.esAnalistaLogeado()}"
 							headerText="Estado">
 							<div class="grid ui-fluid">
 								<p:commandButton icon="pi pi-info-circle"

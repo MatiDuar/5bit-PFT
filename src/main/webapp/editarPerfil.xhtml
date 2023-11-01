@@ -68,8 +68,8 @@
 											monthNavigator="true" pattern="dd-MM-yyyy"
 											yearNavigator="true" yearRange="1950:2023" required="true"
 											requiredMessage="Debe ingresar una fecha de nacimiento"
-											validatorMessage="Formato incorrecto de la Fecha"
-											styleClass="datePicker" />
+											validatorMessage="Formato incorrecto de la Fecha o no es mayor de edad"
+											styleClass="datePicker" maxdate="#{gestionPersona.fecMayoriaEdad()}"/>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="spanish" /></small>
 
@@ -115,8 +115,12 @@
 										<h5>Documento *</h5>
 										<p:inputText id="documento"
 											value="#{gestionPersona.usuarioLogeado.documento}"
-											validatorMessage="No puede contener solo espacios vacios">
-											<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
+											validatorMessage="Formato incorrecto"
+											maxlength="8"
+											required="true"
+											requiredMessage="Debe ingresar un documento">
+											<p:keyFilter for="documento" mask="pnum" />
+										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
 
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
@@ -168,9 +172,12 @@
 										<p:inputText id="email1"
 											value="#{gestionPersona.usuarioLogeado.mail}" required="true"
 											requiredMessage="Debe ingresar el Email" type="email"
-											validatorMessage="Formato de Email incorrecto">
+											validatorMessage="Formato de Email incorrecto"
+											maxlength="50">
+											
 											<f:validateRegex
-												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+											pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
+											
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="email1" /></small>
@@ -180,11 +187,11 @@
 										<h5>Email Instutucional *</h5>
 										<p:inputText id="email2"
 											value="#{gestionPersona.usuarioLogeado.mailInstitucional}"
-											required="true" requiredMessage="Debe ingresar el Email"
-											type="email" validatorMessage="Formato de Email incorrecto">
-											<f:validateRegex
-												pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
-
+											required="true" requiredMessage="Debe ingresar el Email Institucional"
+											type="email" 
+											maxlength="50"
+											disabled="true"
+											validator="#{validatorPersona.validate}">
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="email2" /></small>
@@ -193,6 +200,7 @@
 									<div class="col-12 md:col-4">
 										<h5>ITR *</h5>
 										<p:selectOneMenu id="groupItr"
+											disabled="#{gestionPersona.esEstudianteLogeado() or gestionPersona.esTutorLogeado()}"
 											value="#{gestionPersona.itrSeleccionadoLog}"
 											validatorMessage="Debe Seleccionar una opcion">
 											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
@@ -229,9 +237,10 @@
 													<p:password id="pass" label="Contraseña" match="pass2"
 														feedback="false"
 														value="#{gestionPersona.contrasenaModificar}"
-														validatorMessage="Las Contraseñas no coinciden"
-														required="true" requiredMessage="Se necesita una valor">
-														<f:validateLength minimum="8" maximum="16"></f:validateLength>
+														
+														required="true" requiredMessage="Se necesita una contraseña"
+														validator="#{validatorContrasena.validate}">
+														
 													</p:password>
 													<small class="block ui-state-error"><h:message
 															style="color:red;" for="pass" /></small>
@@ -243,7 +252,7 @@
 														feedback="false"
 														value="#{gestionPersona.contrasenaModificar}"
 														required="true"
-														requiredMessage="Debe ingresar una Contraseña" />
+														requiredMessage="Debe confirmar la contraseña" />
 													<small class="block ui-state-error"><h:message
 															style="color:red;" for="pass2" /></small>
 												</div>

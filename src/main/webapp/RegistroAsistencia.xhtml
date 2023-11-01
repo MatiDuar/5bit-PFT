@@ -78,14 +78,14 @@
 
 					<p:column field="calificacion" headerText="Calificacion"
 						filterable="false" rendered="#{gestionEventos.eventoSeleccionadoMod.tipoActividad.esCalificado}">
-						<p:inputText
+						<p:inputNumber
 							style="width:100%;vertical-align: middle; margin-left: .5rem"
 							value="#{ca.calificacion}"
-							requiredMessage="Debe ingresar la calificacion" maxlength="4"
-							validatorMessage="No puede contener solo espacios vacios"
-							id="calificacion" converterId="javax.faces.Float" required="true" type="number">
-
-						</p:inputText>
+							decimalPlaces="2"
+							validator="#{validatorCalificacion.validate}"
+							requiredMessage="Debe ingresar la calificacion"
+							id="calificacion" converterId="javax.faces.Float" required="true">
+						</p:inputNumber>
 						<small class="block ui-state-error"><h:message
 								style="color:red;" for="calificacion" /></small>
 					</p:column>
@@ -120,7 +120,9 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar"
-								action="#{gestionEventos.guardarCambiosRegistroAsistencias}" />
+								action="#{gestionEventos.guardarCambiosRegistroAsistencias}" update="dateTable">
+								<p:confirm header="Confirmación" message="¿Desea confirmar este registro de asistencia?" icon="pi pi-exclamation-triangle"/> 
+							</p:commandButton>
 						</div>
 
 
@@ -128,6 +130,11 @@
 				</div>
 			</p:panel>
 
+		<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+			<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />					          
+			<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />				      
+		</p:confirmDialog>
+		
 		</h:form>
 
 	</div>
