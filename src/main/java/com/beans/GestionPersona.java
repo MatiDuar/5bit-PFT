@@ -184,7 +184,41 @@ public class GestionPersona implements Serializable {
 			return "";
 		}
 	}
-	
+	public String verificarUsuarioAD(String nombreUsuario) {
+		try {
+
+			// Generar JSON Web Token
+			token = jwt.generarTokenAD(nombreUsuario);
+
+			datosToken = jwt.obtenerClaim(token);
+
+			// traemos los datos de la persona logeada a partir del Id Persona del token
+			// generado
+			Long idPersona = ((Double) datosToken.get("id")).longValue();
+			
+			usuarioLogeado = persistenciaBean.buscarUsuario(idPersona);
+			
+			if (!(Boolean) datosToken.get("activo")) {
+				// Mensaje si el usuario esta inactivo
+				String msg1 = "Usuario dado de baja del sistema";
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				return "";
+			}
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+
+			return "";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			String msg1 = "Usuario o Contrseña errónea";
+			// mensaje autenticación incorrecta
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+
+			return "";
+		}
+	}
 
 	/**
 	 * este metodo se encarga de crear una persona en la base de datos

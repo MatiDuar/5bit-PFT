@@ -182,7 +182,9 @@
 								<p:inputText id="email2"
 									value="#{gestionPersona.personaSeleccionada.mailInstitucional}"
 									required="true" requiredMessage="Debe ingresar el Email"
-									type="email" validatorMessage="Formato de Email incorrecto">
+									type="email" validatorMessage="Formato de Email incorrecto"
+									>
+									
 									<f:validateRegex
 										pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$"></f:validateRegex>
 

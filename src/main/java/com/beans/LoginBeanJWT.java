@@ -62,6 +62,36 @@ public class LoginBeanJWT implements Serializable {
 		}
 
 	}
+	
+	public String generarTokenAD(String nombreUsuario) throws Exception {
+		// a esta altura ya se valido el usuario, solo hay que generar el Token
+		Usuario persona= persistenciaBean.buscarUsuario(nombreUsuario);
+		String token = null;
+		try{
+			if(persona==null) {
+				throw new Exception("No cuenta con usuario en la BD");
+			}
+			Date expirationDate = new Date(System.currentTimeMillis() + 86400000); // 1 día de expiración
+
+			Map<String, Object> claims = new HashMap<>();
+			claims.put("id", persona.getId());
+			claims.put("activo", persona.getActivo());
+
+			token = Jwts.builder().setSubject(persona.getNombreUsuario()).addClaims(claims)
+					.setExpiration(expirationDate)
+					.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256).compact();
+
+			// Almacenar el token en la sesión
+			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("token", token);
+
+			return token;
+		} catch (Exception e) {
+			// El token no se genero
+			throw new Exception("Error al generar el Token: " + e);
+			
+		}
+
+	}
 
 	public Claims obtenerClaim(String token) {
 		// Obtener el token de la sesión

@@ -58,6 +58,8 @@ public class GestionReclamos implements Serializable {
 	
 	
 	private String tipoReclamo;
+	
+	private String yearRange;
 
 	@PostConstruct
 	void init() {
@@ -70,6 +72,7 @@ public class GestionReclamos implements Serializable {
 		
 		try {
 			estadosReclamo = serivce.listarEstados();
+			yearRange="1950-2000";
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -276,6 +279,14 @@ public class GestionReclamos implements Serializable {
 
 	public void setTipoReclamo(String tipoReclamo) {
 		this.tipoReclamo = tipoReclamo;
+	}
+
+	public String getYearRange() {
+		return yearRange;
+	}
+
+	public void setYearRange(String yearRange) {
+		this.yearRange = yearRange;
 	}
 	
 	

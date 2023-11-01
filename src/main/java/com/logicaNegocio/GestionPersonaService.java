@@ -220,6 +220,16 @@ public class GestionPersonaService implements Serializable {
 		}
 		return null;
 	}
+	
+	public Usuario buscarUsuario(String nombreUsuario) {
+		try {
+			return usuarioDAO.buscarNombre(nombreUsuario);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 	/**
 	 * se agrega Persona en la base de datos
@@ -348,6 +358,25 @@ public class GestionPersonaService implements Serializable {
 			e2.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
 			e2.setAnoIngreso(2022);
 			usuarioDAO.crearUsuario(e2);
+			
+			
+			Estudiante e3 = new Estudiante();
+			e3.setActivo(true);
+			e3.setDocumento("50329190");
+			e3.setApellido1("Marshall");
+			e3.setNombre1("Paul");
+			e3.setNombreUsuario("pmarshall");
+			e3.setContrasena("demo");
+			e3.setDepartamento(depDAO.obtenerDepPorNombre("Durazno"));
+			e3.setFechaNacimiento(new Date(2002 - 1900, 02, 04));
+			e3.setLocalidad("demo");
+			e3.setMail("demo@demo.com");
+			e3.setMailInstitucional("pmarshall@5Bit.com.uy");
+			e3.setTelefono("09999999");
+			e3.setValidado(true);
+			e3.setItr(itrDAO.obtenerItrPorNombre("Centro-sur"));
+			e3.setAnoIngreso(2022);
+			usuarioDAO.crearUsuario(e3);
 
 			Tutor t2 = new Tutor();
 			t2.setActivo(true);
