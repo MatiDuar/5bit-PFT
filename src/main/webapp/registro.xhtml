@@ -127,8 +127,8 @@
 										required="true"
 										requiredMessage="Debe ingresar el Documento"
 										validatorMessage="No puede contener solo espacios vacios">
-										<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
-										<p:keyFilter for="documento" mask="pint" />
+										<p:keyFilter for="documento" mask="pnum" />
+										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
 									</p:inputText>
 									<small class="block ui-state-error"><h:message
 											style="color:red;" for="documento" />
@@ -213,9 +213,9 @@
 								<p:password id="pass" label="Contraseña" match="pass2"
 									feedback="false"
 									value="#{gestionPersona.personaSeleccionada.contrasena}"
-									required="true" requiredMessage="Se necesita una valor">
-
-									<f:validateLength minimum="8" maximum="16"></f:validateLength>
+									
+									required="true" requiredMessage="Se necesita una contraseña"
+									validator="#{validatorContrasena.validate}">	
 								</p:password>
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="pass" /></small>
@@ -226,7 +226,7 @@
 								<p:password id="pass2" label="Confirmar Contraseña"
 									feedback="false"
 									value="#{gestionPersona.personaSeleccionada.contrasena}"
-									required="true" requiredMessage="Debe ingresar una Contraseña" />
+									required="true" requiredMessage="Debe confirmar la contraseña" />
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="pass2" /></small>
 							</div>

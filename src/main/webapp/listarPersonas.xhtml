@@ -159,13 +159,17 @@
 										value="#{personas.documento}" />
 								</f:facet>
 								<f:facet name="input" class="col-10">
+								
 									<p:inputText
+									
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.documento}" required="true"
 										requiredMessage="Debe ingresar el Documento"
-										validatorMessage="No puede contener solo espacios vacios"
+										validatorMessage="Formato incorrecto"
+										maxlength="8"
 										id="documento">
-										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+										<p:keyFilter for="documento" mask="pnum" />
+										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
 
 									</p:inputText>
 

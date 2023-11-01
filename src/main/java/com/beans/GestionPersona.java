@@ -167,9 +167,18 @@ public class GestionPersona implements Serializable {
 			
 			usuarioLogeado = persistenciaBean.buscarUsuario(idPersona);
 			
+			String msg1="";
 			if (!(Boolean) datosToken.get("activo")) {
 				// Mensaje si el usuario esta inactivo
-				String msg1 = "Usuario dado de baja del sistema";
+				msg1 = "Usuario dado de baja del sistema";
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+				return "";
+			}
+			
+			if(!(Boolean) datosToken.get("validado")) {
+				// Mensaje si el usuario esta invalidado
+				msg1 = "Usuario no está validado, a la espera de validación";
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 				return "";
@@ -189,21 +198,7 @@ public class GestionPersona implements Serializable {
 		}
 	}
 	
-//	public void verificarUsuarioInst(FacesContext context, UIComponent comp, Object value) {
-//		
-//		FacesContext context = FacesContext.getCurrentInstance();
-//		UIInput input = (UIInput) context.getViewRoot().findComponent("form:input");
-//		input.setValid(false);
-//		context.addMessage(input.getClientId(context), message);
-//		context.validationFailed();
-//		
-//		String nombreUsuario=personaSeleccionada.getNombreUsuario();
-//		
-//		Boolean usuarioExiste=persistenciaBean.existeNombreUsuario(nombreUsuario);
-//		
-//		//return usuarioExiste;
-//	}
-	
+
 
 	/**
 	 * este metodo se encarga de crear una persona en la base de datos
