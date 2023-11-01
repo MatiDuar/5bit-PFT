@@ -2,6 +2,7 @@ package com.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +14,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
+
+import java.util.Calendar;
+import java.util.Date;
 import java.util.LinkedList;
 
 import com.logicaNegocio.GestionEventoService;
@@ -43,6 +47,9 @@ public class GestionEventos implements Serializable {
 	@Inject
 	PickListView pickListView;
 
+
+	
+
 	private Evento eventoSeleccionado;
 
 	private Evento eventoSeleccionadoMod;
@@ -62,10 +69,19 @@ public class GestionEventos implements Serializable {
 	private List<ConvocatoriaAsistencia> convocatoriasSeleccionadas;
 
 	private List<EstadoAsistencia> estadosAsistencia;
+	
+	private Timestamp minDate;
+	
+	private Timestamp maxDate;
+
+	private Timestamp fechaInicioEvento;
 
 	@PostConstruct
 	public void init() {
 		try {
+			
+			//fechaInicioEvento= new Timestamp(0);
+			
 			eventos = persistenciaBean.listarEventos();
 			tiposActividades = persistenciaBean.listarTiposActividad();
 			modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
@@ -74,11 +90,55 @@ public class GestionEventos implements Serializable {
 			eventoSeleccionado = new Evento();
 			tutoresSeleccionados = new LinkedList<>();
 			eventoSeleccionadoMod = new Evento();
+			
+//			//Conseguir fecha minima y maxima para los eventos.
+//			Calendar fechMin = Calendar.getInstance();
+//			Calendar fechMax = Calendar.getInstance();
+//			fechMax.setTime(fechMax.getTime());
+//			
+//			fechMin.set(Calendar.YEAR,2011);
+//			fechMin.set(Calendar.MONTH, Calendar.JANUARY);
+//			fechMin.set(Calendar.DAY_OF_MONTH, 1);
+//			fechMin.set(Calendar.HOUR, 0);
+//			
+//			fechMax.add(Calendar.YEAR, +10);
+//			
+//			minDate = new Timestamp(fechMin.getTimeInMillis());
+//	        maxDate = new Timestamp(fechMax.getTimeInMillis());
+//	        System.out.println(minDate);
+//	        System.out.println(maxDate);
+//			
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
+
+	
+
+	public Timestamp getMinDate() {
+		return minDate;
+	}
+
+
+
+	public void setMinDate(Timestamp minDate) {
+		this.minDate = minDate;
+	}
+
+
+
+	public Timestamp getMaxDate() {
+		return maxDate;
+	}
+
+
+
+	public void setMaxDate(Timestamp maxDate) {
+		this.maxDate = maxDate;
+	}
+
+
 
 	public void asignarTutores() {
 		pickListView.setEventoSeleccionado(eventoSeleccionado);
@@ -124,6 +184,7 @@ public class GestionEventos implements Serializable {
 			e1.printStackTrace();
 		}
 	}
+	
 
 	public void onRowEdit(RowEditEvent<Evento> evento) {
 
@@ -209,7 +270,20 @@ public class GestionEventos implements Serializable {
 		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
 		estadosEvento = persistenciaBean.listarEstadosEventos();
 	}
-
+	
+//	public void fechaInicioListener(Timestamp fechaInicioEvento){
+//		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp
+//				(fechaInicioEvento.getYear(), 
+//						fechaInicioEvento.getMonth(), 
+//						fechaInicioEvento.getDate(), 
+//						fechaInicioEvento.getHours(), 
+//						fechaInicioEvento.getMinutes(), 
+//						fechaInicioEvento.getSeconds(), 
+//						fechaInicioEvento.getNanos())
+//				);
+//		System.out.println("entro");
+//	}
+	
 	public List<Evento> getEventos() {
 		return eventos;
 	}
@@ -289,5 +363,24 @@ public class GestionEventos implements Serializable {
 	public void setEstadosAsistencia(List<EstadoAsistencia> estadosAsistencia) {
 		this.estadosAsistencia = estadosAsistencia;
 	}
+	
+	public void setFechaInicioEvento(java.sql.Timestamp fechaInicioEvento) {
+		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp
+				(fechaInicioEvento.getYear(), 
+						fechaInicioEvento.getMonth(), 
+						fechaInicioEvento.getDate(), 
+						fechaInicioEvento.getHours(), 
+						fechaInicioEvento.getMinutes(), 
+						fechaInicioEvento.getSeconds(), 
+						fechaInicioEvento.getNanos())
+				);
+		this.fechaInicioEvento = fechaInicioEvento;
+	}
+
+	public Timestamp getFechaInicioEvento() {
+		
+		return eventoSeleccionado.getFechaInicio();
+	}
+
 
 }

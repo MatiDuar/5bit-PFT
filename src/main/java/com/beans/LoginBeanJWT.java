@@ -46,7 +46,8 @@ public class LoginBeanJWT implements Serializable {
 			Map<String, Object> claims = new HashMap<>();
 			claims.put("id", persona.getId());
 			claims.put("activo", persona.getActivo());
-
+			claims.put("validado", persona.getValidado());
+			
 			token = Jwts.builder().setSubject(persona.getNombreUsuario()).addClaims(claims)
 					.setExpiration(expirationDate)
 					.signWith(Keys.hmacShaKeyFor(secretKey.getBytes()), SignatureAlgorithm.HS256).compact();

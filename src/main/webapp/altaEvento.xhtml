@@ -52,10 +52,13 @@
 									</div>
 
 									<div class="col-12 md:col-4">
-										<h5>Localizacion</h5>
+										<h5>Localizacion *</h5>
 										<p:inputText id="localizacion"
+											required="true"
+											requiredMessage="Debe ingresar una Localización"
 											value="#{gestionEventos.eventoSeleccionado.localizacion}"
-											validatorMessage="No puede contener solo espacios vacios">
+											validatorMessage="No puede contener solo espacios vacios"
+											maxlength="50">
 											<f:validateRegex pattern="^(|\s*.*\S.*)$"></f:validateRegex>
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
@@ -64,7 +67,7 @@
 
 
 									<div class="field col-12 md:col-4">
-										<h5>creditos</h5>
+										<h5>Creditos</h5>
 										<p:inputText id="creditos"
 											value="#{gestionEventos.eventoSeleccionado.creditos}"
 											validatorMessage="No puede contener solo espacios vacios">
@@ -145,14 +148,14 @@
 									<div class="field col-12 md:col-4">
 										<h5>Fecha de Inicio *</h5>
 										<p:datePicker id="fechaInicio"
-											value="#{gestionEventos.eventoSeleccionado.fechaInicio}"
+											value="#{gestionEventos.fechaInicioEvento}"
 											locale="es" monthNavigator="true"
 											pattern="yyyy-dd-MM HH:mm:ss" yearNavigator="true"
-											yearRange="1950:2023" required="true" showTime="true"
+											yearRange="2011:2100"
+											required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de inicio"
 											validatorMessage="Formato incorrecto de la Fecha"
 											converter="timestampConverter">
-
 										</p:datePicker>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="fechaInicio" /></small>
@@ -164,9 +167,8 @@
 											value="#{gestionEventos.eventoSeleccionado.fechaFin}"
 											locale="es" monthNavigator="true"
 											pattern="yyyy-dd-MM HH:mm:ss" yearNavigator="true"
-											yearRange="1950:2023" required="true" showTime="true"
+											yearRange="2011:2100" required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de Fin"
-											validatorMessage="Formato incorrecto de la Fecha"
 											converter="timestampConverter">
 
 										</p:datePicker>
@@ -176,7 +178,8 @@
 									<div class="field col-12 md:col-4">
 
 										<p:commandButton value="Tutores asignados"
-											action="#{gestionEventos.asignarTutores}" update="grid messages" immediate="true"/>
+											action="#{gestionEventos.asignarTutores}" update="grid messages" immediate="true">
+										</p:commandButton>
 									</div>
 
 
@@ -206,7 +209,9 @@
 									<div
 										class="flex-none flex align-items-center justify-content-center">
 										<p:commandButton value="Confirmar"
-											action="#{gestionEventos.altaEvento}" update="grid messages" />
+											action="#{gestionEventos.altaEvento}" update="grid messages">
+											<p:confirm header="Confirmación" message="¿Desea crear este evento?" icon="pi pi-exclamation-triangle"/> 
+										</p:commandButton>
 									</div>
 
 
@@ -214,7 +219,10 @@
 							</div>
 
 
-
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+								<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />					          
+					            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />				      
+						 </p:confirmDialog>
 
 
 						</h:form>
