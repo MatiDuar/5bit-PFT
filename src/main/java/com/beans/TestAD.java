@@ -130,6 +130,8 @@ public class TestAD implements Serializable {
 			// mensaje autenticación incorrecta
 			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
 			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+			password="";
+
 			return "";
 			
 		}

@@ -11,6 +11,7 @@
 	<link type="text/css" rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/login.css" />
+	<title>Proyecto Final</title>
 </h:head>
 
 <body onload="#{gestionPersona.msjKick()}">
@@ -59,7 +60,7 @@
 							su contraseña?</a>
 					</div>
 
-					<p:commandButton ajax="false" action="#{gestionPersona.verificarUsuario}"
+					<p:commandButton  action="#{gestionPersona.verificarUsuario}"
 						value="Ingresar" icon="pi pi-user" update="messages"
 						validateClient="true" styleClass="w-full" />
 

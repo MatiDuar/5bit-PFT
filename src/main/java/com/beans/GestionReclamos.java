@@ -1,5 +1,6 @@
 package com.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
@@ -181,6 +182,13 @@ public class GestionReclamos implements Serializable {
 	public void darDeBajaReclamo(Reclamo reclamo) throws ServicesException {
 		if(serivce.buscarAccionesPorReclamo(reclamo).isEmpty()) {
 			serivce.darDeBajaReclamo(reclamo.getId());
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("reclamos.xhtml");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+
 		}else {
 			String msg1 = "Para poder eliminar un reclamo no tiene que tener acciones relacionadas.";
 			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");

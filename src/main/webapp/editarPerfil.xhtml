@@ -202,7 +202,7 @@
 										<p:selectOneMenu id="groupItr"
 											disabled="#{gestionPersona.esEstudianteLogeado() or gestionPersona.esTutorLogeado()}"
 											value="#{gestionPersona.itrSeleccionadoLog}"
-											validatorMessage="Debe Seleccionar una opcion">
+											validatorMessage="Debe Seleccionar una opcion" >
 											<f:selectItem itemLabel="Selecciona uno" itemValue="" />
 											<c:forEach var="itr" items="#{gestionPersona.itrs}">
 												<f:selectItem itemLabel="#{itr.nombre}"
