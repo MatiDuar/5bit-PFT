@@ -29,7 +29,7 @@
 						<p:inputTextarea rows="6" cols="33" id="detalleReclamo"
 							value="#{gestionReclamos.accionReclamoSeleccionado.detalleReclamo}"
 							styleClass="mb-3" placeholder="Detalle..." required="true"
-							requiredMessage="El campo no puede estar vacio" />
+							requiredMessage="El Detalle no puede estar vacio" />
 						<small class="block ui-state-error"><h:message
 								style="color:red;" for="detalleReclamo" /></small>
 
@@ -50,7 +50,7 @@
 							class="flex-grow-1 flex align-items-center justify-content-center "></div>
 						<div
 							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Guardar"
+							<p:commandButton value="Guardar" update="messages"
 								action="#{gestionReclamos.realizarAccionReclamo}" />
 						</div>
 					</div>
