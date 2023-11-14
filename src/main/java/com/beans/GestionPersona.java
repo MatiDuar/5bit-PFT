@@ -153,7 +153,7 @@ public class GestionPersona implements Serializable {
 	 * 
 	 * @return devuelve un sting con el path hacia la pagina donde hay que dirigirse
 	 */
-	public String verificarUsuario() {
+	public void verificarUsuario() {
 		try {
 
 			// Generar JSON Web Token
@@ -173,31 +173,67 @@ public class GestionPersona implements Serializable {
 				msg1 = "Usuario dado de baja del sistema";
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				return "";
-			}
+				
+			}else
 			
 			if(!(Boolean) datosToken.get("validado")) {
 				// Mensaje si el usuario esta invalidado
 				msg1 = "Usuario no está validado, a la espera de validación";
 				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
 				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-				return "";
-			}
-			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+				
+			}else {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 
-			return "";
+			}
+
+			
 
 		} catch (Exception e) {
-			e.printStackTrace();
+		
 			String msg1 = "Usuario o Contrseña errónea";
 			// mensaje autenticación incorrecta
 			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
 			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
 
-			return "";
+			
 		}
 	}
-	
+	public void verificarUsuarioAD(String nombreUsuario) {
+		try {
+
+			// Generar JSON Web Token
+			token = jwt.generarTokenAD(nombreUsuario);
+
+			datosToken = jwt.obtenerClaim(token);
+
+			// traemos los datos de la persona logeada a partir del Id Persona del token
+			// generado
+			Long idPersona = ((Double) datosToken.get("id")).longValue();
+			
+			usuarioLogeado = persistenciaBean.buscarUsuario(idPersona);
+			
+			if (!(Boolean) datosToken.get("activo")) {
+				// Mensaje si el usuario esta inactivo
+				String msg1 = "Usuario dado de baja del sistema";
+				FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
+				FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+			
+			}
+			FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+
+			
+
+		} catch (Exception e) {
+		
+			String msg1 = "Usuario o Contrseña errónea";
+			// mensaje autenticación incorrecta
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+
+			
+		}
+	}
 
 
 	/**
@@ -246,6 +282,7 @@ public class GestionPersona implements Serializable {
 		String url = "login.xhtml";
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -449,9 +486,14 @@ public class GestionPersona implements Serializable {
 	}
 
 
-	public String cerrarSesion() {
+	public void cerrarSesion() {
 		reset();
-		return "login.xhtml?facesRedirect=true";
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 	}
 

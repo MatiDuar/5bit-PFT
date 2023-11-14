@@ -74,6 +74,7 @@ public class GestionMantenimientoEvento implements Serializable {
 		persistenciaBean.crearEstadoEvento(estadoEventoSeleccionado);
 		estadoEventoSeleccionado = new EstadosEventos();
 		dfView.closeResponsive();
+		dfView.closeResponsive();
 		filterView.updateEstadoEvento();
 		gestionEventos.updateListas();
 
@@ -84,6 +85,7 @@ public class GestionMantenimientoEvento implements Serializable {
 		modalidadEventoSeleccionado.setActivo(true);
 		persistenciaBean.crearModalidadEvento(modalidadEventoSeleccionado);
 		modalidadEventoSeleccionado = new ModalidadesEventos();
+		dfView.closeResponsive();
 		dfView.closeResponsive();
 		filterView.updateModalidadEvento();
 		gestionEventos.updateListas();

@@ -1,5 +1,6 @@
 package com.beans;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
@@ -58,6 +59,8 @@ public class GestionReclamos implements Serializable {
 	
 	
 	private String tipoReclamo;
+	
+	private String yearRange;
 
 	@PostConstruct
 	void init() {
@@ -70,6 +73,7 @@ public class GestionReclamos implements Serializable {
 		
 		try {
 			estadosReclamo = serivce.listarEstados();
+			yearRange="1950-2000";
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -97,7 +101,7 @@ public class GestionReclamos implements Serializable {
 
 	public void crearReclamo() {
 		try {
-			if (fechaSeleccionada != null) {
+			if (fechaAlta != null) {
 				reclamoAlta.setFechaEvento(new java.sql.Date(fechaAlta.getTime()));
 			}
 
@@ -178,6 +182,13 @@ public class GestionReclamos implements Serializable {
 	public void darDeBajaReclamo(Reclamo reclamo) throws ServicesException {
 		if(serivce.buscarAccionesPorReclamo(reclamo).isEmpty()) {
 			serivce.darDeBajaReclamo(reclamo.getId());
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("reclamos.xhtml");
+			} catch (IOException e) {
+				
+				e.printStackTrace();
+			}
+
 		}else {
 			String msg1 = "Para poder eliminar un reclamo no tiene que tener acciones relacionadas.";
 			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_WARN, msg1, "");
@@ -276,6 +287,14 @@ public class GestionReclamos implements Serializable {
 
 	public void setTipoReclamo(String tipoReclamo) {
 		this.tipoReclamo = tipoReclamo;
+	}
+
+	public String getYearRange() {
+		return yearRange;
+	}
+
+	public void setYearRange(String yearRange) {
+		this.yearRange = yearRange;
 	}
 	
 	

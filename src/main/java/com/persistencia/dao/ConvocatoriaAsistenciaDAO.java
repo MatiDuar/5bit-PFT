@@ -129,9 +129,9 @@ public class ConvocatoriaAsistenciaDAO {
 		try {
 
 			TypedQuery<ConvocatoriaAsistencia> query = em
-					.createQuery("SELECT c FROM ConvocatoriaAsistencia c WHERE c.evento =:evento",
+					.createQuery("SELECT c FROM ConvocatoriaAsistencia c WHERE c.evento.id =:evento",
 							ConvocatoriaAsistencia.class)
-					.setParameter("evento", evento);
+					.setParameter("evento", evento.getId());
 
 			return query.getResultList();
 

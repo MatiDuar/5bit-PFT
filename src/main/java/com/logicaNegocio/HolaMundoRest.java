@@ -12,6 +12,8 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 
+
+
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
@@ -24,12 +26,14 @@ import com.persistencia.dao.UsuarioDAO;
 import com.persistencia.dto.UserDTO;
 
 import com.persistencia.entities.Departamento;
+import com.persistencia.entities.Estado;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 @Path("reclamo")
@@ -129,6 +133,7 @@ public class HolaMundoRest {
 	@Path("crearReclamo")
 	public Response crearReclamo(Reclamo reclamo) {
 		try {
+			reclamo.setFechaHora(new Timestamp(System.currentTimeMillis()));
 			boolean result = reclamoDAO.crearReclamo(reclamo);
 			if (result) {
 				return Response.ok().status(Response.Status.ACCEPTED).build();
@@ -211,6 +216,23 @@ public class HolaMundoRest {
 		// Implement logic to fetch and return a list of Usuario objects
 		try {
 			Reclamo reclamo = reclamoDAO.buscarReclamoPorId(id);
+
+			return reclamo;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+
+	}
+	
+	@GET
+	@Path("obtenerEstadosReclamo")
+	@Produces("application/json")
+	public List<Estado> listaEstadosReclamo() {
+		// Implement logic to fetch and return a list of Usuario objects
+		try {
+			List<Estado> reclamo = gestionPersonas.listarEstadoReclamo();
 
 			return reclamo;
 		} catch (Exception e) {

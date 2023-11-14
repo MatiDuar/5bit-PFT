@@ -41,11 +41,12 @@
 					
 					<label for="usuario1" class="block text-900 font-medium mb-2">Usuario</label>
 					<p:inputText id="usuario1"
-						value="#{gestionPersona.personaSeleccionada.nombreUsuario}"
-						styleClass="w-full mb-3" placeholder="Nombre de Usuario" />
+						value="#{gestionUsuariosAD.mailLogin}"
+						styleClass="w-full mb-3" placeholder="Mail AD" >
+						</p:inputText>
 					<label for="password1" class="block text-900 font-medium mb-2">Contraseña</label>
 					<p:inputText id="password1"
-						value="#{gestionPersona.personaSeleccionada.contrasena}"
+						value="#{gestionUsuariosAD.password}"
 						type="password" styleClass="w-full mb-3" placeholder="Contraseña" />
 
 					<div class="flex align-items-center justify-content-between mb-6">
@@ -60,7 +61,7 @@
 							su contraseña?</a>
 					</div>
 
-					<p:commandButton  action="#{gestionPersona.verificarUsuario}"
+					<p:commandButton ajax="false" action="#{gestionUsuariosAD.verfificarUsuarioAD}"
 						value="Ingresar" icon="pi pi-user" update="messages"
 						validateClient="true" styleClass="w-full" />
 

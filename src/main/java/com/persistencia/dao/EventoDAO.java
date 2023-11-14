@@ -56,7 +56,7 @@ public class EventoDAO {
 			ev.setAnalistas(new HashSet<Analista>());
 			ev.setTutores(new LinkedList<Tutor>());
 			
-			borrarReclamosPorEvento(ev);
+			
 
 			em.merge(ev);
 			em.flush();
