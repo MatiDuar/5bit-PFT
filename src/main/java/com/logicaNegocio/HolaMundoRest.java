@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.persistence.PersistenceException;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -201,7 +202,10 @@ public class HolaMundoRest {
 			} else {
 				return Response.notModified().build();
 			}
-		} catch (Exception e) {
+		} catch(PersistenceException e1) {
+			return Response.notModified().status(Response.Status.FORBIDDEN).build();
+
+		}catch (Exception e) {
 
 			e.printStackTrace();
 			return Response.notModified().build();

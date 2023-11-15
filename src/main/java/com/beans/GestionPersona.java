@@ -496,6 +496,17 @@ public class GestionPersona implements Serializable {
 		}
 
 	}
+	
+	public void toLogin() {
+		
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
 
 	/**
 	 * Este metodo valida si el usuario esta logeado
