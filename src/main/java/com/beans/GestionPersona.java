@@ -199,7 +199,7 @@ public class GestionPersona implements Serializable {
 			
 		}
 	}
-	public void verificarUsuarioAD(String nombreUsuario) {
+	public void verificarUsuarioAD(String nombreUsuario) throws ServicesException,Exception {
 		try {
 
 			// Generar JSON Web Token
@@ -224,12 +224,14 @@ public class GestionPersona implements Serializable {
 
 			
 
+		}catch(ServicesException e1) {
+			
+			throw new ServicesException(e1.getMessage());
+			
+			
 		} catch (Exception e) {
 		
-			String msg1 = "Usuario o Contrseña errónea";
-			// mensaje autenticación incorrecta
-			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_ERROR, msg1, "");
-			FacesContext.getCurrentInstance().addMessage(null, facesMsg);
+			throw e;
 
 			
 		}
@@ -501,6 +503,17 @@ public class GestionPersona implements Serializable {
 		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect("login.xhtml");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	}
+	
+public void toLoginAD() {
+		
+		try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect("loginAD.xhtml");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

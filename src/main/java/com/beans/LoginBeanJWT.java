@@ -16,6 +16,7 @@ import javax.inject.Named;
 
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.entities.Usuario;
+import com.persistencia.exception.ServicesException;
 
 import java.io.Serializable;
 
@@ -64,13 +65,13 @@ public class LoginBeanJWT implements Serializable {
 
 	}
 	
-	public String generarTokenAD(String nombreUsuario) throws Exception {
+	public String generarTokenAD(String nombreUsuario) throws ServicesException,Exception {
 		// a esta altura ya se valido el usuario, solo hay que generar el Token
 		Usuario persona= persistenciaBean.buscarUsuario(nombreUsuario);
 		String token = null;
 		try{
 			if(persona==null) {
-				throw new Exception("No cuenta con usuario en la BD");
+				throw new ServicesException("No cuenta con usuario en la BD,\n Comuniquese con un analista para resolver este problema");
 			}
 			Date expirationDate = new Date(System.currentTimeMillis() + 86400000); // 1 día de expiración
 
@@ -86,7 +87,11 @@ public class LoginBeanJWT implements Serializable {
 			FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("token", token);
 
 			return token;
-		} catch (Exception e) {
+		} catch (ServicesException e1) {
+			// El token no se genero
+			throw new ServicesException(e1.getMessage());
+			
+		}catch (Exception e) {
 			// El token no se genero
 			throw new Exception("Error al generar el Token: " + e);
 			

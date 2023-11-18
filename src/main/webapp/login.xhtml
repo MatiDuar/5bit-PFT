@@ -12,6 +12,8 @@
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/login.css" />
 	<title>Proyecto Final</title>
+	<link rel="shortcut icon" href="resources/images/UTEC.png"></link>
+	
 </h:head>
 
 <body onload="#{gestionPersona.msjKick()}">
@@ -38,7 +40,7 @@
 				<h:form>
 					<p:growl id="messages" life="4000" closable="true" />
 					<p:remoteCommand autoRun="true" update="messages"></p:remoteCommand>
-					
+
 					<label for="usuario1" class="block text-900 font-medium mb-2">Usuario</label>
 					<p:inputText id="usuario1"
 						value="#{gestionPersona.personaSeleccionada.nombreUsuario}"
@@ -60,9 +62,15 @@
 							su contraseña?</a>
 					</div>
 
-					<p:commandButton  action="#{gestionPersona.verificarUsuario}"
+					<p:commandButton action="#{gestionPersona.verificarUsuario}"
 						value="Ingresar" icon="pi pi-user" update="messages"
 						validateClient="true" styleClass="w-full" />
+
+
+					<div class="flex-none flex align-items-center justify-content-center mt-2">
+						<p:commandButton value="Ingresar con Active directory"
+							styleClass="ui-button-outlined" action="#{gestionPersona.toLoginAD}" icon="pi pi-chevron-right"/>
+					</div>
 
 				</h:form>
 			</div>

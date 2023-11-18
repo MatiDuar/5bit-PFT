@@ -34,3 +34,8 @@ html, body {
   margin: 0;
   padding: 0;
 }
+
+.ui-button.ui-state-hover {
+			background-color: #0d89ec !important;
+			color:white !important;
+		}

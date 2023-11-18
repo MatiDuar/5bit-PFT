@@ -139,7 +139,7 @@ public class HolaMundoRest {
 			if (result) {
 				return Response.ok().status(Response.Status.ACCEPTED).build();
 			} else {
-				return Response.notModified().build();
+				return Response.notModified().status(Response.Status.BAD_REQUEST).build();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -198,7 +198,7 @@ public class HolaMundoRest {
 			boolean result = reclamoDAO.borrarReclamo((long) id);
 
 			if (result) {
-				return Response.ok().status(Response.Status.ACCEPTED).build();
+				return Response.ok().status(Response.Status.CREATED).build();
 			} else {
 				return Response.notModified().build();
 			}
