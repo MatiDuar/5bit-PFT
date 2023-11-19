@@ -36,7 +36,7 @@
 						</c:otherwise>
 					</c:choose>					
 				</p:menuitem>
-				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" outcome="eventos">
+				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" outcome="eventos" rendered="#{!gestionPersona.esEstudianteLogeado()}">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="3" />
@@ -46,11 +46,12 @@
 						</c:otherwise>
 					</c:choose>
 				</p:menuitem>
-				<p:menuitem value="Reclamos" icon="pi pi-fw pi-file-o" ajax="false" outcome="reclamos">
+				<p:menuitem value="Reclamos" icon="pi pi-fw pi-file-o" ajax="false" outcome="reclamos" rendered="#{!gestionPersona.esTutorLogeado()}">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="4" />
 						</c:when>
+						
 						<c:otherwise>
 							<f:param name="i" value="3" />
 						</c:otherwise>
