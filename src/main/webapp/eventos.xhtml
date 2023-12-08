@@ -290,7 +290,7 @@
 					</p:rowEditor>
 				</p:column>
 				<p:column width="30"
-				style="padding-left: 5px;">
+				style="padding-left: 5px;" rendered="#{gestionPersona.esAnalistaLogeado()}">
 					<p:commandButton class="rounded-button ui-button-danger ui-button-flat"
 						icon="pi pi-trash" process="@this"
 						action="#{gestionEventos.darDeBajaEvento(evento)}"

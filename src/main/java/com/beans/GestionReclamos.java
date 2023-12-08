@@ -113,8 +113,13 @@ public class GestionReclamos implements Serializable {
 			fechaSeleccionada = null;
 			reclamoSeleccionado = new Reclamo();
 			reclamoAlta= new Reclamo();
-			dfView.closeResponsive();	
+			dfView.closeResponsive();
+		
+				
 			
+			
+			
+
 			return "";
 
 			
