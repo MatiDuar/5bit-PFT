@@ -1,11 +1,20 @@
 @charset "ISO-8859-1";
 
+
+body, html {
+ height: 100%;
+}
+
+
 .layout-sidebar {
 	position: fixed;
 	left: 0;
 	top: 100px;
 	height: calc(100% - 70px);
+	/*background-color: var(- -surface-a);*/
 	background-color: var(- -surface-a);
+	/*background: transparent;
+	backdrop-filter: blur(20px);*/
 	width: 250px;
 	border-right: 1px solid var(--surface-d);
 	user-select: none;
@@ -136,4 +145,17 @@ td .columnaEditar {
 	display: flex !important;
 	justify-content: center;
 	align-items: center;
+}
+
+.fondo{
+	display: block;
+	height: 100%;
+	background: url("../images/7618722-20.png") no-repeat;
+	background-size: cover;
+	background-position: center;
+}
+
+.no-background{
+	display: block;
+	height: 100%;
 }

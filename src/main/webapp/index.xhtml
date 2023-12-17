@@ -36,42 +36,25 @@
 	<!--**************************************** 	Fin contenido barra Izquierda	**************************************** -->
 
 	<!--****************************************	Contenido Principal    **************************************** -->
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}">
-		<div class="layout-content">
-			<div id="contenidoPrincipal">
-				<ui:insert name="contenidoPrincipal">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}" styleClass="#{estiloBean.mostrarFondo ? 'fondo' : 'no-background'}">
+			<div class="layout-content">
+				<div id="contenidoPrincipal">
+					<ui:insert name="contenidoPrincipal">
 
-					<div>
-						<h1>Proyecto PFT - 5bit</h1>
-
-						<div class="card">
-							<h5>PDF</h5>
-							
-						</div>
-					</div>
-
-				</ui:insert>
-			</div>
-		</div>
+					</ui:insert>
+				</div>
+			</div>	
 	</h:panelGroup>
 
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }">
-		<div class="layout-content2">
-			<div id="contenidoPrincipal" style="margin-bottom: 75px;">
-				<ui:insert name="contenidoPrincipal">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }" styleClass="#{estiloBean.mostrarFondo ? 'fondo' : 'no-background'}">
+		
+			<div class="layout-content2">
+				<div id="contenidoPrincipal" style="margin-bottom: 75px;">
+					<ui:insert name="contenidoPrincipal">
 
-					<div>
-						<h1>Proyecto PFT - 5bit</h1>
-
-						<div class="card">
-							<h5>PDF</h5>
-							
-						</div>
-					</div>
-
-				</ui:insert>
-			</div>
-		</div>
+					</ui:insert>
+				</div>
+			</div>	
 	</h:panelGroup>
 	<!--****************************************	Fin contenido Principal	   ****************************************-->
 
