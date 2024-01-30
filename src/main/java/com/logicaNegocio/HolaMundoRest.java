@@ -4,6 +4,7 @@ import javax.ejb.Stateless;
 import javax.inject.Inject;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.persistence.PersistenceException;
 import javax.websocket.server.PathParam;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
@@ -138,7 +139,7 @@ public class HolaMundoRest {
 			if (result) {
 				return Response.ok().status(Response.Status.ACCEPTED).build();
 			} else {
-				return Response.notModified().build();
+				return Response.notModified().status(Response.Status.BAD_REQUEST).build();
 			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
@@ -197,11 +198,14 @@ public class HolaMundoRest {
 			boolean result = reclamoDAO.borrarReclamo((long) id);
 
 			if (result) {
-				return Response.ok().status(Response.Status.ACCEPTED).build();
+				return Response.ok().status(Response.Status.CREATED).build();
 			} else {
 				return Response.notModified().build();
 			}
-		} catch (Exception e) {
+		} catch(PersistenceException e1) {
+			return Response.notModified().status(Response.Status.FORBIDDEN).build();
+
+		}catch (Exception e) {
 
 			e.printStackTrace();
 			return Response.notModified().build();

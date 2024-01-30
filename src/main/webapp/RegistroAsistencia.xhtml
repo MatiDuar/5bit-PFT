@@ -36,7 +36,7 @@
 					widgetVar="caTable"
 					emptyMessage="Registros no encontrados con este criterio"
 					filteredValue="#{dtFilterView.filteredItrs}"
-					globalFilterFunction="#{dtFilterView.globalFilterFunctionITR}"
+					globalFilterFunction="#{dtFilterView.globalFilterFunctionRegistroAsistencia}"
 					editable="true" id="dateTable">
 
 					<p:ajax event="rowEdit"
@@ -49,15 +49,7 @@
 					<f:facet name="header">
 
 
-						<div class="grid ui-fluid">
-							<div class="col-12 md:col-3">
-								<br></br>
-								<p:inputText id="globalFilter" onkeyup="PF('caTable').filter()"
-									style="width:250px" placeholder="Buscardor global..." />
-							</div>
-
-
-						</div>
+						
 
 					</f:facet>
 

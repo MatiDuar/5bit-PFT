@@ -16,17 +16,17 @@
 	<div class="layout-topbar">
 		<div class="flex">
 			<p:tabMenu activeIndex="#{param.i}">
-				<p:menuitem styleClass="flex logo" outcome="index">
+				<p:menuitem styleClass="flex logo" action="#{estiloBean.agregarFondo()}" outcome="index">
 					<div class="col-12 md:col-4">
 						<div class="card">
 							<p:graphicImage width="70px" name="UTEC.png" library="images" />
 						</div>
 					</div>
 				</p:menuitem>
-				<p:menuitem value="Home" icon="pi pi-fw pi-home" outcome="index">
+				<p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{estiloBean.agregarFondo()}" outcome="index" >
 					<f:param name="i" value="1" />
 				</p:menuitem>
-				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas" rendered="#{gestionPersona.esAnalistaLogeado()}">
+				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas" rendered="#{gestionPersona.esAnalistaLogeado()}" action="#{estiloBean.sacarFondo()}">
 				<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="2" />
@@ -36,7 +36,7 @@
 						</c:otherwise>
 					</c:choose>					
 				</p:menuitem>
-				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" outcome="eventos">
+				<p:menuitem value="Eventos" icon="pi pi-fw pi-calendar" ajax="false" action="#{estiloBean.sacarFondo()}" outcome="eventos" rendered="#{!gestionPersona.esEstudianteLogeado()}">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="3" />
@@ -46,17 +46,18 @@
 						</c:otherwise>
 					</c:choose>
 				</p:menuitem>
-				<p:menuitem value="Reclamos" icon="pi pi-fw pi-file-o" ajax="false" outcome="reclamos">
+				<p:menuitem value="Reclamos" icon="pi pi-fw pi-file-o" ajax="false" action="#{estiloBean.sacarFondo()}" outcome="reclamos" rendered="#{!gestionPersona.esTutorLogeado()}">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="4" />
 						</c:when>
+						
 						<c:otherwise>
 							<f:param name="i" value="3" />
 						</c:otherwise>
 					</c:choose>
 				</p:menuitem>
-				<p:menuitem value="Constancias" icon="pi pi-fw pi-clone" ajax="false" outcome="constancias">
+				<p:menuitem value="Constancias" icon="pi pi-fw pi-clone" ajax="false"  action="#{estiloBean.sacarFondo()}" outcome="constancias">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
 							<f:param name="i" value="5" />

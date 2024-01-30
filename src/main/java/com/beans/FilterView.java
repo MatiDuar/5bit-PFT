@@ -30,6 +30,8 @@ import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.Reclamo;
 
+import com.persistencia.entities.ConvocatoriaAsistencia;
+
 @Named("dtFilterView")
 @ViewScoped
 public class FilterView implements Serializable {
@@ -218,6 +220,20 @@ public class FilterView implements Serializable {
 
 	}
 	
+	public boolean globalFilterFunctionRegistroAsistencia(Object value, Object filter, Locale locale) {
+		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
+		if (LangUtils.isBlank(filterText)) {
+			return true;
+		}
+
+		ConvocatoriaAsistencia ca = (ConvocatoriaAsistencia) value;
+		Estudiante estudiante=ca.getEstudiante();
+
+		return ((estudiante.getNombre1()+" "+estudiante.getApellido1()).toLowerCase().startsWith(filterText)
+				|| estudiante.getDocumento().startsWith(filterText));
+
+	}
+	
 	public boolean globalFilterFunctionEstadoReclamo(Object value, Object filter, Locale locale) {
 		String filterText = (filter == null) ? null : filter.toString().trim().toLowerCase();
 		if (LangUtils.isBlank(filterText)) {
@@ -250,7 +266,7 @@ public class FilterView implements Serializable {
 			}
 			String nombreEstudiante = reclamo.getEstudiante().getNombre1() + " "
 					+ reclamo.getEstudiante().getApellido1();
-			return (reclamo.getTitulo().equalsIgnoreCase(filterText)
+			return (reclamo.getTitulo().toLowerCase().startsWith(filterText)
 					|| (reclamo.getNombreEventoVME().toLowerCase().contains(filterText))
 					|| nombreEstudiante.startsWith(filterText));
 		}

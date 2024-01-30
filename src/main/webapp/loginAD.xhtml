@@ -12,6 +12,8 @@
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/login.css" />
 	<title>Proyecto Final</title>
+	<link rel="shortcut icon" href="resources/images/UTEC.png"></link>
+
 </h:head>
 
 <body onload="#{gestionPersona.msjKick()}">
@@ -19,7 +21,7 @@
 	<!--****************************************	Header	  **************************************** -->
 	<div class="headerRegistro">
 		<div class="textoHeader">
-			<h1 class="mt-0">LOGIN</h1>
+			<h1 class="mt-0">LOGIN CON ACTIVE DIRECTORY</h1>
 		</div>
 	</div>
 	<!--**************************************** 	Fin Header    ****************************************-->
@@ -38,15 +40,13 @@
 				<h:form>
 					<p:growl id="messages" life="4000" closable="true" />
 					<p:remoteCommand autoRun="true" update="messages"></p:remoteCommand>
-					
+
 					<label for="usuario1" class="block text-900 font-medium mb-2">Usuario</label>
-					<p:inputText id="usuario1"
-						value="#{gestionUsuariosAD.mailLogin}"
-						styleClass="w-full mb-3" placeholder="Mail AD" >
-						</p:inputText>
+					<p:inputText id="usuario1" value="#{gestionUsuariosAD.mailLogin}"
+						styleClass="w-full mb-3" placeholder="Mail AD">
+					</p:inputText>
 					<label for="password1" class="block text-900 font-medium mb-2">Contraseña</label>
-					<p:inputText id="password1"
-						value="#{gestionUsuariosAD.password}"
+					<p:inputText id="password1" value="#{gestionUsuariosAD.password}"
 						type="password" styleClass="w-full mb-3" placeholder="Contraseña" />
 
 					<div class="flex align-items-center justify-content-between mb-6">
@@ -60,11 +60,17 @@
 							class="font-medium no-underline ml-2 text-blue-500 text-right cursor-pointer">Olvido
 							su contraseña?</a>
 					</div>
-
-					<p:commandButton ajax="false" action="#{gestionUsuariosAD.verfificarUsuarioAD}"
-						value="Ingresar" icon="pi pi-user" update="messages"
-						validateClient="true" styleClass="w-full" />
-
+					<p:commandButton 
+						action="#{gestionUsuariosAD.verfificarUsuarioAD}" value="Ingresar"
+						icon="pi pi-user" update="messages" validateClient="true"
+						styleClass="w-full" />
+					<div
+						class="flex-none flex align-items-center justify-content-center mt-2">
+						<p:commandButton id="loginAD"
+							value="Ingresar con usuario corriente"
+							styleClass="ui-button-outlined " icon="pi pi-chevron-right"
+							action="#{gestionPersona.toLogin}" />
+					</div>
 				</h:form>
 			</div>
 		</div>

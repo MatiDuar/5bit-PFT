@@ -99,7 +99,7 @@ public class GestionReclamos implements Serializable {
 
 	}
 
-	public void crearReclamo() {
+	public String crearReclamo() {
 		try {
 			if (fechaAlta != null) {
 				reclamoAlta.setFechaEvento(new java.sql.Date(fechaAlta.getTime()));
@@ -113,12 +113,21 @@ public class GestionReclamos implements Serializable {
 			fechaSeleccionada = null;
 			reclamoSeleccionado = new Reclamo();
 			reclamoAlta= new Reclamo();
-
 			dfView.closeResponsive();
+		
+				
+			
+			
+			
+
+			return "";
+
+			
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+			return "";
+		} 
 
 	}
 
@@ -146,10 +155,11 @@ public class GestionReclamos implements Serializable {
 			accionReclamoSeleccionado = new AccionReclamo();
 
 			dfView.closeResponsive();
+			
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} 
 
 	}
 	
@@ -172,6 +182,7 @@ public class GestionReclamos implements Serializable {
 			serivce.crearEstadoReclamo(estadoReclamoAlta);
 			estadoReclamoAlta=new Estado();
 			
+			dfView.closeResponsive();
 			dfView.closeResponsive();
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
