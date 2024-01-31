@@ -13,6 +13,7 @@ import com.logicaNegocio.GestionITRService;
 import com.logicaNegocio.GestionPersonaService;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.Usuario;
+import com.persistencia.exception.ServicesException;
 
 @Named(value = "gestionITR") // JEE8
 @SessionScoped // JEE8
@@ -59,15 +60,23 @@ public class GestionITR implements Serializable {
 	}
 	
 	public void crearITR() {
-		itrSeleccionado.setActivo(true);
-		persistenciaBean.crearITR(itrSeleccionado);
-		itrSeleccionado=new ITR();
-		gestionPersona.updateITRs();
+		try {
+			itrSeleccionado.setActivo(true);
+			persistenciaBean.crearITR(itrSeleccionado);
+			itrSeleccionado=new ITR();
+			gestionPersona.updateITRs();
+			closeVentana();
+			closeVentana();
+			
+			
+		}catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
-		closeVentana();
-		closeVentana();
 		
 	}
+	
 	
 	
 	public void mostrarMantenimientoITR() {
