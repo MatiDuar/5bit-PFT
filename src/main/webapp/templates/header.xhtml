@@ -57,6 +57,16 @@
 						</c:otherwise>
 					</c:choose>
 				</p:menuitem>
+				<p:menuitem value="Escolaridad" icon="pi pi-fw pi-id-card" ajax="false" action="#{estiloBean.sacarFondo()}" outcome="escolaridad" rendered="#{gestionPersona.esEstudianteLogeado()}">
+					<c:choose>
+						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
+							<f:param name="i" value="3" />
+						</c:when>
+						<c:otherwise>
+							<f:param name="i" value="2" />
+						</c:otherwise>
+					</c:choose>
+				</p:menuitem>
 				<p:menuitem value="Constancias" icon="pi pi-fw pi-clone" ajax="false"  action="#{estiloBean.sacarFondo()}" outcome="constancias">
 					<c:choose>
 						<c:when test="#{gestionPersona.esAnalistaLogeado()}">
@@ -66,7 +76,7 @@
 							<f:param name="i" value="4" />
 						</c:otherwise>
 					</c:choose>
-				</p:menuitem>
+				</p:menuitem>			
 			</p:tabMenu>
 		</div>
 		<h:form id="coso">

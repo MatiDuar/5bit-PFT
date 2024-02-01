@@ -29,7 +29,7 @@ import com.persistencia.entities.Usuario;
 import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.Reclamo;
-
+import com.persistencia.dto.EscolaridadDTO;
 import com.persistencia.entities.ConvocatoriaAsistencia;
 
 @Named("dtFilterView")
@@ -46,6 +46,7 @@ public class FilterView implements Serializable {
 
 	@Inject
 	private GestionPersona gestionPersona;
+	
 
 	// filtros para Usuarios
 	private String carreraSel;
@@ -65,10 +66,12 @@ public class FilterView implements Serializable {
 	private List<ITR> itrs;
 
 	private List<ITR> filteredItrs;
+	
 
 	// filtros para reclamos
 	private String estadoReclamo;
 	private List<Reclamo> reclamos;
+
 
 	private List<Reclamo> filteredReclamos;
 
@@ -109,6 +112,8 @@ public class FilterView implements Serializable {
 	private List<Estado> estadosReclamo;
 	
 	private List<EstadosEventos> filteredEstadosReclamo;
+	
+
 
 
 	
@@ -141,6 +146,7 @@ public class FilterView implements Serializable {
 			modalidadEventoSeleccionada = "";
 			estadoEvento = "";
 			itrEventoSelccionado = "";
+			
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -561,6 +567,8 @@ public class FilterView implements Serializable {
 	public List<Reclamo> getReclamos() {
 		return reclamos;
 	}
+	
+
 
 	public void setReclamos(List<Reclamo> reclamos) {
 		this.reclamos = reclamos;
@@ -609,4 +617,5 @@ public class FilterView implements Serializable {
 		this.filteredEstadosReclamo = filteredEstadosReclamo;
 	}
 
+	
 }

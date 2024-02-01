@@ -26,6 +26,7 @@ import com.persistencia.dao.TipoActividadDAO;
 import com.persistencia.dao.TipoTutorDAO;
 import com.persistencia.dao.TutorDAO;
 import com.persistencia.dao.UsuarioDAO;
+import com.persistencia.dto.EscolaridadDTO;
 import com.persistencia.entities.*;
 import com.persistencia.exception.ServicesException;
 
@@ -106,6 +107,7 @@ public class GestionPersonaService implements Serializable {
 
 		return listaPersonas;
 	}
+	
 
 	public List<ITR> listarITRs() throws Exception {
 
@@ -200,6 +202,17 @@ public class GestionPersonaService implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			return false;
+		}
+	}
+	
+	public List<EscolaridadDTO> buscarEscolaridad(Usuario usuario) throws Exception {
+
+		try {
+			return convocatoriaAsistenciaDAO.buscarEscolaridadPorEstudiante(usuario);
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
 		}
 	}
 	

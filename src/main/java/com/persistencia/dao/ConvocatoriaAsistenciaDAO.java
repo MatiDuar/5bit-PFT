@@ -1,5 +1,7 @@
 package com.persistencia.dao;
 
+import java.sql.Date;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -7,11 +9,14 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.persistencia.dto.EscolaridadDTO;
 import com.persistencia.entities.ConvocatoriaAsistencia;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
+import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
 
 @Stateless
@@ -150,6 +155,95 @@ public class ConvocatoriaAsistenciaDAO {
 			return query.getSingleResult();
 		} catch (PersistenceException e) {
 
+			return null;
+
+		}
+	}
+	
+	public List<EscolaridadDTO> buscarEscolaridadPorEstudiante(Usuario estudiante)
+			throws ServicesException {
+		try {
+			
+			String queryStr = "select c.estudiante_id, u.nombre1, u.apellido1, c.evento_id, c.calificacion, eve.titulo, eve.creditos, eve.fechainicio, eve.fechafin, eve.semestre, mo.nombremodalidadevento,i.nombre\r\n"
+					+ "from convocatorias_asistencias c, usuarios u , estudiantes e, eventos eve, modalidades_eventos mo, itr i\r\n"
+					+ "where u.id = e.id\r\n"
+					+ "and c.estudiante_id = e.id\r\n"
+					+ "and c.evento_id = eve.id\r\n"
+					+ "and mo.id_modalidad = eve.modalidad_id_modalidad\r\n"
+					+ "and i.id = eve.itr_id\r\n"
+					+ "and c.estudiante_id = :estudiante";
+			
+			Long idEstudiante = estudiante.getId();
+			
+			System.out.println("ID del estudiante: " + idEstudiante);
+			
+			Query q = em.createNativeQuery(queryStr).setParameter("estudiante", idEstudiante);
+
+			List<Object[]> resultados = q.getResultList();
+			
+			System.out.println("Resultado de Query: " + resultados.toString());
+			
+			
+			List<EscolaridadDTO> escolaridades = new ArrayList<>();
+			EscolaridadDTO aux;
+			
+			String strDato;
+			int contador;
+			for (Object[] tupla : resultados) {
+	            contador = 0;
+	            aux = new EscolaridadDTO();
+	            for (Object dato : tupla) {
+	                if (dato != null) {
+	                	strDato = dato.toString();
+	                }else {	
+	                	strDato = "";
+	                }
+	                switch (contador) {
+	                    case 0:
+	                        aux.setIdEstudiante(Integer.parseInt(strDato));
+	                        break;
+	                    case 1:
+	                        aux.setNombre1(strDato);
+	                        break;
+	                    case 2:
+	                        aux.setApellido1(strDato);
+	                        break;
+	                    case 3:
+	                        aux.setEventoId(Integer.parseInt(strDato));
+	                        break;
+	                    case 4:
+	                        aux.setCalificacion(Integer.parseInt(strDato));
+	                        break;
+	                    case 5:
+	                        aux.setTituloEvento(strDato);
+	                        break;
+	                    case 6:
+	                        aux.setCreditos(Integer.parseInt(strDato));
+	                        break;
+	                    case 7:
+	                    	aux.setFechaInicio(new Date(0));
+	                        break;
+	                    case 8:
+	                    	aux.setFechaFin(new Date(0)); 
+	                    	break;
+	                    case 9:
+	                    	aux.setSemestre(strDato); 
+	                    	break;
+	                    case 10:
+	                    	aux.setModalidad(strDato);
+                    		break;
+	                    case 11:
+	                    aux.setNombreItr(strDato);
+                    		break;
+    	
+	                }
+	                contador++;
+	            }
+	            escolaridades.add(aux);
+			}   
+			System.out.println("Escolaridades: " + escolaridades.toString());
+			return escolaridades;
+		} catch (PersistenceException e) {
 			return null;
 
 		}
