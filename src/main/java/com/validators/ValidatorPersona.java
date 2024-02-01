@@ -44,15 +44,24 @@ public class ValidatorPersona implements Validator<String>,Serializable{
 		
 		Pattern formatoEmail = null;
 	    Matcher matcher = null;
+	    
+	    String dominioAContener = "utec.edu.uy";
 							  
 		String usuario= arg2.split("@")[0];
 		
+		String dominio = arg2.substring(arg2.indexOf("@")+1);
+		
+		System.out.println(dominio);
 		
 		formatoEmail = Pattern.compile("^(?!\\s*$).+");
 		matcher = formatoEmail.matcher(arg2);
 		
 		if (!matcher.matches()) {
 			throw new ValidatorException(new FacesMessage("No puede contener solo espacios vacios"));
+		}
+		
+		if(!dominio.contains(dominioAContener)) {
+			throw new ValidatorException(new FacesMessage("Dominio del correo no pertenece a UTEC"));
 		}
 		
 		formatoEmail = Pattern.compile("^[A-Za-z0-9+_.-]+@(.+)$");

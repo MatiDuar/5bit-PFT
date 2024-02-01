@@ -57,7 +57,7 @@ public class DFView {
 	                .resizable(false)
 	                .styleClass("max-w-screen")
 	                .iframeStyleClass("max-w-screen")
-
+	                
 	                .build();
 
 	        PrimeFaces.current().dialog().openDynamic("mantenimientoITR", options, null);

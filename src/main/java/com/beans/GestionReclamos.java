@@ -182,6 +182,7 @@ public class GestionReclamos implements Serializable {
 			serivce.crearEstadoReclamo(estadoReclamoAlta);
 			estadoReclamoAlta=new Estado();
 			
+			
 			dfView.closeResponsive();
 			dfView.closeResponsive();
 		} catch (ServicesException e) {
