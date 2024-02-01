@@ -14,5 +14,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.jboss.ide.eclipse.as.core.server.runtime.runtimeTarget/WildFly 26.1.jdk1.7"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/itext-4.2.1.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

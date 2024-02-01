@@ -19,140 +19,138 @@
 
 		<h1>Escolaridad</h1>
 
-		
+		<h:form>
 
-			<h:form>
+			<div>
+				<h5>Descargar Escolaridad</h5>
 
-				<div>
-					<h5>Descargar Escolaridad</h5>
-					<p:commandButton value="XLS" styleClass="mr-2 mb-2">
-						<p:dataExporter type="xls" target="dataTable" fileName="Escolaridad" />
-					</p:commandButton>
 
-					<p:commandButton value="XLSX" styleClass="mr-2 mb-2">
-						<p:dataExporter type="xlsxstream" target="dataTable" fileName="Escolaridad" />
-					</p:commandButton>
+				<p:commandButton value="PDF" styleClass="mr-2 mb-2">
+					<p:dataExporter type="pdf" target="tablaEscolaridades"
+						fileName="Escolaridad" />
+				</p:commandButton>
 
-					<p:commandButton value="PDF" styleClass="mr-2 mb-2">
-						<p:dataExporter type="pdf" target="dataTable" fileName="Escolaridad" />
-					</p:commandButton>
+				<p:commandButton value="CSV" styleClass="mr-2 mb-2">
+					<p:dataExporter type="csv" target="tablaEscolaridades"
+						fileName="Escolaridad" />
+				</p:commandButton>
 
-					<p:commandButton value="CSV" styleClass="mr-2 mb-2">
-						<p:dataExporter type="csv" target="dataTable" fileName="Escolaridad" />
-					</p:commandButton>
+			</div>
 
-					<p:commandButton value="XML" styleClass="mr-2 mb-2">
-						<p:dataExporter type="xml" target="dataTable" fileName="Escolaridad" />
-					</p:commandButton>
 
-					<p:commandButton value="TXT" styleClass="mr-2 mb-2">
-						<p:dataExporter type="txt" target="dataTable" fileName="Escolaridad"
-							exporter="#{dataExporterView.textExporter}" />
-					</p:commandButton>
-				</div>
+			<p:dataTable id="tablaEscolaridades" var="escolaridad"
+				value="#{gestionPersona.buscarEscolaridad()}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" styleClass="mt-2">
 
-				<p:dataTable var="escolaridad"
-					value="#{gestionPersona.buscarEscolaridad()}"
-					widgetVar="escolaridadesTable"
-					emptyMessage="El estudiante no esta registrado en ningun evento"
-					id="dataTable">
-
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
 					<f:facet name="header">
-
-						<p:remoteCommand oncomplete="PF('escolaridadesTable').filter()"
-							autoRun="true"></p:remoteCommand>
-						<div class="grid ui-fluid">
-
-							<div class="col-12 md:col-2">
-								<br></br>
-								<p:inputText id="globalFilter"
-									onkeyup="PF('escolaridadesTable').filter()" style="width:250px"
-									placeholder="Buscardor global..." />
-							</div>
-
-						</div>
+						<h:outputText value="Evento" />
 					</f:facet>
-
-					<p:column field="eventoId" headerText="Evento" filterable="true">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.eventoId}" />
-
-					</p:column>
-
-					<p:column field="calificacion" headerText="Calificacion"
-						filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.calificacion}" />
-
-					</p:column>
-
-					<p:column field="tituloEvento" headerText="Nombre Evento"
-						filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.tituloEvento}" />
-
-					</p:column>
-
-					<p:column field="creditos" headerText="Creditos" filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.creditos}" />
-
-					</p:column>
-
-					<p:column field="fechaInicio" headerText="Fecha Inicio"
-						filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.fechaInicio}" />
-
-					</p:column>
-
-					<p:column field="fechaFin" headerText="Fecha Fin"
-						filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.fechaFin}" />
-
-					</p:column>}
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
 				
-				<p:column field="semestre" headerText="Semestre" filterable="false">
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Mi Exported Column Name">
+					<f:facet name="header">
+						<h:outputText value="Evento" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
 
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.semestre}" />
+			</p:dataTable>
 
-					</p:column>
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350" widgetVar="confirm"
+				header="Estas Seguro?">
+				<p:commandButton value="Cancelar" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Confirmar" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+		</h:form>
 
-					<p:column field="modalidad" headerText="Modalidad"
-						filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.modalidad}" />
-
-					</p:column>
-
-					<p:column field="nombreItr" headerText="ITR" filterable="false">
-
-						<h:outputText style="vertical-align: middle; margin-left: .5rem"
-							value="#{escolaridad.nombreItr}" />
-
-					</p:column>
-
-				</p:dataTable>
-
-				<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
-					responsive="true" width="350" widgetVar="confirm"
-					header="Estas Seguro?">
-					<p:commandButton value="Cancelar" type="button"
-						styleClass="ui-confirmdialog-no ui-button-flat" />
-					<p:commandButton value="Confirmar" type="button"
-						styleClass="ui-confirmdialog-yes" />
-				</p:confirmDialog>
-			</h:form>
-		
 	</ui:define>
 
 
