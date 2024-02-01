@@ -1,6 +1,7 @@
 package com.validators;
 
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.regex.Matcher;
@@ -46,13 +47,22 @@ public class ValidatorCedula implements Validator<String>,Serializable{
 		
 		String cedula = arg2;
 		
-		if(cedula.length()!=8) {
+		/*if(cedula.length()!=8) {
 			throw new ValidatorException(new FacesMessage("Debe tener 8 digitos"));
-		}
+		}*/
 		
 		char[] digitos = cedula.toCharArray();
 		
-		char digitoVerificador = digitos[7];
+		char digitoVerificador= 'a';
+		
+		if(digitos.length==8) {
+			digitoVerificador = digitos[7];
+		}else if (digitos.length==7) {
+			digitoVerificador = digitos[6];
+		}else {
+			throw new ValidatorException(new FacesMessage("Debe tener 7 u 8 digitos"));
+			}
+		
 		
 		
 			

@@ -115,12 +115,12 @@
 										<h5>Documento *</h5>
 										<p:inputText id="documento"
 											value="#{gestionPersona.usuarioLogeado.documento}"
-											validatorMessage="Formato incorrecto"
+											validator="#{validatorCedula.validate}"
 											maxlength="8"
 											required="true"
 											requiredMessage="Debe ingresar un documento">
 											<p:keyFilter for="documento" mask="pnum" />
-										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
+					
 
 										</p:inputText>
 										<small class="block ui-state-error"><h:message
