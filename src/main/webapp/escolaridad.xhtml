@@ -25,14 +25,12 @@
 				<h5>Descargar Escolaridad</h5>
 
 
-				<p:commandButton value="PDF" styleClass="mr-2 mb-2">
+				<p:commandButton value="PDF" styleClass="mr-2 mb-2" ajax="false">
 					<p:dataExporter type="pdf" target="tablaEscolaridades"
 						fileName="Escolaridad" />
 				</p:commandButton>
 
-				<p:commandButton value="CSV" styleClass="mr-2 mb-2">
-					<p:dataExporter type="csv" target="tablaEscolaridades"
-						fileName="Escolaridad" />
+				<p:commandButton value="CSV" styleClass="mr-2 mb-2" action="#{escolaridadPDF.generarPDF()}" ajax="false">
 				</p:commandButton>
 
 			</div>
