@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ui:composition template="/index.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+	<h:outputScript library="primefaces" name="jquery/jquery.js" />
+	<h:outputScript library="primefaces" name="primefaces.js" />
+	<link type="text/css" rel="stylesheet"
+		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
+	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
+	<h:outputScript library="primefaces" name="jquery.js" />
+	<h:outputScript library="primefaces" name="jquery-plugins.js" />
+
+	<ui:define name="contenidoPrincipal">
+
+		<h1>Escolaridad</h1>
+
+		<h:form>
+
+			<div>
+				<h5>Descargar Escolaridad</h5>
+
+				<p:commandButton value="PDF" styleClass="mr-2 mb-2" action="#{escolaridadPDF.generarPDF()}" ajax="false">
+				</p:commandButton>
+
+			</div>
+
+
+			<p:dataTable id="tablaEscolaridades" var="escolaridad"
+				value="#{gestionPersona.buscarEscolaridad()}"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink}"
+				paginator="true" rows="10" styleClass="mt-2">
+
+				<p:column exporter="true" headerText="Evento"
+					exportHeader="Evento" >
+					<f:facet name="header">
+						<h:outputText value="Evento"/>
+					</f:facet>
+					<h:outputText value="#{escolaridad.eventoId}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Calificacion"
+					exportHeader="Calificacion">
+					<f:facet name="header">
+						<h:outputText value="Calificación" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.calificacion}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Creditos"
+					exportHeader="Creditos">
+					<f:facet name="header">
+						<h:outputText value="Creditos" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.creditos}" />
+				</p:column>
+				
+				
+				
+				<p:column exporter="true" headerText="FechaInicio"
+					exportHeader="FechaInicio">
+					<f:facet name="header">
+						<h:outputText value="Fecha Inicio" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.fechaInicio}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="FechaFin"
+					exportHeader="FechaFin">
+					<f:facet name="header">
+						<h:outputText value="Fecha Fin" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.fechaFin}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="Semestre"
+					exportHeader="Semestre">
+					<f:facet name="header">
+						<h:outputText value="Semestre" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.semestre}" />
+				</p:column>
+				
+				
+				<p:column exporter="true" headerText="Modalidad"
+					exportHeader="Modalidad">
+					<f:facet name="header">
+						<h:outputText value="Modalidad" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.modalidad}" />
+				</p:column>
+				
+				<p:column exporter="true" headerText="ITR"
+					exportHeader="ITR">
+					<f:facet name="header">
+						<h:outputText value="ITR" />
+					</f:facet>
+					<h:outputText value="#{escolaridad.nombreItr}" />
+				</p:column>
+				
+				
+				
+			</p:dataTable>
+
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
+				responsive="true" width="350" widgetVar="confirm"
+				header="Estas Seguro?">
+				<p:commandButton value="Cancelar" type="button"
+					styleClass="ui-confirmdialog-no ui-button-flat" />
+				<p:commandButton value="Confirmar" type="button"
+					styleClass="ui-confirmdialog-yes" />
+			</p:confirmDialog>
+		</h:form>
+
+	</ui:define>
+
+
+</ui:composition>
