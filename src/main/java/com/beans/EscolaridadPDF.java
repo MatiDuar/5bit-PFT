@@ -70,7 +70,7 @@ public class EscolaridadPDF {
 	            PdfPTable table = new PdfPTable(8);
 	
 	            table.setWidthPercentage(100);
-	            Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN,12,Font.BOLD);
+	            Font boldFont = new Font(Font.FontFamily.TIMES_ROMAN,11,Font.BOLD);
 	            
 	          List<EscolaridadDTO> escolaridades = ges.getEscolaridad();
 	            
