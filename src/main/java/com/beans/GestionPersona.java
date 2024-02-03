@@ -7,24 +7,21 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
-import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.LinkedList;
 
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
 import com.logicaNegocio.GestionPersonaService;
+import com.persistencia.dao.ConvocatoriaAsistenciaDAO;
 import com.persistencia.dao.UsuarioDAO;
+import com.persistencia.dto.EscolaridadDTO;
 import com.persistencia.entities.Analista;
 import com.persistencia.entities.AreaTutor;
 import com.persistencia.entities.Carrera;
@@ -91,6 +88,7 @@ public class GestionPersona implements Serializable {
 	private List<AreaTutor> areasTutor;
 	private List<Departamento> departamentos;
 	private List<TipoTutor>rolesTutor;
+	private List<EscolaridadDTO> escolaridad;
 
 	private List<String> bottonesMenu;
 
@@ -129,7 +127,7 @@ public class GestionPersona implements Serializable {
 			itrs = persistenciaBean.listarITRs();
 			areasTutor=persistenciaBean.listarAreaTutor();
 			departamentos=persistenciaBean.listarDepartamento();
-			rolesTutor=persistenciaBean.listarTipoTutor();
+			rolesTutor=persistenciaBean.listarTipoTutor();	
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -374,6 +372,15 @@ public class GestionPersona implements Serializable {
 		}
 		return  null;
 	}
+	
+	
+	public List<EscolaridadDTO> buscarEscolaridad() throws Exception {
+
+		escolaridad = persistenciaBean.buscarEscolaridad(usuarioLogeado);
+
+		return escolaridad;
+	}
+	
 	/**
 	 * La funcion se encarga de activar a una persona en la base de datos
 	 * 
@@ -927,12 +934,14 @@ public void toLoginAD() {
 		this.usuarioModificar = usuarioModificar;
 	}
 
+	public List<EscolaridadDTO> getEscolaridad() {
+		return escolaridad;
+	}
 
-	
-	
-	
-	
-	
+	public void setEscolaridad(List<EscolaridadDTO> escolaridad) {
+		this.escolaridad = escolaridad;
+	}
+
 
 }
 

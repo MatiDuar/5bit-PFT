@@ -36,7 +36,7 @@
 	<!--**************************************** 	Fin contenido barra Izquierda	**************************************** -->
 
 	<!--****************************************	Contenido Principal    **************************************** -->
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}" styleClass="#{estiloBean.mostrarFondo ? 'fondo' : 'no-background'}">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}" >
 			<div class="layout-content">
 				<div id="contenidoPrincipal">
 					<ui:insert name="contenidoPrincipal">
@@ -46,7 +46,7 @@
 			</div>	
 	</h:panelGroup>
 
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }" styleClass="#{estiloBean.mostrarFondo ? 'fondo' : 'no-background'}">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }" >
 		
 			<div class="layout-content2">
 				<div id="contenidoPrincipal" style="margin-bottom: 75px;">
