@@ -1,6 +1,7 @@
 package com.persistencia.dao;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,7 @@ import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
+import java.text.SimpleDateFormat;  
 
 @Stateless
 @LocalBean
@@ -193,11 +195,14 @@ public class ConvocatoriaAsistenciaDAO {
 	            contador = 0;
 	            aux = new EscolaridadDTO();
 	            for (Object dato : tupla) {
+	            	
 	                if (dato != null) {
 	                	strDato = dato.toString();
 	                }else {	
 	                	strDato = "";
 	                }
+	                
+	                
 	                switch (contador) {
 	                    case 0:
 	                        aux.setIdEstudiante(Integer.parseInt(strDato));
@@ -221,10 +226,28 @@ public class ConvocatoriaAsistenciaDAO {
 	                        aux.setCreditos(Integer.parseInt(strDato));
 	                        break;
 	                    case 7:
-	                    	aux.setFechaInicio(new Date(0));
+	                    	try {
+	                    		System.out.println(strDato.toString());
+	                    	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+	                    	    java.util.Date parsedDate =  dateFormat.parse(strDato.toString());
+	                    	    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+	                    		aux.setFechaInicio(timestamp);
+	                    		System.out.println(timestamp.toString());
+	                    	} catch(Exception e) { //this generic but you can control another types of exception
+	                    	    // look the origin of excption 
+	                    		e.printStackTrace();
+	                    	} 
 	                        break;
 	                    case 8:
-	                    	aux.setFechaFin(new Date(0)); 
+	                    	try {
+	                    	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S");
+	                    	    java.util.Date parsedDate = dateFormat.parse(strDato.toString());
+	                    	    Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
+	                    	    aux.setFechaFin(timestamp); 
+	                    	} catch(Exception e) { //this generic but you can control another types of exception
+	                    	    // look the origin of excption 
+	                    		e.printStackTrace();
+	                    	}
 	                    	break;
 	                    case 9:
 	                    	aux.setSemestre(strDato); 
@@ -239,9 +262,16 @@ public class ConvocatoriaAsistenciaDAO {
 	                }
 	                contador++;
 	            }
-	            escolaridades.add(aux);
+	            
+	            //Si la calificación es 0, la escolaridad no se mostrará.
+	            if(aux.getCalificacion()>0) {
+	            	 escolaridades.add(aux);
+	            }
+	           
 			}   
-			System.out.println("Escolaridades: " + escolaridades.toString());
+			
+			
+			
 			return escolaridades;
 		} catch (PersistenceException e) {
 			return null;
