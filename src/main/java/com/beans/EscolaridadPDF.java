@@ -87,7 +87,11 @@ public class EscolaridadPDF {
 
 	            // Agregar filas
 	            for (EscolaridadDTO es : escolaridades) {
-	                table.addCell(es.getEventoId().toString());
+	            	System.out.println(es.getCalificacion());
+	            	if(es.getCalificacion().toString()=="0") {
+	            		continue;
+	            	}
+	                table.addCell(es.getTituloEvento().toString());
 	                table.addCell(es.getCalificacion().toString());
 	                table.addCell(es.getCreditos().toString());
 	                table.addCell(es.getFechaInicio().toString());

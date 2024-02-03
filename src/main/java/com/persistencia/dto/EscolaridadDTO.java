@@ -1,6 +1,7 @@
 package com.persistencia.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 public class EscolaridadDTO {
 	
@@ -11,8 +12,8 @@ private Integer eventoId;
 private Integer calificacion;
 private String tituloEvento;
 private Integer creditos;
-private Date fechaInicio;
-private Date fechaFin;
+private Timestamp fechaInicio;
+private Timestamp fechaFin;
 private String semestre;
 private String modalidad;
 private String nombreItr;
@@ -21,7 +22,7 @@ private String nombreItr;
 
 
 public EscolaridadDTO(Integer idEstudiante, String nombre1, String apellido1, Integer eventoId, Integer calificacion,
-		String tituloEvento, Integer creditos, Date fechaInicio, Date fechaFin, String semestre, String modalidad,
+		String tituloEvento, Integer creditos, Timestamp fechaInicio, Timestamp fechaFin, String semestre, String modalidad,
 		String nombreItr) {
 	super();
 	this.idEstudiante = idEstudiante;
@@ -89,18 +90,27 @@ public void setCreditos(Integer creditos) {
 	this.creditos = creditos;
 }
 
-public Date getFechaInicio() {
+
+public Timestamp getFechaInicio() {
 	return fechaInicio;
 }
-public void setFechaInicio(Date fechaInicio) {
+
+
+public void setFechaInicio(Timestamp fechaInicio) {
 	this.fechaInicio = fechaInicio;
 }
-public Date getFechaFin() {
+
+
+public Timestamp getFechaFin() {
 	return fechaFin;
 }
-public void setFechaFin(Date fechaFin) {
+
+
+public void setFechaFin(Timestamp fechaFin) {
 	this.fechaFin = fechaFin;
 }
+
+
 public String getSemestre() {
 	return semestre;
 }
