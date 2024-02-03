@@ -24,13 +24,7 @@
 			<div>
 				<h5>Descargar Escolaridad</h5>
 
-
-				<p:commandButton value="PDF" styleClass="mr-2 mb-2" ajax="false">
-					<p:dataExporter type="pdf" target="tablaEscolaridades"
-						fileName="Escolaridad" />
-				</p:commandButton>
-
-				<p:commandButton value="CSV" styleClass="mr-2 mb-2" action="#{escolaridadPDF.generarPDF()}" ajax="false">
+				<p:commandButton value="PDF" styleClass="mr-2 mb-2" action="#{escolaridadPDF.generarPDF()}" ajax="false">
 				</p:commandButton>
 
 			</div>
@@ -42,101 +36,74 @@
 				paginator="true" rows="10" styleClass="mt-2">
 
 				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+					exportHeader="Evento" >
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Evento"/>
 					</f:facet>
 					<h:outputText value="#{escolaridad.eventoId}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				<p:column exporter="true" headerText="Calificacion"
+					exportHeader="Calificacion">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Calificación" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.calificacion}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				<p:column exporter="true" headerText="Creditos"
+					exportHeader="Creditos">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Creditos" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.creditos}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				
+				
+				<p:column exporter="true" headerText="FechaInicio"
+					exportHeader="FechaInicio">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Fecha Inicio" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.fechaInicio}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				<p:column exporter="true" headerText="FechaFin"
+					exportHeader="FechaFin">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Fecha Fin" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.fechaFin}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				<p:column exporter="true" headerText="Semestre"
+					exportHeader="Semestre">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Semestre" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.semestre}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				
+				<p:column exporter="true" headerText="Modalidad"
+					exportHeader="Modalidad">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="Modalidad" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.modalidad}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
+				<p:column exporter="true" headerText="ITR"
+					exportHeader="ITR">
 					<f:facet name="header">
-						<h:outputText value="Evento" />
+						<h:outputText value="ITR" />
 					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
+					<h:outputText value="#{escolaridad.nombreItr}" />
 				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
-					<f:facet name="header">
-						<h:outputText value="Evento" />
-					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
-				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
-					<f:facet name="header">
-						<h:outputText value="Evento" />
-					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
-				</p:column>
 				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
-					<f:facet name="header">
-						<h:outputText value="Evento" />
-					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
-				</p:column>
-				
-				<p:column exporter="true" headerText="Evento"
-					exportHeader="Mi Exported Column Name">
-					<f:facet name="header">
-						<h:outputText value="Evento" />
-					</f:facet>
-					<h:outputText value="#{escolaridad.eventoId}" />
-				</p:column>
-
 			</p:dataTable>
 
 			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade"
