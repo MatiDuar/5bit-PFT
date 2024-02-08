@@ -27,6 +27,7 @@
 				<p:inputText id="nombreEstadoEvento"
 					value="#{gestionMantenimientoEvento.estadoEventoSeleccionado.nombre}" styleClass="mb-3"
 					placeholder="Nombre de Estado" required="true"
+					validator="#{validatorAltaEstadoEvento.validate}"
 					requiredMessage="El campo no puede estar vacio" maxlength="50"/>
 				<small class="block ui-state-error"><h:message
 						style="color:red;" for="nombreEstadoEvento" id="mensaje"/></small>

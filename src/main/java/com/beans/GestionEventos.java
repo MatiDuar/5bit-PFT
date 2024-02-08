@@ -49,6 +49,9 @@ public class GestionEventos implements Serializable {
 
 
 	
+	private EstadosEventos estadoAEditar;
+
+	
 
 	private Evento eventoSeleccionado;
 
@@ -381,6 +384,19 @@ public class GestionEventos implements Serializable {
 		
 		return eventoSeleccionado.getFechaInicio();
 	}
+	
+	public EstadosEventos getEstadoAEditar() {
+		return estadoAEditar;
+	}
 
+	
+
+	public void setEstadoAEditar(EstadosEventos estadoAEditar) {
+		this.estadoAEditar = estadoAEditar;
+	}
+	
+	public void cargarEstadoAEditar(EstadosEventos estado) {
+		estadoAEditar = estado;
+	}
 
 }

@@ -14,6 +14,7 @@ import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
 
 import com.persistencia.entities.Analista;
+import com.persistencia.entities.EstadosEventos;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Tutor;
 import com.persistencia.entities.Reclamo;
@@ -111,6 +112,7 @@ public class EventoDAO {
 		}
 		
 	}
+	
 	
 	public void borrarReclamosPorEvento(Evento evento) throws ServicesException{
 		try {

@@ -99,6 +99,16 @@ public class GestionEventoService {
 		}
 	}
 	
+	public List<EstadosEventos> listarEstadosEventos(){
+		try {
+			return estadosEventosDAO.obtenerEstadosEventos();
+		} catch (ServicesException e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public Tutor buscarTutorPorId(Long id) throws ServicesException {
 		return tutorDAO.buscarTutorPorId(id);
 	}
@@ -117,15 +127,6 @@ public class GestionEventoService {
 		}
 	}
 
-	public List<EstadosEventos> listarEstadosEventos() {
-		try {
-			return estadosEventosDAO.obtenerEstadosEventos();
-		} catch (ServicesException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
-		}
-	}
 	
 	public List<Estudiante> listarEstudiantes() {
 		try {

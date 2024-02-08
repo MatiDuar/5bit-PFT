@@ -2,6 +2,10 @@ package com.validators;
 
 import java.io.Serializable;
 import java.util.List;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.util.LinkedList;
 
 import javax.enterprise.context.SessionScoped;
@@ -33,6 +37,21 @@ public class ValidatorModificarITR implements Validator<String>, Serializable {
 
 	@Override
 	public void validate(FacesContext arg0, UIComponent arg1, String arg2) throws ValidatorException {
+
+		
+		Pattern formatoNombre = null;
+	    Matcher matcher = null;
+		
+		String nombreITR = arg2;
+		
+		formatoNombre= Pattern.compile("^(?!\\s*$).+");
+		matcher= formatoNombre.matcher(nombreITR);
+		
+		if (!matcher.matches()) {
+			throw new ValidatorException(new FacesMessage("No puede contener solo espacios vacíos"));
+		}
+		
+
 
 		List<ITR> itrs = new LinkedList<>();
 		ITR itrAModificar = new ITR();

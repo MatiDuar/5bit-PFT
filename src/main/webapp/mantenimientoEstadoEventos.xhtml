@@ -77,10 +77,8 @@
 									value="#{estado.nombre}"
 									requiredMessage="Debe ingresar el Nombre del Estado"
 									maxlength="50"
-									validatorMessage="No puede contener solo espacios vacios"
-									id="nombre">
-									<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
-
+									id="nombre"
+									validator="#{validatorModificarEstadoEvento.validate}">
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="nombre" /></small>
@@ -121,11 +119,9 @@
 						</p:rowEditor>
 					</p:column>
 
-
+				<p:ajax event="rowEditInit" listener="#{gestionEventos.cargarEstadoAEditar(estado)}"/>
 
 				</p:dataTable>
-
-
 
 			</p:panel>
 

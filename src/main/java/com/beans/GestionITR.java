@@ -47,6 +47,7 @@ public class GestionITR implements Serializable {
 			
 	}
 	
+	
 	public void onRowCancel(RowEditEvent<ITR> itr) {
 		
 	}
