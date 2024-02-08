@@ -23,15 +23,18 @@
 		<h1>Gestión de Usuarios</h1>
 
 		<div class="card">
-			<h:form>
-				<p:panel id="contenido">
+			<h:form > 
+				<p:panel id="contenido"  style="padding-bottom: 50px;">
 					<p:dataTable var="personas" value="#{dtFilterView.personas}"
 						widgetVar="personasTable"
 						emptyMessage="Personas no encontradas con este criterio"
 						filteredValue="#{dtFilterView.filteredPersonas}"
 						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
 						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable"
-						paginator="true" rows="10">
+						paginator="true" rows="10"
+						scrollable="true"
+						scrollWidth="98%"
+						style="margin-bottom: 25px;">
 
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
 							update="dateTable" />
@@ -103,7 +106,7 @@
 							</div>
 						</f:facet>
 						<p:column field="nombre1" headerText="Nombre"
-							sortBy="#{personas.nombre1}" filterable="false">
+							sortBy="#{personas.nombre1}" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -126,8 +129,31 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
+						<p:column field="nombre2" headerText="Segundo Nombre"
+							sortBy="#{personas.nombre1}" filterable="false" visible="false" style="width: 150px;text-align:center;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombre2}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.nombre2}"
+										maxlength="50"
+										validatorMessage="No puede contener solo espacios vacios"
+										id="segundoNombre">
+										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+									</p:inputText>
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="segundoNombre" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 						<p:column field="apellido1" headerText="Apellido"
-							filterable="false">
+							filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -150,8 +176,31 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
+						<p:column field="apellido2" headerText="Segundo Apellido"
+							filterable="false" visible="false" style="width: 150px;text-align:center;">
+							<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText
+										style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.apellido2}" />
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:inputText
+										style="width:100%;vertical-align: middle; margin-left: .5rem"
+										value="#{personas.apellido2}" required="true"
+										validatorMessage="No puede contener solo espacios vacios"
+										id="apellido2">
+										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+
+									</p:inputText>
+
+									<small class="block ui-state-error"><h:message
+											style="color:red;" for="apellido2" /></small>
+								</f:facet>
+							</p:cellEditor>
+						</p:column>
 						<p:column field="documento" headerText="Documento"
-							filterable="false">
+							filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -178,7 +227,16 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column field="mail" headerText="Email" filterable="false">
+						<p:column field="fechaNacimiento" headerText="Fecha Nac."
+							filterable="false" visible="false" style="width: 150px;text-align:center;">
+
+							<h:outputText style="vertical-align: middle; margin-left: .5rem"
+								value="#{personas.fechaNacimiento}"> 
+								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+							</h:outputText>
+
+						</p:column>
+						<p:column field="mail" headerText="Email" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -200,25 +258,25 @@
 							</p:cellEditor>
 						</p:column>
 						<p:column field="mailInstitucional" headerText="Email Utec"
-							filterable="false">
+							filterable="false" style="width: 150px;text-align:center;">
 
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{personas.mailInstitucional}" />
 
 						</p:column>
 						<p:column field="nombreUsuario" headerText="Nombre de Usuario"
-							filterable="false">
+							filterable="false" style="width: 150px;text-align:center;">
 
 
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{personas.nombreUsuario}" />
 
 						</p:column>
-						<p:column headerText="Tipo de Usuario" filterable="false">
+						<p:column headerText="Tipo de Usuario" filterable="false" style="width: 150px;text-align:center;">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{gestionPersona.tipoUsuario(personas)}" />
 						</p:column>
-						<p:column headerText="Direccion" filterable="false">
+						<p:column headerText="Direccion" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -238,7 +296,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Telefono" filterable="false">
+						<p:column headerText="Telefono" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -258,11 +316,11 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="37" headerText="Edad" filterable="false">
+						<p:column width="37" headerText="Edad" filterable="false" style="width: 150px;text-align:center;">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{dtFilterView.getEdad(personas.fechaNacimiento)}" />
 						</p:column>
-						<p:column headerText="ITR" filterable="false">
+						<p:column headerText="ITR" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -284,7 +342,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Departamento" filterable="false">
+						<p:column headerText="Departamento" filterable="false" style="width: 150px;text-align:center;"> 
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:outputText
@@ -306,7 +364,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Generacion" filterable="false">
+						<p:column headerText="Generacion" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:panelGroup
@@ -324,7 +382,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="95" headerText="Area Tutor" filterable="false">
+						<p:column width="95" headerText="Area Tutor" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:panelGroup rendered="#{gestionPersona.esTutorMod(personas)}">
@@ -351,7 +409,7 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column headerText="Rol Tutor" filterable="false">
+						<p:column headerText="Rol Tutor" filterable="false" style="width: 150px;text-align:center;">
 							<p:cellEditor>
 								<f:facet name="output">
 									<h:panelGroup rendered="#{gestionPersona.esTutorMod(personas)}">
@@ -379,18 +437,18 @@
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
-						<p:column width="35"
+						<p:column 
 							rendered="#{gestionPersona.esAnalistaLogeado()}"
-							headerText="Estado">
-							<div class="grid ui-fluid">
+							headerText="Estado" style="width: 100px;text-align:center;">
+							<div class="grid ui-fluid" style="width: 100px;margin: 0 auto; display: block;">
 								<p:commandButton icon="pi pi-info-circle"
 									styleClass="rounded-button ui-button-secondary ui-button-flat"
 									immediate="true"
 									action="#{gestionPersona.abrirModificarEstado(personas)}"></p:commandButton>
 							</div>
 						</p:column>
-						<p:column width="35" style="width:6rem;" headerText="Editar"
-							rendered="#{gestionPersona.esAnalistaLogeado()}">
+						<p:column headerText="Editar"
+							rendered="#{gestionPersona.esAnalistaLogeado()}" style="width: 100px;text-align:center;">
 							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 								saveTitle="Save Row">
 							</p:rowEditor>

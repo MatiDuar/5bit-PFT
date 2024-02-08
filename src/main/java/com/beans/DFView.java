@@ -265,7 +265,7 @@ public class DFView {
 			                .fitViewport(true)
 			                .responsive(true)
 			                .width("80%")
-			                .height("60%")
+			                .height("70%")
 			                .contentWidth("100%")
 			                .resizeObserver(true)
 			                .resizeObserverCenter(true)

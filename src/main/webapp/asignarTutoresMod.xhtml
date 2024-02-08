@@ -22,7 +22,7 @@
 	<title>Asignar Tutores</title>
 </h:head>
 
-<h:body>
+<h:body style="all:initial">
 
 	<div class="box">
 		<div style="padding: 20px;">
@@ -119,13 +119,19 @@
 							class="flex-grow-1 flex align-items-center justify-content-center "></div>
 						<div
 							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Guardar"
-								action="#{pickListView.guardarCambiosMod}" />
+							<p:commandButton value="Guardar" action="#{pickListView.guardarCambiosMod}"> 
+								<p:confirm header="Confirmación" message="¿Desea confirmar este registro de tutores?" icon="pi pi-exclamation-triangle"/>
+							</p:commandButton>
 						</div>
 
 
 					</div>
 				</div>
+				
+			<p:confirmDialog global="true" showEffect="fade" hideEffect="fade" responsive="true" width="350">
+				<p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-flat" />					          
+				<p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" />				      
+			</p:confirmDialog>
 
 			</h:form>
 		</div>

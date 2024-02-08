@@ -19,10 +19,10 @@
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
 	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
 
-	<title>Convocatoria evento</title>
+	<title>Convocatoria a Evento</title>
 </h:head>
 
-<h:body>
+<h:body style="all:initial">
 
 	<div class="box">
 		<div style="padding: 20px;">
@@ -118,18 +118,12 @@
 				</p:pickList>
 				<div>
 					<div class="flex card-container" style="margin-top: 20px;">
-						<div
-							class="flex-none flex align-items-center justify-content-center">
+	
 
-						</div>
-
-						<div
-							class="flex-grow-1 flex align-items-center justify-content-center "></div>
-						<div
-							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Registrar"
-								 action="#{pickListView.guardarCambiosConvocatoria}">
-								 <p:confirm header="Confirmación" message="¿Desea confirmar esta convocatoria?" icon="pi pi-exclamation-triangle"/> 	 
+						<div class="flex-grow-1 flex align-items-center justify-content-center "></div>
+						<div class="flex-none flex align-items-center justify-content-center">
+							<p:commandButton value="Registrar" action="#{pickListView.guardarCambiosConvocatoria}">
+								 <p:confirm  header="Confirmación" message="¿Desea confirmar esta convocatoria?" icon="pi pi-exclamation-triangle"/> 	 
 							</p:commandButton>	
 						</div>
 

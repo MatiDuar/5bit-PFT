@@ -23,7 +23,7 @@
 
 
 
-<h:body>
+<h:body style="all:initial">
 
 
 
@@ -37,7 +37,11 @@
 					emptyMessage="Registros no encontrados con este criterio"
 					filteredValue="#{dtFilterView.filteredItrs}"
 					globalFilterFunction="#{dtFilterView.globalFilterFunctionRegistroAsistencia}"
-					editable="true" id="dateTable">
+					editable="true" id="dateTable"
+					scrollable="true"
+					paginator="true"
+					paginatorPosition="bottom"
+					rows="4">
 
 					<p:ajax event="rowEdit"
 						listener="#{gestionEventos.onRowEditRegistroAsistencia}"
@@ -112,7 +116,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar"
-								action="#{gestionEventos.guardarCambiosRegistroAsistencias}" update="dateTable">
+								class="mt-3" action="#{gestionEventos.guardarCambiosRegistroAsistencias}" update="dateTable">
 								<p:confirm header="Confirmación" message="¿Desea confirmar este registro de asistencia?" icon="pi pi-exclamation-triangle"/> 
 							</p:commandButton>
 						</div>
