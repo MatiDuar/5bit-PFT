@@ -23,37 +23,45 @@
 			<h:form>
 				<p:growl id="messages" life="4000" closable="true" />
 
+				<div class="field col-12 md:col-4">
+					<p:inputText id="nombreITR"
+						value="#{gestionITR.itrSeleccionado.nombre}"
+						placeholder="Nombre de ITR" required="true"
+						requiredMessage="El campo no puede estar vacio"
+						validator="#{validatorAltaITR.validate}" update="messages">
+					</p:inputText>
+					<small class="block ui-state-error"><h:message
+							style="color:red;" for="nombreITR" /> </small>
+				</div>
 
-				<p:inputText id="nombreITR"
-					value="#{gestionITR.itrSeleccionado.nombre}" styleClass="mb-3"
-					placeholder="Nombre de ITR" required="true"
-					requiredMessage="El campo no puede estar vacio" />
-				<small class="block ui-state-error"><h:message
-						style="color:red;" for="nombreITR" /></small>
+				<div class="field col-12 md:col-4">
+					<div class="col-12">
+						<p:outputLabel>Departamento</p:outputLabel>
+					</div>
+					<p:selectOneMenu id="groupDep"
+						value="#{gestionITR.itrSeleccionado.departamento}"
+						validatorMessage="Debe Seleccionar una opcion"
+						converter="omnifaces.SelectItemsConverter">
+						<f:selectItem itemLabel="Selecciona uno" itemValue="" />
+						<c:forEach var="dep" items="#{gestionPersona.departamentos}">
+							<f:selectItem itemLabel="#{dep.nombre}" itemValue="#{dep}" />
+						</c:forEach>
+
+						<f:validateRequired></f:validateRequired>
+					</p:selectOneMenu>
+
+					<small class="block ui-state-error"><h:message
+							style="color:red;" for="groupDep" /></small>
+				</div>
 
 
-				<p:selectOneMenu id="groupDep"
-					value="#{gestionITR.itrSeleccionado.departamento}"
-					validatorMessage="Debe Seleccionar una opcion"
-					converter="omnifaces.SelectItemsConverter">
-					<f:selectItem itemLabel="Selecciona uno" itemValue="" />
-					<c:forEach var="dep" items="#{gestionPersona.departamentos}">
-						<f:selectItem itemLabel="#{dep.nombre}" itemValue="#{dep}" />
-					</c:forEach>
-
-					<f:validateRequired></f:validateRequired>
-				</p:selectOneMenu>
-				<small class="block ui-state-error"><h:message
-						style="color:red;" for="groupDep" /></small>
-
-
-				<div style="margin-top:20px;">
+				<div style="margin-top: 20px;">
 					<div class="flex card-container">
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Cancelar"
-								styleClass="ui-button-raised  ui-button-flat"
-								 immediate="true" action="#{gestionITR.closeVentana()}"/>
+								styleClass="ui-button-raised  ui-button-flat" immediate="true"
+								action="#{gestionITR.closeVentana()}" />
 						</div>
 
 						<div
@@ -61,7 +69,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Guardar" action="#{gestionITR.crearITR}"
-								 />
+								update="@form" />
 						</div>
 					</div>
 				</div>
