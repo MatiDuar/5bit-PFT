@@ -1,5 +1,7 @@
 package com.logicaNegocio;
 
+import java.util.List;
+
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -39,5 +41,15 @@ public class GestionMantenimientoEventoService {
 		} catch (ServicesException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public List<ModalidadesEventos> obtenerModalidadesEventos() {
+		try {
+			return modalidadesDAO.obtenerModalidadesEventos();
+		} catch (ServicesException e) {
+			e.printStackTrace();
+			return null;
+		}
+				
 	}
 }

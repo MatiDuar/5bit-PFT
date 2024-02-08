@@ -45,7 +45,6 @@
 
 					<f:facet name="header">
 
-
 						<div class="grid ui-fluid">
 							<div class="col-12 md:col-3">
 								<br></br>
@@ -58,10 +57,8 @@
 								<br></br>
 								<p:commandButton value="Agregar Modalidad"
 									action="#{dfView.viewAltaModalidadEvento}" />
-
 							</div>
 						</div>
-
 					</f:facet>
 
 					<p:column field="nombre" headerText="Nombre"
@@ -77,9 +74,8 @@
 									value="#{modalidad.nombre}"
 									requiredMessage="Debe ingresar el Nombre de la Modalidad"
 									maxlength="50"
-									validatorMessage="No puede contener solo espacios vacios"
-									id="nombre">
-									<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+									id="nombre"
+									validator="#{validatorModificarModalidadEvento.validate}">
 
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
@@ -114,15 +110,11 @@
 					</p:column>
 
 					<p:column style="width:6rem;" headerText="Editar">
-
 						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 							saveTitle="Save Row">
-
 						</p:rowEditor>
 					</p:column>
-
-
-
+						<p:ajax event="rowEditInit" listener="#{gestionEventos.cargarModalidadAEditar(modalidad)}"/>
 				</p:dataTable>
 
 

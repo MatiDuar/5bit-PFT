@@ -48,10 +48,9 @@ public class GestionEventos implements Serializable {
 	PickListView pickListView;
 
 
-	
 	private EstadosEventos estadoAEditar;
-
 	
+	private ModalidadesEventos modalidadAEditar;
 
 	private Evento eventoSeleccionado;
 
@@ -389,7 +388,6 @@ public class GestionEventos implements Serializable {
 		return estadoAEditar;
 	}
 
-	
 
 	public void setEstadoAEditar(EstadosEventos estadoAEditar) {
 		this.estadoAEditar = estadoAEditar;
@@ -398,5 +396,22 @@ public class GestionEventos implements Serializable {
 	public void cargarEstadoAEditar(EstadosEventos estado) {
 		estadoAEditar = estado;
 	}
+
+
+	public void cargarModalidadAEditar(ModalidadesEventos modalidad) {
+		modalidadAEditar = modalidad;
+	}
+
+	public ModalidadesEventos getModalidadAEditar() {
+		return modalidadAEditar;
+	}
+
+
+
+	public void setModalidadAEditar(ModalidadesEventos modalidadAEditar) {
+		this.modalidadAEditar = modalidadAEditar;
+	}
+	
+	
 
 }
