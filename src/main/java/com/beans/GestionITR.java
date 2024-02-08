@@ -30,6 +30,8 @@ public class GestionITR implements Serializable {
 	
 	private ITR itrSeleccionado;
 	
+	private ITR itrAeditar;
+	
 	private static final long serialVersionUID = 1L;
 	
 	@PostConstruct
@@ -78,6 +80,10 @@ public class GestionITR implements Serializable {
 	}
 	
 	
+	public void cargarITRAEditar(ITR itr) {
+		itrAeditar = itr;
+	}
+	
 	
 	public void mostrarMantenimientoITR() {
 		dfView.viewMantenimientoITR();
@@ -93,6 +99,14 @@ public class GestionITR implements Serializable {
 
 	public void setItrSeleccionado(ITR itrSeleccionado) {
 		this.itrSeleccionado = itrSeleccionado;
+	}
+
+	public ITR getItrAeditar() {
+		return itrAeditar;
+	}
+
+	public void setItrAeditar(ITR itrAeditar) {
+		this.itrAeditar = itrAeditar;
 	}
 	
 	

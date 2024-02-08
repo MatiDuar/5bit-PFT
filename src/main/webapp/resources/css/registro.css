@@ -60,7 +60,7 @@
 body{
 	display: block;
 	height: 100%;
-	background: url("../images/7618740.png") no-repeat;
+	background: url("../images/7618740-10.png") no-repeat;
 	background-size: cover;
 	background-position: center;
 }
@@ -78,4 +78,9 @@ body{
 
 .center{
 	text-align: center;
+}
+
+.border-round{
+    border: 3px solid #1d1954;
+    border-radius: 20px !important;
 }
