@@ -76,10 +76,8 @@
 									value="#{itr.nombre}"
 									requiredMessage="Debe ingresar el Nombre del ITR"
 									maxlength="50"
-									validatorMessage="No puede contener solo espacios vacios"
-									id="nombre">
-									<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
-
+									id="nombre"
+									validator="#{validatorModificarITR.validate}">
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="nombre" /></small>
@@ -140,7 +138,7 @@
 						rendered="#{gestionPersona.esAnalistaLogeado()}">
 
 						<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
-							saveTitle="Save Row">
+							saveTitle="Save Row" update="#{gestionITR.cargarITRAEditar(itr)}">
 
 						</p:rowEditor>
 					</p:column>
