@@ -44,6 +44,9 @@ public class GestionReclamos implements Serializable {
 	@Inject
 	DFView dfView;
 
+	
+	private Estado estadoAEditar;
+	
 	private Reclamo reclamoSeleccionado;
 
 	private Reclamo reclamoAlta;
@@ -308,6 +311,19 @@ public class GestionReclamos implements Serializable {
 	public void setYearRange(String yearRange) {
 		this.yearRange = yearRange;
 	}
+	
+	public Estado getEstadoAEditar() {
+		return estadoAEditar;
+	}
+
+	public void setEstadoAEditar(Estado estadoAEditar) {
+		this.estadoAEditar = estadoAEditar;
+	}
+	
+	public void cargarEstadoAEditar(Estado estado) {
+		estadoAEditar = estado;
+	}
+
 	
 	
 

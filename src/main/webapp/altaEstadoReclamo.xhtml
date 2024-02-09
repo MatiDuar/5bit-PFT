@@ -27,7 +27,8 @@
 				<p:inputText id="nombreEstadoReclamo"
 					value="#{gestionReclamos.estadoReclamoAlta.nombre}" styleClass="mb-3"
 					placeholder="Nombre de Estado" required="true"
-					requiredMessage="El campo no puede estar vacio" maxlength="50"/>
+					requiredMessage="El campo no puede estar vacio" maxlength="50"
+					validator="#{validatorAltaEstadoReclamo.validate}"/>
 				<small class="block ui-state-error"><h:message
 						style="color:red;" for="nombreEstadoReclamo" id="mensaje"/></small>
 
