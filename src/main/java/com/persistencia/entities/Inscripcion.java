@@ -16,7 +16,7 @@ public class Inscripcion implements Serializable {
 	@Column(name="ID_INSCRIPCION")
 	private Long id;
 
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
 	@ManyToOne

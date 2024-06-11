@@ -21,10 +21,10 @@ public class Justificacion implements Serializable {
 	@Column(name="ID_JUSTIFICACION")
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name="FECHA_HORA",nullable=false)
 	private Time fechaHora;
 	
-	@Column(nullable=false,length=150)
+	@Column(name="DETALLE",nullable=false,length=150)
 	private String detalle;
 	
 	@ManyToOne(optional=false)

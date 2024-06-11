@@ -26,7 +26,7 @@ public class Materia implements Serializable {
 	@Column(name="ID_MATERIA")
 	private Long id;
 	
-	@Column (nullable=false, length=150,unique=true)
+	@Column (name="NOMBRE",nullable=false, length=150,unique=true)
 	private String nombre;
 	
 	@ManyToMany( mappedBy="materias")

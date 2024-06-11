@@ -16,9 +16,9 @@ public class PlantillaConstancia implements Serializable {
 	@Column(name="ID_PLANTILLA")
 	private Long id;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="NOMBRE",nullable=false,length=50)
 	private String nombre;
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
 	public PlantillaConstancia() {

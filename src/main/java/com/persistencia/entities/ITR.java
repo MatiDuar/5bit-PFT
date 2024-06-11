@@ -22,14 +22,14 @@ public class ITR implements Serializable {
 	@Column(name="ID_ITR")
 	private Long id;
 	
-	@Column(length=50,nullable=false,unique=true)
+	@Column(name="NOMBRE",length=50,nullable=false,unique=true)
 	private String nombre;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name="ID_DEPARTAMENTO")
 	private Departamento departamento;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 
 	public Long getId() {

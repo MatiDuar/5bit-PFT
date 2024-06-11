@@ -21,21 +21,19 @@ public class Matricula implements Serializable {
 	private Long id;
 	
 
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
-	@Column(nullable=true)
+	@Column(name="NOTA",nullable=true)
 	private float nota;	
 	
-	@Column(nullable=false)
+	@Column(name="CREDITOS",nullable=false)
 	private int creditos;	
 	
-	@Column(nullable=false)
+	@Column(name="SEMESTRE",nullable=false)
 	private int semestre;	
 
-
-	
-	@Column(nullable=false)
+	@Column(name="FECHA_INSCRIPCION",nullable=false)
 	private Date fecha_inscripcion;
 	
 	@ManyToOne(cascade=CascadeType.ALL)

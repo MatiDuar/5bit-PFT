@@ -22,10 +22,10 @@ public class ModalidadesEventos implements Serializable {
 	@Column(name="ID_MODALIDAD_EVENTOS")
 	private Long id_modalidad;
 	
-	@Column(nullable=false,length=20)
+	@Column(name="NOMBRE",nullable=false,length=20)
 	private String nombreModalidadEvento;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 
 	public Long getId() {
