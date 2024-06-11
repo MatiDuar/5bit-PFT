@@ -20,6 +20,7 @@ public class Analista extends Usuario implements Serializable {
 	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ANALISTA" )
 	@SequenceGenerator(name = "SEQ_ANALISTA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ANALISTA")
 	private Long idAnalista;	
 
 	

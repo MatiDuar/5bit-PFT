@@ -14,6 +14,7 @@ public class AccionJustificacion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_JUSTIFICACION" )
 	@SequenceGenerator(name = "SEQ_ACCION_JUSTIFICACION", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ACCION_JUSTIFICACION")
 	private Long id;
 	
 	@Column(nullable=false)
@@ -24,9 +25,11 @@ public class AccionJustificacion implements Serializable {
 	
 
 	@ManyToOne
+	@JoinColumn(name="ID_JUSTIFICACION")
 	private Justificacion justificacion;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ANALISTA")
 	private Analista analista;
 	
 	public AccionJustificacion() {

@@ -31,6 +31,7 @@ public class Estudiante extends Usuario implements Serializable {
 
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ESTUDIANTE" )
 	@SequenceGenerator(name = "SEQ_ESTUDIANTE", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ESTUDIANTE")
 	private Long idEstudiate;
 	
 	@Column

@@ -12,10 +12,7 @@
 		<table name="DEPARTAMENTOS">
 		</table>
 	</entity>
-	<entity class="com.persistencia.entities.Usuario" access="FIELD">
-		<table name="USUARIOS">
-		</table>
-	</entity>
+	
 	<entity class="com.persistencia.entities.Tutor" access="FIELD">
 		<table name="TUTORES">
 		</table>
@@ -147,6 +144,10 @@
 		class="com.persistencia.entities.TipoConvocatoriaMatricula"
 		access="FIELD">
 		<table name="TIPOS_CONVOCATORIAS_MATRICULAS">
+		</table>
+	</entity>
+	<entity class="com.persistencia.entities.Usuario" access="FIELD">
+		<table name="USUARIOS">
 		</table>
 	</entity>
 </entity-mappings>

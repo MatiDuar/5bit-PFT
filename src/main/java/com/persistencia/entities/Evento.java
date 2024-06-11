@@ -35,6 +35,7 @@ public class Evento implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EVENTO" )
 	@SequenceGenerator(name = "SEQ_EVENTO", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_EVENTO")
 	private Long id;
 
 	@Column(nullable = false)
@@ -47,9 +48,11 @@ public class Evento implements Serializable {
 	private String titulo;
 
 	@ManyToOne
+	@JoinColumn(name="ID_TIPO_ACTIVIDAD")
 	private TipoActividad tipoActividad;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_MODALIDAD")
 	private ModalidadesEventos modalidad;
 
 	@Column(nullable = true,length = 2)
@@ -64,9 +67,11 @@ public class Evento implements Serializable {
 	
 
 	@ManyToOne
+	@JoinColumn(name="ID_ITR")
 	private ITR itr;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ESTADO")
 	private EstadosEventos estado;
 
 	@JoinTable(name = "RESP_TUTOR_EVENTO", joinColumns = @JoinColumn(name = "FK_EVENTO", nullable = false), 

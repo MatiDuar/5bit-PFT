@@ -13,15 +13,18 @@ public class Inscripcion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_INSCRIPCION" )
 	@SequenceGenerator(name = "SEQ_INSCRIPCION", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_INSCRIPCION")
 	private Long id;
 
 	@Column(nullable=false)
 	private Boolean activo;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ESTUDIANTE")
 	private Estudiante estudiante;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_CARRERA")
 	private Carrera carrera;
 
 

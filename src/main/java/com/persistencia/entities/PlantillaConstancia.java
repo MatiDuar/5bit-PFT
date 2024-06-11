@@ -13,6 +13,7 @@ public class PlantillaConstancia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_PLANTILLA_CONSTANCIA" )
 	@SequenceGenerator(name = "SEQ_PLANTILLA_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_PLANTILLA")
 	private Long id;
 	
 	@Column(nullable=false,length=50)

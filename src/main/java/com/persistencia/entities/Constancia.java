@@ -15,6 +15,7 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONSTANCIA" )
 	@SequenceGenerator(name = "SEQ_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_CONSTANCIA")
 	private Long id;
 	
 	@Column(nullable=false)
@@ -24,15 +25,19 @@ private static final long serialVersionUID = 1L;
 	private String detalle;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_EVENTO")
 	private Evento evento;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ESTADO")
 	private Estado estado;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_TIPO_CONSTANCIA")
 	private TipoConstancia tipoConstancia;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ESTUDIANTE")
 	private Estudiante estudiante;
 	
 	public Constancia() {

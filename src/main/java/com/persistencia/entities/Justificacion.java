@@ -18,6 +18,7 @@ public class Justificacion implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_JUSTIFICACION" )
 	@SequenceGenerator(name = "SEQ_JUSTIFICACION", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_JUSTIFICACION")
 	private Long id;
 	
 	@Column(nullable=false)
@@ -25,13 +26,17 @@ public class Justificacion implements Serializable {
 	
 	@Column(nullable=false,length=150)
 	private String detalle;
+	
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_ESTUDIANTE")
 	private Estudiante estudiante;
 
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_EVENTO")
 	private Evento evento;
 	
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_ESTADO")
 	private Estado estado;
 
 	public String getDetalle() {

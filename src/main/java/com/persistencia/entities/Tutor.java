@@ -22,13 +22,16 @@ public class Tutor extends Usuario implements Serializable {
 	
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TUTOR" )
 	@SequenceGenerator(name = "SEQ_TUTOR", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_TUTOR")
 	private Long idTutor;
 	
 
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_AREA_TUTOR")
 	private AreaTutor areaTutor;
 	
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_TIPO_TUTOR")
 	private TipoTutor tipoTutor;
 
 

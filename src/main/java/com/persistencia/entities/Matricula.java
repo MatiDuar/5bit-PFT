@@ -17,6 +17,7 @@ public class Matricula implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATRICULA" )
 	@SequenceGenerator(name = "SEQ_MATRICULA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_MATRICULA")
 	private Long id;
 	
 
@@ -38,15 +39,19 @@ public class Matricula implements Serializable {
 	private Date fecha_inscripcion;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ID_MATERIA")
 	private Materia materia;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ID_INSCRIPCION")
 	private Inscripcion inscripcion;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ID_TIPO_ASIGNATURA")
 	private TipoAsignatura tipoAsignatura;
 	
 	@ManyToOne(cascade=CascadeType.ALL)
+	@JoinColumn(name="ID_TIPO_CONVOCATORIA_MATRICULA")
 	private TipoConvocatoriaMatricula convocatoriaTipo;
 	
 	public Long getId() {

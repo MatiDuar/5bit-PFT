@@ -15,6 +15,7 @@ public class AccionReclamo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_RECLAMO" )
 	@SequenceGenerator(name = "SEQ_ACCION_RECLAMO", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ACCION_RECLAMO")
 	private Long id;
 	
 	@Column(nullable=false)
@@ -24,9 +25,12 @@ public class AccionReclamo implements Serializable {
 	private String detalleReclamo;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_RECLAMO")
 	private Reclamo reclamo;
 	@ManyToOne
+	@JoinColumn(name="ID_ANALISTA")
 	private Analista analista;
+	
 	public AccionReclamo() {
 		super();
 	}

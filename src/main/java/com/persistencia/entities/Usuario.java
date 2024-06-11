@@ -9,7 +9,7 @@ import javax.persistence.*;
 
 
 @Entity
-@Inheritance(strategy=InheritanceType.JOINED)
+//@Inheritance(strategy=InheritanceType.JOINED)
 public abstract class Usuario implements Serializable {
 
 	public Usuario() {
@@ -20,7 +20,8 @@ public abstract class Usuario implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_USUARIO" )
 	@SequenceGenerator(name = "SEQ_USUARIO", initialValue = 1, allocationSize = 1)
-	private Long id;
+	@Column(name="ID_USUARIO")
+	private Long ID_USUARIO;
 	
 	@Column(nullable=false,length=50)
 	private String documento;
@@ -47,9 +48,11 @@ public abstract class Usuario implements Serializable {
 	private Date fechaNacimiento;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_GENERO")
 	private Genero genero;
 	
 	@ManyToOne(optional=false)
+	@JoinColumn(name = "ID_DEPARTAMENTO")
 	private Departamento departamento;
 	
 	@Column(nullable=false,length=150)
@@ -68,6 +71,7 @@ public abstract class Usuario implements Serializable {
 	private Boolean validado;
 	
 	@ManyToOne(optional=false)
+	@JoinColumn(name = "ID_ITR")
 	private ITR itr;
 	
 	@Column(nullable=false)
@@ -76,11 +80,11 @@ public abstract class Usuario implements Serializable {
 	
 
 	public Long getId() {
-		return id;
+		return ID_USUARIO;
 	}
 
 	public void setId(long id) {
-		this.id = id;
+		this.ID_USUARIO = id;
 	}
 
 	public String getDocumento() {
@@ -224,7 +228,7 @@ public abstract class Usuario implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id + ", documento=" + documento + ", nombreUsuario=" + nombreUsuario + ", contrasena="
+		return "Usuario [id=" + ID_USUARIO + ", documento=" + documento + ", nombreUsuario=" + nombreUsuario + ", contrasena="
 				+ contrasena + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1
 				+ ", nombre2=" + nombre2 + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero
 				+ ", departamento=" + departamento + ", localidad=" + localidad + ", mail=" + mail + ", telefono="
@@ -233,7 +237,7 @@ public abstract class Usuario implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id);
+		return Objects.hash(ID_USUARIO);
 	}
 
 	@Override
@@ -245,7 +249,7 @@ public abstract class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(id, other.id);
+		return Objects.equals(ID_USUARIO, other.ID_USUARIO);
 	}
 
 	

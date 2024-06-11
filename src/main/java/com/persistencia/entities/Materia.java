@@ -23,6 +23,7 @@ public class Materia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATERIA" )
 	@SequenceGenerator(name = "SEQ_MATERIA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_MATERIA")
 	private Long id;
 	
 	@Column (nullable=false, length=150,unique=true)

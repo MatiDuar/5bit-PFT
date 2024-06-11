@@ -19,6 +19,7 @@ public class Reclamo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_RECLAMO")
 	@SequenceGenerator(name = "SEQ_RECLAMO", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_RECLAMO")
 	private Long id;
 
 	@Column(nullable = false)
@@ -31,9 +32,11 @@ public class Reclamo implements Serializable {
 	private String detalle;
 
 	@ManyToOne(optional = false)
+	@JoinColumn(name="ID_ESTUDIANTE")
 	private Estudiante estudiante;
 
 	@ManyToOne(optional = false)
+	@JoinColumn(name="ID_ESTADO")
 	private Estado estado;
 	
 	@Column(nullable = true)

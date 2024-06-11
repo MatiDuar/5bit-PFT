@@ -13,6 +13,7 @@ public class AccionConstancia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_CONSTANCIA" )
 	@SequenceGenerator(name = "SEQ_ACCION_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ACCION_CONSTANCIA")
 	private Long id;
 	
 	@Column(nullable=false)
@@ -22,9 +23,11 @@ public class AccionConstancia implements Serializable {
 	private String detalle;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_CONSTANCIA")
 	private Constancia constancia;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_ANALISTA")
 	private Analista analista;
 	
 	

@@ -17,6 +17,7 @@ public class TipoConstancia implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TIPO_CONSTANCIA" )
 	@SequenceGenerator(name = "SEQ_TIPO_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_TIPO_CONSTANCIA")
 	private Long id;
 	
 	@Column(nullable=false,length=50)
@@ -26,6 +27,7 @@ public class TipoConstancia implements Serializable {
 	private Boolean activo;
 	
 	@ManyToOne
+	@JoinColumn(name="ID_PLANTILLA")
 	private PlantillaConstancia plantillaConstancia;
 
 	public PlantillaConstancia getPlantillaConstancia() {

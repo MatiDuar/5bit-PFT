@@ -12,6 +12,7 @@ public class AreaTutor implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_AREA_TUTOR")
 	@SequenceGenerator(name = "SEQ_AREA_TUTOR", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_AREA_TUTOR")
 	private Long id;
 
 	@Column(nullable = false, length = 150, unique = true)

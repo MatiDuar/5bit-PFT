@@ -19,6 +19,7 @@ public class ModalidadesEventos implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ESTADOS_MODALIDADES" )
 	@SequenceGenerator(name = "SEQ_ESTADOS_MODALIDADES", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_MODALIDAD_EVENTOS")
 	private Long id_modalidad;
 	
 	@Column(nullable=false,length=20)

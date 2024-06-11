@@ -19,12 +19,14 @@ public class ITR implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ITR" )
 	@SequenceGenerator(name = "SEQ_ITR", initialValue = 1, allocationSize = 1)
+	@Column(name="ID_ITR")
 	private Long id;
 	
 	@Column(length=50,nullable=false,unique=true)
 	private String nombre;
 	
 	@ManyToOne(optional=false)
+	@JoinColumn(name="ID_DEPARTAMENTO")
 	private Departamento departamento;
 	
 	@Column(nullable=false)
