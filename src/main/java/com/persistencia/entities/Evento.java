@@ -64,8 +64,6 @@ public class Evento implements Serializable {
 	@Column(name="LOCACION")
 	private String localizacion;
 	
-	
-
 	@ManyToOne
 	@JoinColumn(name="ID_ITR")
 	private ITR itr;
