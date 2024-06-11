@@ -23,10 +23,10 @@ public class TipoActividad implements Serializable {
 	@Column(name="ID_TIPO_ACTIVIDAD")
 	private Long id;
 	
-	@Column(nullable=false,length=50,unique=true)
+	@Column(name="DESCRIPCION",nullable=false,length=50,unique=true)
 	private String nombre;
 	
-	@Column(nullable=false)
+	@Column(name="ES_CALIFICADO",nullable=false)
 	private Boolean esCalificado;
 	
 	public Long getId() {

@@ -18,10 +18,10 @@ public class TipoAsignatura implements Serializable {
 	@Column(name="ID_TIPO_ASIGNATURA")
 	private Long id;
 
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
-	@Column(nullable=false)
+	@Column(name="NOMBRE",nullable=false)
 	private String nombre;
 	public Long getId() {
 		return id;

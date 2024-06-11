@@ -20,10 +20,10 @@ public class TipoConstancia implements Serializable {
 	@Column(name="ID_TIPO_CONSTANCIA")
 	private Long id;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="DESCRIPCION",nullable=false,length=50)
 	private String nombre;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
 	@ManyToOne

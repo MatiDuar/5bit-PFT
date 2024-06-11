@@ -23,28 +23,28 @@ public abstract class Usuario implements Serializable {
 	@Column(name="ID_USUARIO")
 	private Long ID_USUARIO;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="DOCUMENTO",nullable=false,length=50)
 	private String documento;
 	
-	@Column(nullable=false,length=50,unique=true)
+	@Column(name="NOMBRE_USUARIO",nullable=false,length=50,unique=true)
 	private String nombreUsuario;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="CONTRASENA",nullable=false,length=50)
 	private String contrasena;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="APELLIDO1",nullable=false,length=50)
 	private String apellido1;
 	
-	@Column(length=50)
+	@Column(name="APELLIDO2",length=50)
 	private String apellido2;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="NOMBRE1",nullable=false,length=50)
 	private String nombre1;
 	
-	@Column(length=50)
+	@Column(name="NOMBRE2",length=50)
 	private String nombre2;
 	
-	@Column(nullable=false)
+	@Column(name="FEC_NAC",nullable=false)
 	private Date fechaNacimiento;
 	
 	@ManyToOne
@@ -55,26 +55,27 @@ public abstract class Usuario implements Serializable {
 	@JoinColumn(name = "ID_DEPARTAMENTO")
 	private Departamento departamento;
 	
-	@Column(nullable=false,length=150)
+	@Column(name="LOCALIDAD",nullable=false,length=150)
 	private String localidad;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="MAIL",nullable=false,length=50)
 	private String mail;
 	
-	@Column(nullable=false,length=50)
-	private String mailInstitucional;
-	
-	@Column(nullable=false,length=50)
+	@Column(name="TELEFONO",nullable=false,length=50)
 	private String telefono;
 	
-	@Column(nullable=false)
+	@Column(name="MAIL_INSTITUCIONAL",nullable=false,length=50)
+	private String mailInstitucional;
+	
+	
+	@Column(name="VALIDADO",nullable=false)
 	private Boolean validado;
 	
 	@ManyToOne(optional=false)
 	@JoinColumn(name = "ID_ITR")
 	private ITR itr;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
 	
