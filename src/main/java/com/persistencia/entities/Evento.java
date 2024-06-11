@@ -72,8 +72,8 @@ public class Evento implements Serializable {
 	@JoinColumn(name="ID_ESTADO")
 	private EstadosEventos estado;
 
-	@JoinTable(name = "RESP_TUTOR_EVENTO", joinColumns = @JoinColumn(name = "FK_EVENTO", nullable = false), 
-			inverseJoinColumns = @JoinColumn(name = "FK_TUTOR_EVENTO", nullable = true))
+	@JoinTable(name = "RESP_TUTOR_EVENTO", joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
+			inverseJoinColumns = @JoinColumn(name = "ID_TUTOR", nullable = true))
 	@ManyToMany( fetch = FetchType.EAGER)
 
 	private List<Tutor> tutores;
@@ -86,9 +86,9 @@ public class Evento implements Serializable {
 		this.tutores.add(tutor); 
 	}
 
-	@JoinTable(name = "ANALIST_GEST_EVENT", 
-			joinColumns = @JoinColumn(name = "FK_EVENTO_GESTION", nullable = false), 
-			inverseJoinColumns =@JoinColumn(name = "FK_ANALISTA_EVENTO", nullable = true))
+	@JoinTable(name = "ANALIST_GEST_EVENTOS", 
+			joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
+			inverseJoinColumns =@JoinColumn(name = "ID_ANALISTA", nullable = true))
 	@ManyToMany( fetch = FetchType.EAGER)
 
 	private Set<Analista> analistas;

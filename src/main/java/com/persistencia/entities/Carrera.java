@@ -43,8 +43,8 @@ public class Carrera implements Serializable {
 	private int creditosPracticasProfesionales;
 	
 	
-	@JoinTable(name = "CARRERA_MATERIA", joinColumns = @JoinColumn(name = "FK_CARRERA", nullable = false), 
-			inverseJoinColumns = @JoinColumn(name = "FK_MATERIA_CARRERA", nullable = false))
+	@JoinTable(name = "CARRERA_MATERIA", joinColumns = @JoinColumn(name = "ID_CARRERA", nullable = false), 
+			inverseJoinColumns = @JoinColumn(name = "ID_MATERIA", nullable = false))
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Materia> materias;
 
