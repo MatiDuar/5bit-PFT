@@ -28,7 +28,7 @@ public class Analista extends Usuario implements Serializable {
 		super();
 	}
 	
-	 @ManyToMany( mappedBy="analistas")
+	 @ManyToMany(mappedBy="analistas")
 	 private Set <Evento> eventos;
 
 

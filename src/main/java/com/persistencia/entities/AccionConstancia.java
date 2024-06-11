@@ -16,10 +16,10 @@ public class AccionConstancia implements Serializable {
 	@Column(name="ID_ACCION_CONSTANCIA")
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name="FECHA_HORA",nullable=false)
 	private Date fechaHora;
 	
-	@Column (nullable=false, length=150)
+	@Column (name="DETALLE",nullable=false, length=150)
 	private String detalle;
 	
 	@ManyToOne

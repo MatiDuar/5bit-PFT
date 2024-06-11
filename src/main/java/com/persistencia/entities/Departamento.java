@@ -22,10 +22,10 @@ public class Departamento implements Serializable {
 	@Column(name="ID_DEPARTAMENTO")
 	private Long id;
 	
-	@Column(nullable=false,length=50,unique=true)
+	@Column(name="DESCRIPCION",nullable=false,length=50,unique=true)
 	private String nombre;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 
 	public Long getId() {

@@ -22,7 +22,7 @@ public class EstadoAsistencia implements Serializable {
 	@Column(name="ID_ESTADO_ASISTENCIA")
 	private Long id;
 	
-	@Column(nullable=false,length=50)
+	@Column(name="DESCRIPCION",nullable=false,length=50)
 	private String nombre;
 
 	public Long getId() {

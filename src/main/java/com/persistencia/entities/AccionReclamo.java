@@ -18,10 +18,10 @@ public class AccionReclamo implements Serializable {
 	@Column(name="ID_ACCION_RECLAMO")
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name="FECHA_HORA",nullable=false)
 	private Timestamp fechaHoraReclamo;
 	
-	@Column(nullable=false, length=150)
+	@Column(name="DETALLE",nullable=false, length=150)
 	private String detalleReclamo;
 	
 	@ManyToOne

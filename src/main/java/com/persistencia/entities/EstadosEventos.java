@@ -22,10 +22,10 @@ public class EstadosEventos implements Serializable {
 	@Column(name="ID_ESTADO_EVENTO")
 	private Long id_estado;
 	
-	@Column(nullable=false,length=20)
+	@Column(name="NOMBRE",nullable=false,length=20)
 	private String nombreEstadoEvento;
 	
-	@Column(nullable=false)
+	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 
 	public Long getId() {

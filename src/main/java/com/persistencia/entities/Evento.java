@@ -38,13 +38,13 @@ public class Evento implements Serializable {
 	@Column(name="ID_EVENTO")
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(name="FECHA_INIC",nullable = false)
 	private Timestamp FechaInicio;
 
-	@Column(nullable = false)
+	@Column(name="FECHA_FIN",nullable = false)
 	private Timestamp FechaFin;
 
-	@Column(nullable = false, length = 50)
+	@Column(name="TITULO",nullable = false, length = 50)
 	private String titulo;
 
 	@ManyToOne
@@ -55,13 +55,13 @@ public class Evento implements Serializable {
 	@JoinColumn(name="ID_MODALIDAD")
 	private ModalidadesEventos modalidad;
 
-	@Column(nullable = true,length = 2)
+	@Column(name="CREDITOS",nullable = true,length = 2)
 	private String creditos;
 
-	@Column(nullable = true,length = 2)
+	@Column(name="SEMESTRE",nullable = true,length = 2)
 	private String semestre;
 	
-	@Column()
+	@Column(name="LOCACION")
 	private String localizacion;
 	
 	

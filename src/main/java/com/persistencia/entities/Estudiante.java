@@ -18,7 +18,7 @@ import javax.persistence.SequenceGenerator;
 
 
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="id")
+@PrimaryKeyJoinColumn(referencedColumnName="ID_USUARIO")
 public class Estudiante extends Usuario implements Serializable {
 	
 	public Estudiante() {
@@ -34,7 +34,7 @@ public class Estudiante extends Usuario implements Serializable {
 	@Column(name="ID_ESTUDIANTE")
 	private Long idEstudiate;
 	
-	@Column
+	@Column(name="ANOINGRESO")
 	private int anoIngreso;
 	
 	

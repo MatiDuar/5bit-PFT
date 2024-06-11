@@ -18,10 +18,10 @@ private static final long serialVersionUID = 1L;
 	@Column(name="ID_CONSTANCIA")
 	private Long id;
 	
-	@Column(nullable=false)
+	@Column(name="FECHA_HORA",nullable=false)
 	private Date fechaHora;
 	
-	@Column (nullable=false, length=150)
+	@Column (name="DETALLE",nullable=false, length=150)
 	private String detalle;
 	
 	@ManyToOne

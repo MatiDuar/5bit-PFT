@@ -15,7 +15,7 @@ public class AreaTutor implements Serializable {
 	@Column(name="ID_AREA_TUTOR")
 	private Long id;
 
-	@Column(nullable = false, length = 150, unique = true)
+	@Column(name="DESCRIPCION",nullable = false, length = 150, unique = true)
 	private String nombre;
 
 	public AreaTutor() {

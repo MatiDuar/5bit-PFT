@@ -25,7 +25,7 @@ private static final long serialVersionUID = 1L;
 	@JoinColumn(name="ID_EVENTO")
 	private Evento evento;
 	
-	@Column (nullable=false)
+	@Column (name="CALIFICACION",nullable=false)
 	private float calificacion;
 	
 	@ManyToOne

@@ -137,13 +137,13 @@
 	</entity>
 	<entity class="com.persistencia.entities.TipoAsignatura"
 		access="FIELD">
-		<table name="TIPOS_ASIGNATURAS">
+		<table name="TIPO_ASIGNATURA">
 		</table>
 	</entity>
 	<entity
 		class="com.persistencia.entities.TipoConvocatoriaMatricula"
 		access="FIELD">
-		<table name="TIPOS_CONVOCATORIAS_MATRICULAS">
+		<table name="TIPO_CONVOCATORIAS_MATRICULAS">
 		</table>
 	</entity>
 	<entity class="com.persistencia.entities.Usuario" access="FIELD">
