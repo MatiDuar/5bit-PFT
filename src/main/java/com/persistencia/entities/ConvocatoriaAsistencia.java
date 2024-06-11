@@ -14,7 +14,7 @@ private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONVOCATORIA_ASISTENCIA" )
 	@SequenceGenerator(name = "SEQ_CONVOCATORIA_ASISTENCIA", initialValue = 1, allocationSize = 1)
-	@Column(name="ID_CONVOCATORIA_ASISTENCIA")
+	@Column(name="ID_ASISTENCIA")
 	private Long id;
 	
 	@ManyToOne

@@ -27,19 +27,19 @@ public class Carrera implements Serializable {
 	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
-	@Column(name="CANTSEMESTRE",nullable=false)
+	@Column(name="CANT_SEMESTRE",nullable=false)
 	private int cantSemestre;
 	
-	@Column(name="CREDITOSOBLIGATORIOS",nullable=false)
+	@Column(name="CREDITOS_OBLIGATORIOS",nullable=false)
 	private int creditosObligatorios;
 	
-	@Column(name="CREDITOSOPTATIVOS",nullable=false)
+	@Column(name="CREDITOS_OPTATIVOS",nullable=false)
 	private int creditosOptativos;
-	@Column(name="CREDITOSLIBRECONFIGURACION",nullable=false)
+	@Column(name="CREDITOS_LIBRE_CONFIGURACION",nullable=false)
 	private int creditosLibreConfiguracion;
-	@Column(name="CREDITOSPROYECTO",nullable=false)
+	@Column(name="CREDITOS_PROYECTO",nullable=false)
 	private int creditosProyecto;
-	@Column(name="CREDITOSPRACTICASPROFESIONALES",nullable=false)
+	@Column(name="CREDITOS_PRACTICAS_PROFESIONALES",nullable=false)
 	private int creditosPracticasProfesionales;
 	
 	

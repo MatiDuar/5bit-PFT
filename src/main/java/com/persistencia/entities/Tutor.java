@@ -10,7 +10,7 @@ import javax.persistence.*;
  *
  */
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="id")
+@PrimaryKeyJoinColumn(referencedColumnName="ID_USUARIO")
 public class Tutor extends Usuario implements Serializable {
 
 	public Tutor() {

@@ -22,13 +22,13 @@ public class Reclamo implements Serializable {
 	@Column(name="ID_RECLAMO")
 	private Long id;
 
-	@Column(nullable = false)
+	@Column(name="TITULO",nullable = false)
 	private String titulo;
 
-	@Column(nullable = true)
+	@Column(name="FECHA_HORA",nullable = true)
 	private Timestamp fechaHora;
 
-	@Column(nullable = false)
+	@Column(name="DETALLE",nullable = false)
 	private String detalle;
 
 	@ManyToOne(optional = false)
@@ -39,22 +39,22 @@ public class Reclamo implements Serializable {
 	@JoinColumn(name="ID_ESTADO")
 	private Estado estado;
 	
-	@Column(nullable = true)
+	@Column(name="NOMBRE_EVENTO_VME",nullable = true)
 	private String nombreEventoVME;
 	
-	@Column(nullable = true)
+	@Column(name="NOMBRE_ACTIVIDAD",nullable = true)
 	private String nombreActividad;
 	
-	@Column(nullable = true)
+	@Column(name="SEMESTRE",nullable = true)
 	private int semestre;
 
-	@Column(nullable = true)
+	@Column(name="FECHA_EVENTO",nullable = true)
 	private Date fechaEvento;
 	
-	@Column(nullable = true)
+	@Column(name="NOMBRE_DOCENTE",nullable = true)
 	private String nombreDocente;
 	
-	@Column(nullable = true)
+	@Column(name="CREDITOS",nullable = true)
 	private int creditos;
 
 

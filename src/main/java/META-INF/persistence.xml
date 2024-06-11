@@ -8,7 +8,7 @@
 
 
 			<!-- <jta-data-source>java:/JAVAEE</jta-data-source> -->   
-			<jta-data-source>java:/pftop</jta-data-source>
+			<jta-data-source>java:/operativa</jta-data-source>
 
 
 		<mapping-file>META-INF/orm.xml</mapping-file>

@@ -34,7 +34,7 @@ public class Estudiante extends Usuario implements Serializable {
 	@Column(name="ID_ESTUDIANTE")
 	private Long idEstudiate;
 	
-	@Column(name="ANOINGRESO")
+	@Column(name="ANO_INGRESO")
 	private int anoIngreso;
 	
 	
