@@ -13,7 +13,7 @@ import javax.persistence.Id;
  *
  */
 @Entity
-@PrimaryKeyJoinColumn(referencedColumnName="ID_ANALISTA")
+@PrimaryKeyJoinColumn(referencedColumnName="ID_USUARIO")
 public class Analista extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;

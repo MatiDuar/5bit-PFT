@@ -12,6 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
@@ -39,6 +40,7 @@ public class Estudiante extends Usuario implements Serializable {
 	
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name="ID_ESTUDIANTE")
 	Set<Inscripcion> inscripciones;
 	public void addInscripcion(Inscripcion inscripcion) {
 		if (this.inscripciones == null) {

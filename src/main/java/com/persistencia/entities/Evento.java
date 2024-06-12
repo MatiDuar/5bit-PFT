@@ -72,7 +72,7 @@ public class Evento implements Serializable {
 	@JoinColumn(name="ID_ESTADO")
 	private EstadosEventos estado;
 
-	@JoinTable(name = "RESP_TUTOR_EVENTO", joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
+	@JoinTable(name = "RESP_TUTORES_EVENTOS", joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
 			inverseJoinColumns = @JoinColumn(name = "ID_TUTOR", nullable = true))
 	@ManyToMany( fetch = FetchType.EAGER)
 

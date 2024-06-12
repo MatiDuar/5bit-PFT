@@ -2,6 +2,7 @@ package com.persistencia.entities;
 
 import java.io.Serializable;
 import java.sql.Time;
+import java.sql.Timestamp;
 
 import javax.persistence.*;
 
@@ -22,7 +23,7 @@ public class Justificacion implements Serializable {
 	private Long id;
 	
 	@Column(name="FECHA_HORA",nullable=false)
-	private Time fechaHora;
+	private Timestamp fechaHora;
 	
 	@Column(name="DETALLE",nullable=false,length=150)
 	private String detalle;
@@ -55,11 +56,11 @@ public class Justificacion implements Serializable {
 		this.id = id;
 	}
 
-	public Time getFechaHora() {
+	public Timestamp getFechaHora() {
 		return fechaHora;
 	}
 
-	public void setFechaHora(Time fechaHora) {
+	public void setFechaHora(Timestamp fechaHora) {
 		this.fechaHora = fechaHora;
 	}
 

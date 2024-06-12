@@ -29,6 +29,7 @@ public class Inscripcion implements Serializable {
 
 
 	@OneToMany(fetch = FetchType.EAGER)
+	@JoinColumn(name = "ID_INSCRIPCION")
 	Set<Matricula>matriculas;
 	
 	public void addMatricula(Matricula matricula) {
