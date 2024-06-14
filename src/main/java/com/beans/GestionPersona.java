@@ -471,8 +471,7 @@ public class GestionPersona implements Serializable {
 		
 		persistenciaBean.modificarUsuario(persona.getObject());
 		
-		FacesMessage msg = new FacesMessage("Error al editar persona, verifique los datos.", String.valueOf(persona.getObject().getNombre1()));
-        FacesContext.getCurrentInstance().addMessage(null, msg);
+       FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,"Se guardaron correctamente los datos del usuario.",""));
 			
 	}
 

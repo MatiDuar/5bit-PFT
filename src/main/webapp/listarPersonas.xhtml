@@ -11,7 +11,7 @@
 
 	<h:outputScript library="primefaces" name="jquery/jquery.js" />
 	<h:outputScript library="primefaces" name="primefaces.js" />
-	<h:outputScript library="primefaces" name="jquery.js" />
+
 	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 	<link type="text/css" rel="stylesheet"
 		href="https://cdn.jsdelivr.net/npm/primeflex@3.3.1/primeflex.min.css" />
@@ -21,7 +21,8 @@
 	<ui:define name="contenidoPrincipal">
 
 		<h1>Gestión de Usuarios</h1>
-
+		
+		
 		<div class="card">
 			<h:form> 
 				<p:growl id="msgs" showDetail="true"/>
@@ -31,16 +32,16 @@
 						emptyMessage="Personas no encontradas con este criterio"
 						filteredValue="#{dtFilterView.filteredPersonas}"
 						globalFilterFunction="#{dtFilterView.globalFilterFunction}"
-						editable="#{gestionPersona.esAnalistaLogeado()}" id="dateTable"
+						editable="#{gestionPersona.esAnalistaLogeado()}" id="TablaPersonas"
 						paginator="true" rows="10"
 						scrollable="true"
 						scrollWidth="98%"
 						style="margin-bottom: 25px;">
 
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
-							update="dateTable" />
+							update="TablaPersonas @form:msgs" />
 						<p:ajax event="rowEditCancel"
-							listener="#{gestionPersona.onRowCancel}" update="dateTable"/>
+							listener="#{gestionPersona.onRowCancel}" update="TablaPersonas" />
 						<f:facet name="header">
 							<div class="grid ui-fluid">
 								<div class="col-12 md:col-2">
@@ -100,7 +101,7 @@
 
 									<p:commandButton id="toggler" type="button" value="Columnas"
 										icon="pi pi-align-justify" />
-									<p:columnToggler datasource="dateTable" trigger="toggler">
+									<p:columnToggler datasource="TablaPersonas" trigger="toggler">
 										<p:ajax />
 									</p:columnToggler>
 								</div>
@@ -118,9 +119,8 @@
 									<p:inputText
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.nombre1}"
-										requiredMessage="Debe ingresar el primer Nombre"
 										maxlength="50"
-										validatorMessage="No puede contener solo espacios vacios"
+										validatorMessage="Debe ingresar el primer Nombre"
 										id="primerNombre">
 										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 
@@ -449,17 +449,17 @@
 						<p:column headerText="Editar"
 							rendered="#{gestionPersona.esAnalistaLogeado()}" style="width: 100px;text-align:center;">
 							<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
-								saveTitle="Save Row">
+								saveTitle="Save Row" update="msgs">
 							</p:rowEditor>
 						</p:column>
 					</p:dataTable>
 				</p:panel>
 				<p:confirmDialog global="true" showEffect="fade" responsive="true"
-					width="350" class="dialog" appendTo="contenido">
+					width="350" class="dialog" appendTo="contenido" >
 					<p:commandButton value="No" type="button"
-						styleClass="ui-confirmdialog-no ui-button-flat" update="dateTable" />
+						styleClass="ui-confirmdialog-no ui-button-flat" update="TablaPersonas" />
 					<p:commandButton value="Sí" type="button"
-						styleClass="ui-confirmdialog-yes" update="dateTable" />
+						styleClass="ui-confirmdialog-yes" update="TablaPersonas" />
 				</p:confirmDialog>
 				
 			</h:form>
