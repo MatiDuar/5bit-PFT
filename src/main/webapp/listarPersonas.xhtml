@@ -23,7 +23,8 @@
 		<h1>Gestión de Usuarios</h1>
 
 		<div class="card">
-			<h:form > 
+			<h:form> 
+				<p:growl id="msgs" showDetail="true"/>
 				<p:panel id="contenido"  style="padding-bottom: 50px;">
 					<p:dataTable var="personas" value="#{dtFilterView.personas}"
 						widgetVar="personasTable"
@@ -39,7 +40,7 @@
 						<p:ajax event="rowEdit" listener="#{gestionPersona.onRowEdit}"
 							update="dateTable" />
 						<p:ajax event="rowEditCancel"
-							listener="#{gestionPersona.onRowCancel}" update="dateTable" />
+							listener="#{gestionPersona.onRowCancel}" update="dateTable"/>
 						<f:facet name="header">
 							<div class="grid ui-fluid">
 								<div class="col-12 md:col-2">
@@ -142,9 +143,7 @@
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.nombre2}"
 										maxlength="50"
-										validatorMessage="No puede contener solo espacios vacios"
-										id="segundoNombre">
-										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
+										id="segundoNombre">			
 
 									</p:inputText>
 									<small class="block ui-state-error"><h:message
@@ -462,6 +461,7 @@
 					<p:commandButton value="Sí" type="button"
 						styleClass="ui-confirmdialog-yes" update="dateTable" />
 				</p:confirmDialog>
+				
 			</h:form>
 		</div>
 	</ui:define>

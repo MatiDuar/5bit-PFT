@@ -120,7 +120,7 @@ public class GestionPersona implements Serializable {
 
 	@PostConstruct
 	public void init() {
-		persistenciaBean.initPersona();
+		//persistenciaBean.initPersona();
 //		carreras = persistenciaBean.listarCarreras();
 
 		try {
@@ -470,6 +470,9 @@ public class GestionPersona implements Serializable {
 
 		
 		persistenciaBean.modificarUsuario(persona.getObject());
+		
+		FacesMessage msg = new FacesMessage("Error al editar persona, verifique los datos.", String.valueOf(persona.getObject().getNombre1()));
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 			
 	}
 
