@@ -13,8 +13,8 @@ private static final long serialVersionUID = 1L;
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CONSTANCIA" )
-	@SequenceGenerator(name = "SEQ_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONSTANCIA_SEC" )
+	@SequenceGenerator(name = "CONSTANCIA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_CONSTANCIA")
 	private Long id;
 	

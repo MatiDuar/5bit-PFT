@@ -17,8 +17,8 @@ public class EstadoAsistencia implements Serializable {
 	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ESTADO_ASISTENCIA" )
-	@SequenceGenerator(name = "SEQ_ESTADO_ASISTENCIA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTADO_ASISTENCIA_SEC" )
+	@SequenceGenerator(name = "ESTADO_ASISTENCIA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ESTADO_ASISTENCIA")
 	private Long id;
 	

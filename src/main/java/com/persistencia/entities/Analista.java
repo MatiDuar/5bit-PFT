@@ -18,8 +18,8 @@ public class Analista extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ANALISTA" )
-	@SequenceGenerator(name = "SEQ_ANALISTA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ANALISTA_SEC" )
+	@SequenceGenerator(name = "ANALISTA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ANALISTA")
 	private Long idAnalista;	
 

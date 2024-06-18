@@ -12,8 +12,8 @@ public class AccionJustificacion implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_JUSTIFICACION" )
-	@SequenceGenerator(name = "SEQ_ACCION_JUSTIFICACION", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCION_JUSTIFICACION_SEC" )
+	@SequenceGenerator(name = "ACCION_JUSTIFICACION_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ACCION_JUSTIFICACION")
 	private Long id;
 	

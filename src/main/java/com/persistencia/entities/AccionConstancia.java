@@ -11,8 +11,8 @@ public class AccionConstancia implements Serializable {
 	private static final long serialVersionUID = 1L;	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_CONSTANCIA" )
-	@SequenceGenerator(name = "SEQ_ACCION_CONSTANCIA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCION_CONSTANCIA_SEC" )
+	@SequenceGenerator(name = "ACCION_CONSTANCIA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ACCION_CONSTANCIA")
 	private Long id;
 	

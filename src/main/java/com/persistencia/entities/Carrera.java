@@ -16,8 +16,8 @@ public class Carrera implements Serializable {
 	} 
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_CARRERA" )
-	@SequenceGenerator(name = "SEQ_CARRERA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARRERA_SEQ" )
+	@SequenceGenerator(name = "CARRERA_SEQ", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_CARRERA")
 	private Long id;
 	

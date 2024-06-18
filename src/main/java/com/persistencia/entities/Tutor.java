@@ -20,8 +20,8 @@ public class Tutor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;	
 
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TUTOR" )
-	@SequenceGenerator(name = "SEQ_TUTOR", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TUTOR_SEC" )
+	@SequenceGenerator(name = "TUTOR_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_TUTOR")
 	private Long idTutor;
 	

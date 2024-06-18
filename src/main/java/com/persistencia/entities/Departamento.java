@@ -17,8 +17,8 @@ public class Departamento implements Serializable {
 	
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_DEPARTAMENTO" )
-	@SequenceGenerator(name = "SEQ_DEPARTAMENTO", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "DEPARTAMENTO_SEC" )
+	@SequenceGenerator(name = "DEPARTAMENTO_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_DEPARTAMENTO")
 	private Long id;
 	

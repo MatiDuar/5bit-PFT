@@ -33,8 +33,8 @@ public class Evento implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_EVENTO" )
-	@SequenceGenerator(name = "SEQ_EVENTO", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVENTO_SEC" )
+	@SequenceGenerator(name = "EVENTO_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_EVENTO")
 	private Long id;
 

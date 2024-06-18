@@ -14,8 +14,8 @@ public class Estado implements Serializable {
 	private static final long serialVersionUID = 1L;	
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ESTADO" )
-	@SequenceGenerator(name = "SEQ_ESTADO", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTADO_SEC" )
+	@SequenceGenerator(name = "ESTADO_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ESTADO")
 	private Long id;
 	

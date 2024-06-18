@@ -28,6 +28,7 @@ public class GestionReclamoService {
 	AccionReclamoDAO accionReclamoDAO;
 
 	
+
 	
 	public List<Reclamo>listarReclamo() throws ServicesException{
 		return reclamoDAO.obtenerReclamos();

@@ -13,8 +13,8 @@ public class AccionReclamo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_ACCION_RECLAMO" )
-	@SequenceGenerator(name = "SEQ_ACCION_RECLAMO", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCION_RECLAMO_SEC" )
+	@SequenceGenerator(name = "ACCION_RECLAMO_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_ACCION_RECLAMO")
 	private Long id;
 	

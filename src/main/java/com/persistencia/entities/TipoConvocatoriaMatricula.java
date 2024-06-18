@@ -13,8 +13,8 @@ public class TipoConvocatoriaMatricula implements Serializable {
 	} 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_TIPO_CONVOCATORIA_MATRICULA" )
-	@SequenceGenerator(name = "SEQ_TIPO_CONVOCATORIA_MATRICULA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TIPO_CONVOCATORIA_MATRICULA_SEC" )
+	@SequenceGenerator(name = "TIPO_CONVOCATORIA_MATRICULA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_TIPO_CONVOCATORIA_MATRICULA")
 	private Long id;
 

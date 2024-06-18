@@ -15,8 +15,8 @@ public class Matricula implements Serializable {
 	} 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "SEQ_MATRICULA" )
-	@SequenceGenerator(name = "SEQ_MATRICULA", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MATRICULA_SEC" )
+	@SequenceGenerator(name = "MATRICULA_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_MATRICULA")
 	private Long id;
 	

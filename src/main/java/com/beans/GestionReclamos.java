@@ -43,6 +43,9 @@ public class GestionReclamos implements Serializable {
 
 	@Inject
 	DFView dfView;
+	
+	@Inject
+	EmailSender emailSender;
 
 	
 	private Estado estadoAEditar;
@@ -60,10 +63,11 @@ public class GestionReclamos implements Serializable {
 	
 	private Estado estadoReclamoAlta;
 	
-	
 	private String tipoReclamo;
 	
 	private String yearRange;
+	
+	
 
 	@PostConstruct
 	void init() {
@@ -117,11 +121,10 @@ public class GestionReclamos implements Serializable {
 			reclamoSeleccionado = new Reclamo();
 			reclamoAlta= new Reclamo();
 			dfView.closeResponsive();
-		
-				
 			
-			
-			
+			emailSender.enviarMail("Estado de reclamo", 
+					"El reclamo del usuario " + gestionPersona.getUsuarioLogeado().getNombreUsuario()+ " se ingreso correctamente", 
+					gestionPersona.getUsuarioLogeado().getMailInstitucional());
 
 			return "";
 
