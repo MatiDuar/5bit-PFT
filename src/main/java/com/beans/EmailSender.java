@@ -13,9 +13,7 @@ import javax.mail.internet.*;
 @SessionScoped
 public class EmailSender implements Serializable{
 	
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	// Autenticación
     final String username = "cincobitutec@gmail.com";
@@ -25,21 +23,21 @@ public class EmailSender implements Serializable{
 	public void enviarMail(String subject, String bodyText,String mail) {
 		
 		// Propiedades del servidor de correo
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com");
-        props.put("mail.smtp.port", "587"); // Puerto SMTP para STARTTLS
-        props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true"); // Habilitar STARTTLS
+        Properties propiedades = new Properties();
+        propiedades.put("mail.smtp.host", "smtp.gmail.com");
+        propiedades.put("mail.smtp.port", "587"); // Puerto SMTP para STARTTLS
+        propiedades.put("mail.smtp.auth", "true");
+        propiedades.put("mail.smtp.starttls.enable", "true"); // Habilitar STARTTLS
 		
      // Obtener la sesión de correo
-        Session session = Session.getInstance(props, new javax.mail.Authenticator() {
+        Session session = Session.getInstance(propiedades, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(username, password);
             }
         });
 
         try {
-            // Crear un mensaje de correo
+            // Crear el mensaje para enviar
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress("cincobitutec@gmail.com"));
             message.setRecipients(
@@ -49,7 +47,7 @@ public class EmailSender implements Serializable{
             message.setSubject(subject);
             message.setText(bodyText);
 
-            // Enviar el mensaje
+            // Enviar el correo
             Transport.send(message);
             System.out.println("Correo enviado con éxito");
 

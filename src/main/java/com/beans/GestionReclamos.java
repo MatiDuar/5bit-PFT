@@ -89,7 +89,7 @@ public class GestionReclamos implements Serializable {
 
 	public void guardarCambios() {
 		try {
-			
+
 			if (fechaSeleccionada != null) {
 				reclamoSeleccionado.setFechaEvento(new java.sql.Date(fechaSeleccionada.getTime()));
 			}
@@ -97,6 +97,17 @@ public class GestionReclamos implements Serializable {
 
 			fechaSeleccionada = null;
 			reclamoSeleccionado = new Reclamo();
+
+			// #####################  Envio de Mails #####################
+			emailSender.enviarMail("Estado de Reclamo",
+				    "Estimado/a,\n\n" +
+				    "Le informamos que el estado de su reclamo titulado \"" + reclamoSeleccionado.getTitulo() + 
+				    "\" ha sido modificado a \"" + reclamoSeleccionado.getEstado().getNombre() + "\".\n\n" +
+				    "Atentamente,\n" +
+				    "El equipo de gestión de reclamos",
+				    gestionPersona.getUsuarioLogeado().getMailInstitucional());
+			// ##############################################################
+			
 
 			dfView.closeResponsive();
 		} catch (ServicesException e) {
@@ -121,11 +132,16 @@ public class GestionReclamos implements Serializable {
 			reclamoSeleccionado = new Reclamo();
 			reclamoAlta= new Reclamo();
 			dfView.closeResponsive();
+					
+			// #####################  Envio de Mails #####################
+			emailSender.enviarMail("Ingreso de Reclamo", 
+				    "Estimado/a " + gestionPersona.getUsuarioLogeado().getNombreUsuario() + ",\n\n" +
+				    "Le informamos que su reclamo ha sido ingresado correctamente.\n\n" +
+				    "Atentamente,\n" +
+				    "El equipo de gestión de reclamos",
+				    gestionPersona.getUsuarioLogeado().getMailInstitucional());
+			// ##############################################################
 			
-			emailSender.enviarMail("Estado de reclamo", 
-					"El reclamo del usuario " + gestionPersona.getUsuarioLogeado().getNombreUsuario()+ " se ingreso correctamente", 
-					gestionPersona.getUsuarioLogeado().getMailInstitucional());
-
 			return "";
 
 			

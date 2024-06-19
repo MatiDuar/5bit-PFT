@@ -39,6 +39,9 @@ public class PickListView {
 
 	@Inject
 	private DFView dfView;
+	
+	@Inject
+	EmailSender emailSender;
 
 	public static PickListView instance;
 
@@ -137,6 +140,20 @@ public class PickListView {
 		gestionEventos.setTutoresSeleccionados(tutores.getTarget());
 		System.out.println(gestionEventos.getTutoresSeleccionados() + " tutores gestion de eventos");
 		System.out.println("///////////");
+		
+		
+		// #####################  Envio de Mails #####################
+		for( Tutor tutor: gestionEventos.getTutoresSeleccionados()) {					
+			emailSender.enviarMail("Asignación a Evento: " + gestionEventos.getEventoSeleccionado().getTitulo(), 
+				    "Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() +",\n\n" +
+				    "Le informamos que ha sido asignado como tutor al siguiente evento:\n" +
+				    "Nombre del evento: " + gestionEventos.getEventoSeleccionado().getTitulo() + "\n" +
+				    "Fecha Inicio del evento: " + gestionEventos.getEventoSeleccionado().getFechaInicio() + "\n\n" +
+				    "Atentamente,\n" +
+				    "El equipo de gestión de eventos",
+				    tutor.getMailInstitucional());
+		}
+		// ##############################################################
 
 		dfView.closeResponsive();
 
