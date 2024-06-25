@@ -8,6 +8,7 @@ import java.sql.Timestamp;
 import javax.persistence.*;
 
 @Entity
+@Table(name="RECLAMOS")
 public class Reclamo implements Serializable {
 
 	public Reclamo() {
@@ -18,7 +19,7 @@ public class Reclamo implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "RECLAMO_SEC")
-	@SequenceGenerator(name = "RECLAMO_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "RECLAMO_SEC", sequenceName = "RECLAMO_SEC", allocationSize = 1)
 	@Column(name="ID_RECLAMO")
 	private Long id;
 

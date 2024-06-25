@@ -6,7 +6,8 @@ import java.util.List;
 
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="CARRERAS")
 public class Carrera implements Serializable {
 
 	
@@ -17,7 +18,7 @@ public class Carrera implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CARRERA_SEQ" )
-	@SequenceGenerator(name = "CARRERA_SEQ", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "CARRERA_SEQ", sequenceName = "CARRERA_SEQ", allocationSize = 1)
 	@Column(name="ID_CARRERA")
 	private Long id;
 	
@@ -45,6 +46,7 @@ public class Carrera implements Serializable {
 	
 	@JoinTable(name = "CARRERA_MATERIA", joinColumns = @JoinColumn(name = "ID_CARRERA", nullable = false), 
 			inverseJoinColumns = @JoinColumn(name = "ID_MATERIA", nullable = false))
+	@SequenceGenerator(name = "CARRERA_MATERIA_SEC", sequenceName = "CARRERA_MATERIA_SEC", allocationSize = 1)
 	@ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private List<Materia> materias;
 

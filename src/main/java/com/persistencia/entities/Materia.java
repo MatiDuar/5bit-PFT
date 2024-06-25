@@ -4,13 +4,16 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
-
+@Entity
+@Table(name="MATERIAS")
 public class Materia implements Serializable {
 
 	
@@ -22,7 +25,7 @@ public class Materia implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MATERIA_SEQ" )
-	@SequenceGenerator(name = "MATERIA_SEQ", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "MATERIA_SEQ", sequenceName = "MATERIA_SEQ", allocationSize = 1)
 	@Column(name="ID_MATERIA")
 	private Long id;
 	

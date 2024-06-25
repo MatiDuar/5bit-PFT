@@ -5,11 +5,9 @@ import java.util.Set;
 
 import javax.persistence.*;
 
-/**
- * Entity implementation class for Entity: Tutor
- *
- */
+
 @Entity
+@Table(name = "TUTORES")
 @PrimaryKeyJoinColumn(referencedColumnName="ID_USUARIO")
 public class Tutor extends Usuario implements Serializable {
 
@@ -20,8 +18,8 @@ public class Tutor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;	
 
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TUTOR_SEC" )
-	@SequenceGenerator(name = "TUTOR_SEC", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TUTOR_SEC")
+    @SequenceGenerator(name = "TUTOR_SEC", sequenceName = "TUTOR_SEC", allocationSize = 1)
 	@Column(name="ID_TUTOR")
 	private Long idTutor;
 	
@@ -35,7 +33,10 @@ public class Tutor extends Usuario implements Serializable {
 	private TipoTutor tipoTutor;
 
 
-	@ManyToMany( mappedBy="tutores")
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "RESP_TUTORES_EVENTOS", 
+               joinColumns = @JoinColumn(name = "ID_TUTOR", nullable = false), 
+               inverseJoinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false))
 	 private Set <Evento> eventos;
 
 
@@ -55,9 +56,27 @@ public class Tutor extends Usuario implements Serializable {
 		this.tipoTutor = tipoTutor;
 	}
 
+	public Long getIdTutor() {
+		return idTutor;
+	}
 
-	
-	
-	
+	public void setIdTutor(Long idTutor) {
+		this.idTutor = idTutor;
+	}
+
+	public Set<Evento> getEventos() {
+		return eventos;
+	}
+
+	public void setEventos(Set<Evento> eventos) {
+		this.eventos = eventos;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario [id=" + getId()+" ]" +" Tutor [idTutor=" + idTutor + ", areaTutor=" + areaTutor + ", tipoTutor=" + tipoTutor+"]";
+	}
+
+
    
 }

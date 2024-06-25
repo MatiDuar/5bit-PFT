@@ -9,7 +9,9 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name = "USUARIOS")
 @Inheritance(strategy=InheritanceType.JOINED)
+@SequenceGenerator(name = "USUARIO_SEC", initialValue = 1, allocationSize = 1)
 public abstract class Usuario implements Serializable {
 
 	public Usuario() {
@@ -19,9 +21,8 @@ public abstract class Usuario implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "USUARIO_SEC" )
-	@SequenceGenerator(name = "USUARIO_SEC", initialValue = 1, allocationSize = 1)
 	@Column(name="ID_USUARIO")
-	private Long id_usuario;
+	private Long id;
 	
 	@Column(name="DOCUMENTO",nullable=false,length=50)
 	private String documento;
@@ -81,11 +82,11 @@ public abstract class Usuario implements Serializable {
 	
 
 	public Long getId() {
-		return id_usuario;
+		return id;
 	}
 
 	public void setId(long id) {
-		this.id_usuario = id;
+		this.id = id;
 	}
 
 	public String getDocumento() {
@@ -229,7 +230,7 @@ public abstract class Usuario implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Usuario [id=" + id_usuario + ", documento=" + documento + ", nombreUsuario=" + nombreUsuario + ", contrasena="
+		return "Usuario [id=" + id + ", documento=" + documento + ", nombreUsuario=" + nombreUsuario + ", contrasena="
 				+ contrasena + ", apellido1=" + apellido1 + ", apellido2=" + apellido2 + ", nombre1=" + nombre1
 				+ ", nombre2=" + nombre2 + ", fechaNacimiento=" + fechaNacimiento + ", genero=" + genero
 				+ ", departamento=" + departamento + ", localidad=" + localidad + ", mail=" + mail + ", telefono="
@@ -238,7 +239,7 @@ public abstract class Usuario implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_usuario);
+		return Objects.hash(id);
 	}
 
 	@Override
@@ -250,7 +251,7 @@ public abstract class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		return Objects.equals(id_usuario, other.id_usuario);
+		return Objects.equals(id, other.id);
 	}
 
 	

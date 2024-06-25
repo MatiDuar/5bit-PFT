@@ -6,6 +6,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -20,9 +21,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 
 @Entity
+@Table(name="EVENTOS")
 public class Evento implements Serializable {
 
 	public Evento() {
@@ -33,9 +37,9 @@ public class Evento implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVENTO_SEC" )
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVENTO_SEC")
 	@SequenceGenerator(name = "EVENTO_SEC", initialValue = 1, allocationSize = 1)
-	@Column(name="ID_EVENTO")
+	@Column(name="ID_EVENTO",nullable=false)
 	private Long id;
 
 	@Column(name="FECHA_INIC",nullable = false)
@@ -72,10 +76,8 @@ public class Evento implements Serializable {
 	@JoinColumn(name="ID_ESTADO")
 	private EstadosEventos estado;
 
-	@JoinTable(name = "RESP_TUTORES_EVENTOS", joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
-			inverseJoinColumns = @JoinColumn(name = "ID_TUTOR", nullable = true))
-	@ManyToMany( fetch = FetchType.EAGER)
-
+	
+	@ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
 	private List<Tutor> tutores;
 
 	public void addTutor(Tutor tutor) {
@@ -86,10 +88,10 @@ public class Evento implements Serializable {
 		this.tutores.add(tutor); 
 	}
 
+	@ManyToMany( fetch = FetchType.EAGER)
 	@JoinTable(name = "ANALIST_GEST_EVENTOS", 
 			joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
 			inverseJoinColumns =@JoinColumn(name = "ID_ANALISTA", nullable = true))
-	@ManyToMany( fetch = FetchType.EAGER)
 
 	private Set<Analista> analistas;
 
@@ -238,11 +240,40 @@ public class Evento implements Serializable {
 	}
 
 
+	
+	
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
+
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Evento other = (Evento) obj;
+		return Objects.equals(id, other.id);
+	}
+
+
 
 	@Override
 	public String toString() {
 		return "Evento [id=" + id + ", FechaInicio=" + FechaInicio + ", FechaFin=" + FechaFin + ", titulo=" + titulo
-				+ ", tipoActividad=" + tipoActividad + ", creditos=" + creditos + ", semestre=" + semestre + "tutores:"+tutores+"]";
+				+ ", tipoActividad=" + tipoActividad + ", modalidad=" + modalidad + ", creditos=" + creditos
+				+ ", semestre=" + semestre + ", localizacion=" + localizacion + ", itr=" + itr + ", estado=" + estado
+				+ ", tutores=" + tutores + ", analistas=" + analistas + ", getId()=" + getId() + "]";
 	}
+	
+	
+
+
 
 }

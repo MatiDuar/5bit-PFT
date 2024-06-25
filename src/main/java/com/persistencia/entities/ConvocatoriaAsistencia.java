@@ -3,7 +3,8 @@ package com.persistencia.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="CONVOCATORIAS_ASISTENCIAS")
 public class ConvocatoriaAsistencia implements Serializable {
 
 	
@@ -13,7 +14,7 @@ private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "CONVOCATORIA_ASISTENCIA_SEC" )
-	@SequenceGenerator(name = "CONVOCATORIA_ASISTENCIA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "CONVOCATORIA_ASISTENCIA_SEC", sequenceName = "CONVOCATORIA_ASISTENCIA_SEC", allocationSize = 1)
 	@Column(name="ID_ASISTENCIA")
 	private Long id;
 	

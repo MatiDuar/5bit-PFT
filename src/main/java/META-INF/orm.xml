@@ -12,7 +12,6 @@
 		<table name="DEPARTAMENTOS">
 		</table>
 	</entity>
-	
 	<entity class="com.persistencia.entities.Tutor" access="FIELD">
 		<table name="TUTORES">
 		</table>

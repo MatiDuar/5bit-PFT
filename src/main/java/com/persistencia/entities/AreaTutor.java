@@ -5,13 +5,15 @@ import java.util.Objects;
 
 import javax.persistence.*;
 
+@Entity
+@Table(name="AREAS_TUTORES")
 public class AreaTutor implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "AREA_TUTOR_SEC")
-	@SequenceGenerator(name = "AREA_TUTOR_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "AREA_TUTOR_SEC", sequenceName = "AREA_TUTOR_SEC", allocationSize = 1)
 	@Column(name="ID_AREA_TUTOR")
 	private Long id;
 

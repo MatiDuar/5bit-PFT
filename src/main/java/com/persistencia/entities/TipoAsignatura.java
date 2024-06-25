@@ -3,7 +3,8 @@ package com.persistencia.entities;
 import java.io.Serializable;
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="TIPO_ASIGNATURA")
 public class TipoAsignatura implements Serializable {
 
 	
@@ -14,7 +15,7 @@ public class TipoAsignatura implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TIPO_ASIGNATURA_SEC" )
-	@SequenceGenerator(name = "TIPO_ASIGNATURA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "TIPO_ASIGNATURA_SEC", sequenceName = "TIPO_ASIGNATURA_SEC", allocationSize = 1)
 	@Column(name="ID_TIPO_ASIGNATURA")
 	private Long id;
 

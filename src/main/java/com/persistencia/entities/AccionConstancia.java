@@ -5,14 +5,15 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="ACCIONES_CONSTANCIA")
 public class AccionConstancia implements Serializable {
 
 	private static final long serialVersionUID = 1L;	
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ACCION_CONSTANCIA_SEC" )
-	@SequenceGenerator(name = "ACCION_CONSTANCIA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "ACCION_CONSTANCIA_SEC", sequenceName = "TIPO_ACTIVIDAD_SEC", allocationSize = 1)
 	@Column(name="ID_ACCION_CONSTANCIA")
 	private Long id;
 	

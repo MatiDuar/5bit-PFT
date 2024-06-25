@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name="TIPOS_TUTORES")
 public class TipoTutor implements Serializable {
 
 	public TipoTutor() {
@@ -19,7 +20,7 @@ public class TipoTutor implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TIPO_TUTOR_SEC" )
-	@SequenceGenerator(name = "TIPO_TUTOR_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "TIPO_TUTOR_SEC", sequenceName = "TIPO_TUTOR_SEC", allocationSize = 1)
 	@Column(name="ID_TIPO_TUTOR")
 	private Long id;
 	

@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name="ESTADOS_ASISTENCIAS")
 public class EstadoAsistencia implements Serializable {
 
 	public EstadoAsistencia() {
@@ -18,7 +19,7 @@ public class EstadoAsistencia implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTADO_ASISTENCIA_SEC" )
-	@SequenceGenerator(name = "ESTADO_ASISTENCIA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "ESTADO_ASISTENCIA_SEC", sequenceName = "ESTADO_ASISTENCIA_SEC", allocationSize = 1)
 	@Column(name="ID_ESTADO_ASISTENCIA")
 	private Long id;
 	

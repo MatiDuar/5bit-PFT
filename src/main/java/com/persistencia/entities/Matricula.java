@@ -5,7 +5,8 @@ import java.sql.Date;
 
 import javax.persistence.*;
 
-
+@Entity
+@Table(name="MATRICULAS")
 public class Matricula implements Serializable {
 
 	
@@ -16,7 +17,7 @@ public class Matricula implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "MATRICULA_SEC" )
-	@SequenceGenerator(name = "MATRICULA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "MATRICULA_SEC", sequenceName = "MATRICULA_SEC", allocationSize = 1)
 	@Column(name="ID_MATRICULA")
 	private Long id;
 	

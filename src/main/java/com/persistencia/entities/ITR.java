@@ -7,6 +7,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name="ITR")
 public class ITR implements Serializable {
 
 	public ITR() {
@@ -18,7 +19,7 @@ public class ITR implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ITR_SEC" )
-	@SequenceGenerator(name = "ITR_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "ITR_SEC", sequenceName = "ITR_SEC", allocationSize = 1)
 	@Column(name="ID_ITR")
 	private Long id;
 	

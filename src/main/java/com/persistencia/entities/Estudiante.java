@@ -16,10 +16,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 
 @Entity
+@Table(name="ESTUDIANTES")
 @PrimaryKeyJoinColumn(referencedColumnName="ID_USUARIO")
+@SequenceGenerator(name = "ESTUDIANTE_SEC", initialValue = 1, allocationSize = 1)
 public class Estudiante extends Usuario implements Serializable {
 	
 	public Estudiante() {
@@ -28,12 +31,6 @@ public class Estudiante extends Usuario implements Serializable {
 	
 	private static final long serialVersionUID = 1L;	
 	
-
-
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTUDIANTE_SEC" )
-	@SequenceGenerator(name = "ESTUDIANTE_SEC", initialValue = 1, allocationSize = 1)
-	@Column(name="ID_ESTUDIANTE")
-	private Long idEstudiate;
 	
 	@Column(name="ANO_INGRESO")
 	private int anoIngreso;
@@ -48,13 +45,6 @@ public class Estudiante extends Usuario implements Serializable {
 		}
 
 		this.inscripciones.add(inscripcion);
-	}
-	public Long getIdEstudiate() {
-		return idEstudiate;
-	}
-
-	public void setIdEstudiate(Long idEstudiate) {
-		this.idEstudiate = idEstudiate;
 	}
 
 	public int getAnoIngreso() {

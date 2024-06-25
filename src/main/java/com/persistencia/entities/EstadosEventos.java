@@ -8,6 +8,7 @@ import javax.persistence.*;
 
  
 @Entity
+@Table(name="ESTADOS_EVENTOS")
 public class EstadosEventos implements Serializable {
 
 	
@@ -18,7 +19,7 @@ public class EstadosEventos implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ESTADO_EVENTO_SEC" )
-	@SequenceGenerator(name = "ESTADO_EVENTO_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "ESTADO_EVENTO_SEC", sequenceName = "ESTADO_EVENTO_SEC", allocationSize = 1)
 	@Column(name="ID_ESTADO")
 	private Long id_estado;
 	

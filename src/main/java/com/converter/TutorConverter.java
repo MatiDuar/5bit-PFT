@@ -27,14 +27,20 @@ public class TutorConverter implements Converter<Tutor> {
 	public Tutor getAsObject(FacesContext arg0, UIComponent arg1, String string) {
 		// TODO Auto-generated method stub
 
+		System.out.println("####### este es el id ####### id= "+ string);
+		
 		if (string != null && !string.isEmpty()) {
 
 			try {
-				Long usuarioId = Long.parseLong(extractIdFromUsuarioString(string));				
+				
+				Long usuarioId = Long.parseLong(extractIdFromUsuarioString(string));	
+				
+				System.out.println("######## "+ usuarioId+" #########");
+				
 				return PickListView.instance.buscarTutorPorId(usuarioId); // Implement this method
 
 			} catch (NumberFormatException e) {
-				throw new ConverterException("Invalid format for Usuario.");
+				throw new ConverterException("Invalid format for Usuario.\n" + e.getMessage());
 			} 
 		}
 		return null;

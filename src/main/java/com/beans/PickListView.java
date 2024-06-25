@@ -1,31 +1,25 @@
 package com.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.inject.Alternative;
-import javax.faces.application.FacesMessage;
-import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.SelectEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.event.UnselectEvent;
-
 import org.primefaces.model.DualListModel;
 
 import com.logicaNegocio.GestionEventoService;
+import com.persistencia.entities.ConvocatoriaAsistencia;
 import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
 import com.persistencia.entities.Tutor;
-import com.persistencia.entities.Usuario;
-import com.persistencia.entities.ConvocatoriaAsistencia;
 import com.persistencia.exception.ServicesException;
-
-import java.util.List;
-import java.util.ArrayList;
-import java.util.LinkedList;
 
 @Named
 @RequestScoped
@@ -82,12 +76,18 @@ public class PickListView {
 			if (gestionEventos.getTutoresSeleccionados() != null) {
 				tutores.setTarget(gestionEventos.getTutoresSeleccionados());
 			}
+			System.out.println("######################### Inicio #################################\n");
+			System.out.println("Evento Seleccionado Mod: \n" + gestionEventos.getEventoSeleccionadoMod().getTutores());
+			
 			if (gestionEventos.getEventoSeleccionadoMod().getTutores() != null) {
+				System.out.println("Tutores No Seleccionados: \n" + tutoresMod.getSource().toString());
+				System.out.println("Tutores Seleccionados: \n" + tutoresMod.getTarget().toString());
 				tutoresMod.setTarget(gestionEventos.getEventoSeleccionadoMod().getTutores());
 				estudiantesConvocados
 						.setTarget(service.buscarEstudiantesPorEvento(gestionEventos.getEventoSeleccionadoMod()));
 			}
-
+			
+			System.out.println("######################### Fin #################################\n");
 			filtrarTutor(tutores.getSource(), tutores.getTarget());
 
 			filtrarTutor(tutoresMod.getSource(), tutoresMod.getTarget());
@@ -112,6 +112,14 @@ public class PickListView {
 
 	public void onTransfer(TransferEvent event) {
 
+		StringBuilder builder = new StringBuilder();
+		List<Tutor> listTutores = new ArrayList<>();
+        for (Object item : event.getItems()) {
+            builder.append(((Tutor) item)); 
+            listTutores.add((Tutor) item);
+        }
+        tutoresMod.setTarget(listTutores);
+        System.out.println("Esta es la lista de Tutores " + listTutores.toString());
 	}
 
 	public void onSelect(SelectEvent<Tutor> event) {
@@ -160,8 +168,17 @@ public class PickListView {
 	}
 
 	public void guardarCambiosMod() {
-
+		
 		Evento evento = gestionEventos.getEventoSeleccionadoMod();
+//		for(Tutor tut : tutoresMod.getTarget()) {
+//			Set<Evento> eventosDeTutor = tut.getEventos();
+//			
+//			boolean existe = eventosDeTutor.add(evento);
+//			if(!existe) {
+//				System.out.println("El evento de id"+ evento.getId() + " se agregó al Set.");
+//			}
+//		}
+	
 		evento.setTutores(tutoresMod.getTarget());
 		System.out.println(evento + " en guardarCambiuos");
 
@@ -171,7 +188,8 @@ public class PickListView {
 		dfView.closeResponsive();
 
 	}
-
+	
+	
 	public void guardarCambiosConvocatoria() {
 		Evento evento = gestionEventos.getEventoSeleccionadoMod();
 		

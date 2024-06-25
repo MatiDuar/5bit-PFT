@@ -5,6 +5,7 @@ import javax.persistence.*;
 
 
 @Entity
+@Table(name="PLANTILLAS_CONSTANCIAS")
 public class PlantillaConstancia implements Serializable {
 
 	
@@ -12,7 +13,7 @@ public class PlantillaConstancia implements Serializable {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "PLANTILLA_COSTANCIA_SEC" )
-	@SequenceGenerator(name = "PLANTILLA_COSTANCIA_SEC", initialValue = 1, allocationSize = 1)
+	@SequenceGenerator(name = "PLANTILLA_COSTANCIA_SEC", sequenceName = "PLANTILLA_COSTANCIA_SEC", allocationSize = 1)
 	@Column(name="ID_PLANTILLA")
 	private Long id;
 	

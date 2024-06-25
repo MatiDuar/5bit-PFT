@@ -1,6 +1,7 @@
 package com.persistencia.dao;
 
 import java.util.List;
+import java.util.ArrayList;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.HashSet;
@@ -39,8 +40,15 @@ public class EventoDAO {
    	public void crearEvento(Evento evento) throws ServicesException {
    		
    		try {
+//   			List<Tutor> tutores = new ArrayList<>();
+//   			
+//   			for ( Tutor tutor : evento.getTutores()){
+//   					tutor.setId(tutor.getIdTutor());
+//   					tutores.add(tutor);
+//   			}
+   			System.out.println("\n\n\n\n Evento a persistir  \n" + evento);
+//   			evento.setTutores(tutores);
    			
-
    			em.merge(evento);
 
    			em.flush();		
