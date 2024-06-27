@@ -6,6 +6,8 @@ import java.util.Set;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.faces.application.FacesMessage;
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -83,8 +85,7 @@ public class PickListView {
 				System.out.println("Tutores No Seleccionados: \n" + tutoresMod.getSource().toString());
 				System.out.println("Tutores Seleccionados: \n" + tutoresMod.getTarget().toString());
 				tutoresMod.setTarget(gestionEventos.getEventoSeleccionadoMod().getTutores());
-				estudiantesConvocados
-						.setTarget(service.buscarEstudiantesPorEvento(gestionEventos.getEventoSeleccionadoMod()));
+				estudiantesConvocados.setTarget(service.buscarEstudiantesPorEvento(gestionEventos.getEventoSeleccionadoMod()));
 			}
 			
 			System.out.println("######################### Fin #################################\n");
@@ -118,8 +119,13 @@ public class PickListView {
             builder.append(((Tutor) item)); 
             listTutores.add((Tutor) item);
         }
-        tutoresMod.setTarget(listTutores);
-        System.out.println("Esta es la lista de Tutores " + listTutores.toString());
+        
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setSummary("Tutor Transferido");
+        msg.setDetail(builder.toString());
+
+        FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void onSelect(SelectEvent<Tutor> event) {
@@ -147,22 +153,7 @@ public class PickListView {
 		eventoSeleccionado.setTutores(tutores.getTarget());
 		gestionEventos.setTutoresSeleccionados(tutores.getTarget());
 		System.out.println(gestionEventos.getTutoresSeleccionados() + " tutores gestion de eventos");
-		System.out.println("///////////");
-		
-		
-		// #####################  Envio de Mails #####################
-		for( Tutor tutor: gestionEventos.getTutoresSeleccionados()) {					
-			emailSender.enviarMail("Asignación a Evento: " + gestionEventos.getEventoSeleccionado().getTitulo(), 
-				    "Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() +",\n\n" +
-				    "Le informamos que ha sido asignado como tutor al siguiente evento:\n" +
-				    "Nombre del evento: " + gestionEventos.getEventoSeleccionado().getTitulo() + "\n" +
-				    "Fecha Inicio del evento: " + gestionEventos.getEventoSeleccionado().getFechaInicio() + "\n\n" +
-				    "Atentamente,\n" +
-				    "El equipo de gestión de eventos",
-				    tutor.getMailInstitucional());
-		}
-		// ##############################################################
-
+		System.out.println("///////////");		
 		dfView.closeResponsive();
 
 	}
@@ -180,10 +171,24 @@ public class PickListView {
 //		}
 	
 		evento.setTutores(tutoresMod.getTarget());
-		System.out.println(evento + " en guardarCambiuos");
+		System.out.println(evento + " en guardar Cambios  ");
 
 		gestionEventos.guardarCambios(evento);
 
+		// #####################  Envio de Mails #####################
+				for( Tutor tutor: evento.getTutores()) {					
+					emailSender.enviarMail("Asignación a Evento: " + gestionEventos.getEventoSeleccionado().getTitulo(), 
+						    "Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() +",\n\n" +
+						    "Le informamos que ha sido asignado como tutor al siguiente evento:\n" +
+						    "Nombre del evento: " + gestionEventos.getEventoSeleccionado().getTitulo() + "\n" +
+						    "Fecha Inicio del evento: " + gestionEventos.getEventoSeleccionado().getFechaInicio() + "\n\n" +
+						    "Atentamente,\n" +
+						    "El equipo de gestión de eventos",
+						    tutor.getMailInstitucional());
+				}
+		// ##############################################################
+		
+		
 		eventoSeleccionado = new Evento();
 		dfView.closeResponsive();
 

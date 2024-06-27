@@ -10,6 +10,7 @@ import java.util.HashSet;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.TypedQuery;
@@ -38,26 +39,20 @@ public class EventoDAO {
     
     
    	public void crearEvento(Evento evento) throws ServicesException {
-   		
-   		try {
-//   			List<Tutor> tutores = new ArrayList<>();
-//   			
-//   			for ( Tutor tutor : evento.getTutores()){
-//   					tutor.setId(tutor.getIdTutor());
-//   					tutores.add(tutor);
-//   			}
-   			System.out.println("\n\n\n\n Evento a persistir  \n" + evento);
-//   			evento.setTutores(tutores);
-   			
-   			em.merge(evento);
-
-   			em.flush();		
-   			
+   		try {   			
+   	        
+   			Evento eventoPersistido = em.merge(evento);
+   			System.out.println("EventoPersistido "+ eventoPersistido);
+   			em.flush();
+	
    		}catch(PersistenceException e) {
-   			throw new ServicesException(e.getMessage()); 
+   			throw new ServicesException(e.getMessage());
    		}
    	}
     
+   	
+   
+   	
    
 	public boolean borrarEvento(Long id) throws ServicesException {
 		try {
@@ -98,8 +93,8 @@ public class EventoDAO {
 		try {
 			
 			em.merge(evento);
-			
 			em.flush();
+		 			
 			
 		}catch(PersistenceException e) {
 			throw new ServicesException("No se pudo MODIFICAR el evento"); 

@@ -46,10 +46,12 @@ public class GestionEventos implements Serializable {
 
 	@Inject
 	PickListView pickListView;
-
+	
+	@Inject
+	EmailSender emailSender;
 
 	private EstadosEventos estadoAEditar;
-	
+
 	private ModalidadesEventos modalidadAEditar;
 
 	private Evento eventoSeleccionado;
@@ -71,9 +73,9 @@ public class GestionEventos implements Serializable {
 	private List<ConvocatoriaAsistencia> convocatoriasSeleccionadas;
 
 	private List<EstadoAsistencia> estadosAsistencia;
-	
+
 	private Timestamp minDate;
-	
+
 	private Timestamp maxDate;
 
 	private Timestamp fechaInicioEvento;
@@ -81,9 +83,9 @@ public class GestionEventos implements Serializable {
 	@PostConstruct
 	public void init() {
 		try {
-			
-			//fechaInicioEvento= new Timestamp(0);
-			
+
+			// fechaInicioEvento= new Timestamp(0);
+
 			eventos = persistenciaBean.listarEventos();
 			tiposActividades = persistenciaBean.listarTiposActividad();
 			modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
@@ -92,7 +94,7 @@ public class GestionEventos implements Serializable {
 			eventoSeleccionado = new Evento();
 			tutoresSeleccionados = new LinkedList<>();
 			eventoSeleccionadoMod = new Evento();
-			
+
 //			//Conseguir fecha minima y maxima para los eventos.
 //			Calendar fechMin = Calendar.getInstance();
 //			Calendar fechMax = Calendar.getInstance();
@@ -116,31 +118,21 @@ public class GestionEventos implements Serializable {
 		}
 	}
 
-	
-
 	public Timestamp getMinDate() {
 		return minDate;
 	}
-
-
 
 	public void setMinDate(Timestamp minDate) {
 		this.minDate = minDate;
 	}
 
-
-
 	public Timestamp getMaxDate() {
 		return maxDate;
 	}
 
-
-
 	public void setMaxDate(Timestamp maxDate) {
 		this.maxDate = maxDate;
 	}
-
-
 
 	public void asignarTutores() {
 		pickListView.setEventoSeleccionado(eventoSeleccionado);
@@ -163,6 +155,19 @@ public class GestionEventos implements Serializable {
 		eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
 		eventoSeleccionado.setTutores(tutoresSeleccionados);
 		persistenciaBean.crearEvento(eventoSeleccionado);
+
+		// ##################### Envio de Mails #####################
+		for (Tutor tutor : eventoSeleccionado.getTutores()) {
+			emailSender.enviarMail("Asignación a Evento: " + eventoSeleccionado.getTitulo(),
+					"Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() + ",\n\n"
+							+ "Le informamos que ha sido asignado como tutor al siguiente evento:\n"
+							+ "Nombre del evento: " + eventoSeleccionado.getTitulo() + "\n"
+							+ "Fecha Inicio del evento: " + eventoSeleccionado.getFechaInicio()
+							+ "\n\n" + "Atentamente,\n" + "El equipo de gestión de eventos",
+					tutor.getMailInstitucional());
+		}
+		// ##############################################################
+
 		eventoSeleccionado = new Evento();
 	}
 
@@ -186,14 +191,13 @@ public class GestionEventos implements Serializable {
 			e1.printStackTrace();
 		}
 	}
-	
 
 	public void onRowEdit(RowEditEvent<Evento> evento) {
 
 		persistenciaBean.crearEvento(evento.getObject());
 
 	}
-	
+
 	public void onRowEditReclamo(RowEditEvent<Reclamo> reclamo) {
 
 		try {
@@ -204,16 +208,18 @@ public class GestionEventos implements Serializable {
 		}
 
 	}
-	
+
 	public void onRowCancelReclamo(RowEditEvent<Reclamo> reclamo) {
 
 	}
 
 	public void guardarCambios(Evento evento) {
 
-		persistenciaBean.crearEvento(evento);
+		persistenciaBean.modificarEvento(evento);
 
 	}
+	
+	
 
 	public void onRowCancel(RowEditEvent<Evento> evento) {
 
@@ -272,7 +278,7 @@ public class GestionEventos implements Serializable {
 		modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
 		estadosEvento = persistenciaBean.listarEstadosEventos();
 	}
-	
+
 //	public void fechaInicioListener(Timestamp fechaInicioEvento){
 //		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp
 //				(fechaInicioEvento.getYear(), 
@@ -285,7 +291,7 @@ public class GestionEventos implements Serializable {
 //				);
 //		System.out.println("entro");
 //	}
-	
+
 	public List<Evento> getEventos() {
 		return eventos;
 	}
@@ -365,38 +371,30 @@ public class GestionEventos implements Serializable {
 	public void setEstadosAsistencia(List<EstadoAsistencia> estadosAsistencia) {
 		this.estadosAsistencia = estadosAsistencia;
 	}
-	
+
 	public void setFechaInicioEvento(java.sql.Timestamp fechaInicioEvento) {
-		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp
-				(fechaInicioEvento.getYear(), 
-						fechaInicioEvento.getMonth(), 
-						fechaInicioEvento.getDate(), 
-						fechaInicioEvento.getHours(), 
-						fechaInicioEvento.getMinutes(), 
-						fechaInicioEvento.getSeconds(), 
-						fechaInicioEvento.getNanos())
-				);
+		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp(fechaInicioEvento.getYear(),
+				fechaInicioEvento.getMonth(), fechaInicioEvento.getDate(), fechaInicioEvento.getHours(),
+				fechaInicioEvento.getMinutes(), fechaInicioEvento.getSeconds(), fechaInicioEvento.getNanos()));
 		this.fechaInicioEvento = fechaInicioEvento;
 	}
 
 	public Timestamp getFechaInicioEvento() {
-		
+
 		return eventoSeleccionado.getFechaInicio();
 	}
-	
+
 	public EstadosEventos getEstadoAEditar() {
 		return estadoAEditar;
 	}
 
-
 	public void setEstadoAEditar(EstadosEventos estadoAEditar) {
 		this.estadoAEditar = estadoAEditar;
 	}
-	
+
 	public void cargarEstadoAEditar(EstadosEventos estado) {
 		estadoAEditar = estado;
 	}
-
 
 	public void cargarModalidadAEditar(ModalidadesEventos modalidad) {
 		modalidadAEditar = modalidad;
@@ -406,12 +404,8 @@ public class GestionEventos implements Serializable {
 		return modalidadAEditar;
 	}
 
-
-
 	public void setModalidadAEditar(ModalidadesEventos modalidadAEditar) {
 		this.modalidadAEditar = modalidadAEditar;
 	}
-	
-	
 
 }

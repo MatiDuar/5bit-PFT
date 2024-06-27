@@ -556,7 +556,7 @@ public class GestionPersonaService implements Serializable {
 			evento.setEstado(estadosEventoDAO.buscarNombreEstadoEvento("Futuro"));
 			evento.setTipoActividad(tipoActividadDAO.buscarTipoActividadPorId((long) 1));
 			evento.setModalidad(modalidadEventosDAO.buscarModalidadEventoPorId((long) 1));
-			eventoDAO.crearEvento(evento);
+//			eventoDAO.crearEvento(evento);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

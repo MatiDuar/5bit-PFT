@@ -37,8 +37,8 @@ public class Evento implements Serializable {
 
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "EVENTO_SEC")
-	@SequenceGenerator(name = "EVENTO_SEC", initialValue = 1, allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secEvento")
+    @SequenceGenerator(name = "secEvento", sequenceName = "EVENTO_SEC", allocationSize = 20)
 	@Column(name="ID_EVENTO",nullable=false)
 	private Long id;
 
@@ -77,7 +77,10 @@ public class Evento implements Serializable {
 	private EstadosEventos estado;
 
 	
-	@ManyToMany(mappedBy = "eventos", fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "RESP_TUTORES_EVENTOS", 
+               joinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false), 
+               inverseJoinColumns = @JoinColumn(name = "ID_TUTOR", nullable = false))
 	private List<Tutor> tutores;
 
 	public void addTutor(Tutor tutor) {

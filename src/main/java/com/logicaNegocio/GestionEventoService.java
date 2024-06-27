@@ -5,6 +5,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import java.util.List;
 
 import com.persistencia.dao.ConvocatoriaAsistenciaDAO;
 import com.persistencia.dao.EstadoAsistenciaDAO;
@@ -65,6 +66,14 @@ public class GestionEventoService {
 	public void crearEvento(Evento evento) {
 		try {
 			eventoDAO.crearEvento(evento);
+		} catch (ServicesException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void modificarEvento(Evento evento) {
+		try {
+			eventoDAO.modificarEvento(evento);
 		} catch (ServicesException e) {
 			e.printStackTrace();
 		}

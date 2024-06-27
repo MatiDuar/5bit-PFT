@@ -18,8 +18,8 @@ public class Tutor extends Usuario implements Serializable {
 	private static final long serialVersionUID = 1L;	
 
 	
-	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TUTOR_SEC")
-    @SequenceGenerator(name = "TUTOR_SEC", sequenceName = "TUTOR_SEC", allocationSize = 1)
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "secTutor")
+    @SequenceGenerator(name = "secTutor", sequenceName = "TUTOR_SEC", allocationSize = 1)
 	@Column(name="ID_TUTOR")
 	private Long idTutor;
 	
@@ -33,10 +33,8 @@ public class Tutor extends Usuario implements Serializable {
 	private TipoTutor tipoTutor;
 
 
-	@ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "RESP_TUTORES_EVENTOS", 
-               joinColumns = @JoinColumn(name = "ID_TUTOR", nullable = false), 
-               inverseJoinColumns = @JoinColumn(name = "ID_EVENTO", nullable = false))
+	
+	@ManyToMany(mappedBy = "tutores", fetch = FetchType.EAGER)
 	 private Set <Evento> eventos;
 
 
