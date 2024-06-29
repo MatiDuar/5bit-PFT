@@ -152,23 +152,44 @@ public class GestionEventos implements Serializable {
 
 	public void altaEvento() {
 
-		eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
-		eventoSeleccionado.setTutores(tutoresSeleccionados);
-		persistenciaBean.crearEvento(eventoSeleccionado);
+		try {
+		
+			eventoSeleccionado.setEstado(persistenciaBean.buscarEstadoEvento("Futuro"));
+			eventoSeleccionado.setTutores(tutoresSeleccionados);
+			persistenciaBean.crearEvento(eventoSeleccionado);
 
-		// ##################### Envio de Mails #####################
-		for (Tutor tutor : eventoSeleccionado.getTutores()) {
-			emailSender.enviarMail("Asignación a Evento: " + eventoSeleccionado.getTitulo(),
-					"Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() + ",\n\n"
-							+ "Le informamos que ha sido asignado como tutor al siguiente evento:\n"
-							+ "Nombre del evento: " + eventoSeleccionado.getTitulo() + "\n"
-							+ "Fecha Inicio del evento: " + eventoSeleccionado.getFechaInicio()
-							+ "\n\n" + "Atentamente,\n" + "El equipo de gestión de eventos",
-					tutor.getMailInstitucional());
+			// ##################### Envio de Mails #####################
+			for (Tutor tutor : eventoSeleccionado.getTutores()) {
+				emailSender.enviarMail("Asignación a Evento: " + eventoSeleccionado.getTitulo(),
+						"Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() + ",\n\n"
+								+ "Le informamos que ha sido asignado como tutor al siguiente evento:\n"
+								+ "Nombre del evento: " + eventoSeleccionado.getTitulo() + "\n"
+								+ "Fecha Inicio del evento: " + eventoSeleccionado.getFechaInicio()
+								+ "\n\n" + "Atentamente,\n" + "El equipo de gestión de eventos",
+						tutor.getMailInstitucional());
+			}
+			// ##############################################################
+			
+			String msg1 = "";
+			
+			System.out.println("Tutores en eventoSeleccionado: "+ eventoSeleccionado.getTutores());
+			
+			if( !eventoSeleccionado.getTutores().isEmpty()) {
+				msg1= "Se ha creado el evento con éxito y se ha informado a los tutores.";
+			}else {
+				msg1= "Se ha creado el evento con éxito.";
+			}
+			
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null,facesMsg);
+			
+			eventoSeleccionado = new Evento();
+			
+		}catch (Exception e) {
+			System.out.println("Error en alta de evento: "+e);
 		}
-		// ##############################################################
+		
 
-		eventoSeleccionado = new Evento();
 	}
 
 	public void darDeBajaEvento(Evento e) {

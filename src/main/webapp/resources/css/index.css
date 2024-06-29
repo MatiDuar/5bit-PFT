@@ -160,3 +160,7 @@ td .columnaEditar {
 	display: block;
 	height: 100%;
 }
+
+.ui-growl-item{
+	margin-top: 50px;
+}
