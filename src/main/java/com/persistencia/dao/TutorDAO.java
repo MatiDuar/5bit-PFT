@@ -35,7 +35,7 @@ public class TutorDAO {
    			
    			em.persist(tutor);
    			em.flush();		
-   			
+   			   			
    		}catch(PersistenceException e) {
    			throw new ServicesException("No se pudo CREAR el tutor"); 
    		}
@@ -47,7 +47,6 @@ public class TutorDAO {
 			
 			em.remove(tutor);
 			em.flush();
-			
 		}catch(PersistenceException e) {
 			throw new ServicesException("No se pudo BORRAR el tutor"); 
 		}
@@ -72,9 +71,7 @@ public class TutorDAO {
 		try {
 			
 			em.merge(tutor);
-			
 			em.flush();
-			
 		}catch(PersistenceException e) {
 			throw new ServicesException("No se pudo MODIFICAR el tutor"); 
 		}

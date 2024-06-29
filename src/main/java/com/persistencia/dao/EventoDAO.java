@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.persistencia.entities.Analista;
@@ -39,11 +40,45 @@ public class EventoDAO {
     
     
    	public void crearEvento(Evento evento) throws ServicesException {
+   		Evento eventoInsertado = null;
    		try {   			
    	        
-   			Evento eventoPersistido = em.merge(evento);
-   			System.out.println("EventoPersistido "+ eventoPersistido);
-   			em.flush();
+//   			Evento eventoPersistido = em.merge(evento);
+//   			System.out.println("EventoPersistido "+ eventoPersistido);
+//   			em.flush();
+//   			
+   		 Query query = em.createNativeQuery("INSERT INTO EVENTOS (FECHA_INIC, FECHA_FIN, TITULO, ID_TIPO_ACTIVIDAD, SEMESTRE, CREDITOS, LOCACION, ID_ITR, ID_MODALIDAD, ID_ESTADO) "
+                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+         query.setParameter(1, evento.getFechaInicio());
+         query.setParameter(2, evento.getFechaFin());
+         query.setParameter(3, evento.getTitulo());
+         query.setParameter(4, evento.getTipoActividad().getId());
+         query.setParameter(5, evento.getSemestre());
+         query.setParameter(6, evento.getCreditos());
+         query.setParameter(7, evento.getLocalizacion());
+         query.setParameter(8, evento.getItr().getId());
+         query.setParameter(9, evento.getModalidad().getId());
+         query.setParameter(10, evento.getEstado().getId());
+         
+         query.executeUpdate();
+         
+      // Obtener el ID generado automáticamente
+         Query idQuery = em.createNativeQuery("SELECT EVENTO_SEC.CURRVAL FROM DUAL");
+         Long id = ((Number) idQuery.getSingleResult()).longValue();
+
+         // Recuperar el evento insertado
+         eventoInsertado = em.find(Evento.class, id);
+         
+   		    
+   		    for(Tutor tut :evento.getTutores()) {
+   		    	eventoInsertado.addTutor(tut);
+   		    	
+   		    }
+   		 em.merge(eventoInsertado);
+//   		 em.flush();
+  
+   		    
+   		    //FECHA_INIC, FECHA_FIN, TITULO, ID_TIPO_ACTIVIDAD, SEMESTRE, CREDITOS, LOCACION, ID_ITR, ID_MODALIDAD, ID_ESTADO
 	
    		}catch(PersistenceException e) {
    			throw new ServicesException(e.getMessage());
