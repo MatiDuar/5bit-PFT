@@ -22,9 +22,14 @@
 				<div class="bordeBtn">
 					<p:commandButton value="#{button}" styleClass="ui-button-flat w-full "
 						action="#{gestionPersona.getActionBottonesMenu(button)}"
-						style="text-align: start;"/>
+						style="text-align: start;">
+                			<p:ajax event="dialogReturn" listener="#{dfView.redirect(eventos.xhtml)}"/>		
+					</p:commandButton>
+						
 				</div>
 			</ui:repeat>
+			
+			
 
 
 		</div>

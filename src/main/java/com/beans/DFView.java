@@ -346,6 +346,15 @@ public class DFView {
 	  }
 	  
 	  
+	  public void redirect (String url) {
+		  try {
+			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	  }
+	  
 	  public void updateMantenimientoITR() {
 		  
 		  PrimeFaces.current().dialog().closeDynamic(null);
