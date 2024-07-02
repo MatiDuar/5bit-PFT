@@ -27,17 +27,15 @@
 	<div class="box">
 		<div style="padding: 20px;">
 			<h:form>
+			
 				<p:growl id="msg" showDetail="true" escape="false" />
-
 
 				<p:pickList id="pojoPickList" value="#{pickListView.tutoresMod}"
 					var="tutores" itemValue="#{tutores}" itemLabel="#{pickListView.tutorToString(tutores)}"
 					showSourceFilter="true" showTargetFilter="true"
 					sourceFilterPlaceholder="Filter available countries"
 					targetFilterPlaceholder="Filter starting countries"
-					filterMatchMode="contains" converter="tutorConverter" responsive="true">				
-							
-				
+					filterMatchMode="contains" converter="tutorConverter" responsive="true">					
 
 					<f:facet name="targetCaption">
 						<h4>Asignados</h4>
@@ -120,7 +118,7 @@
 							class="flex-grow-1 flex align-items-center justify-content-center "></div>
 						<div
 							class="flex-none flex align-items-center justify-content-center">
-							<p:commandButton value="Guardar" action="#{pickListView.guardarCambiosMod}"> 
+							<p:commandButton value="Guardar" action="#{pickListView.guardarCambiosMod}" update="msg"> 
 								<p:confirm header="Confirmación" message="¿Desea confirmar este registro de tutores?" icon="pi pi-exclamation-triangle"/>
 							</p:commandButton>
 						</div>

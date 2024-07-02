@@ -89,6 +89,7 @@ public class GestionPersona implements Serializable {
 	private List<Departamento> departamentos;
 	private List<TipoTutor>rolesTutor;
 	private List<EscolaridadDTO> escolaridad;
+	private List<ITR> itrsActivos;
 
 	private List<String> bottonesMenu;
 
@@ -124,6 +125,7 @@ public class GestionPersona implements Serializable {
 //		carreras = persistenciaBean.listarCarreras();
 
 		try {
+			itrsActivos = persistenciaBean.listarITRsActivos();
 			itrs = persistenciaBean.listarITRs();
 			areasTutor=persistenciaBean.listarAreaTutor();
 			departamentos=persistenciaBean.listarDepartamento();
@@ -634,10 +636,21 @@ public void toLoginAD() {
 	public void updateITRs()  {
 		try {
 			itrs=persistenciaBean.listarITRs();
+			updateITRsActivos();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	public void updateITRsActivos() {
+		try {
+			itrsActivos=persistenciaBean.listarITRsActivos();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void setToRegistro(String toRegistro) {
 		this.toRegistro = toRegistro;
 	}
@@ -944,6 +957,15 @@ public void toLoginAD() {
 		this.escolaridad = escolaridad;
 	}
 
+	public List<ITR> getItrsActivos() {
+		return itrsActivos;
+	}
+
+	public void setItrsActivos(List<ITR> itrsActivos) {
+		this.itrsActivos = itrsActivos;
+	}
+	
+	
 
 }
 

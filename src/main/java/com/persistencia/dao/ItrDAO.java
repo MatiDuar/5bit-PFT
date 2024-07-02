@@ -93,6 +93,18 @@ public class ItrDAO {
 	}
 
 	
+    public List<ITR> obtenerItrsActivos() throws ServicesException{
+    	try {
+    		TypedQuery<ITR> query = em.createQuery("SELECT DISTINCT i FROM ITR i WHERE ACTIVO = 1",ITR.class);
+    		
+			return query.getResultList();
+    		
+			
+		} catch (Exception e) {
+			throw new ServicesException("No se pudo obtener la lista de ITRs activos."); 
+		}
+    }
+    
 	public List<ITR> obtenerItrs() throws ServicesException {
 		
 		try {

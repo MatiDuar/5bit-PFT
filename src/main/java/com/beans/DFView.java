@@ -57,6 +57,7 @@ public class DFView {
 	                .resizable(false)
 	                .styleClass("max-w-screen")
 	                .iframeStyleClass("max-w-screen")
+	                .closable(false)
 	                
 	                .build();
 

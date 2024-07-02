@@ -67,7 +67,7 @@
 										value="#{dtFilterView.itrSeleccionado}"
 										onchange="PF('personasTable').filter()">
 										<f:selectItem itemLabel="-" itemValue=" " />
-										<c:forEach var="itr" items="#{gestionPersona.itrs}">
+										<c:forEach var="itr" items="#{gestionPersona.itrsActivos}">
 											<f:selectItem itemLabel="#{itr.nombre}"
 												itemValue="#{itr.nombre}" />
 										</c:forEach>
@@ -94,7 +94,9 @@
 								<div class="col-12 md:col-1">
 									<br></br>
 									<p:commandButton value="ITR"
-										action="#{dfView.viewMantenimientoITR}" />
+										action="#{dfView.viewMantenimientoITR}">
+										<p:ajax event="dialogReturn" listener="#{dfView.redirect(listarPersonas.xhtml)}"/>		
+									</p:commandButton>
 								</div>
 								<div class="col-12 md:col-1">
 									<br></br>

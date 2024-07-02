@@ -161,14 +161,6 @@ public class PickListView {
 	public void guardarCambiosMod() {
 		
 		Evento evento = gestionEventos.getEventoSeleccionadoMod();
-//		for(Tutor tut : tutoresMod.getTarget()) {
-//			Set<Evento> eventosDeTutor = tut.getEventos();
-//			
-//			boolean existe = eventosDeTutor.add(evento);
-//			if(!existe) {
-//				System.out.println("El evento de id"+ evento.getId() + " se agregó al Set.");
-//			}
-//		}
 	
 		evento.setTutores(tutoresMod.getTarget());
 		System.out.println(evento + " en guardar Cambios  ");
@@ -187,6 +179,18 @@ public class PickListView {
 						    tutor.getMailInstitucional());
 				}
 		// ##############################################################
+		
+		String msg1 = "";
+				
+		System.out.println("tutores en evento a modificar: "+evento.getTutores().isEmpty());
+			
+			msg1= "Se ha notificado a los tutores correspondientes.";
+			
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null,facesMsg);
+			FacesContext.getCurrentInstance().getExternalContext().getFlash().setKeepMessages(true);
+		
+				
 		
 		
 		eventoSeleccionado = new Evento();

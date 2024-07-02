@@ -64,7 +64,11 @@
 							<br></br>
 							<p:commandButton value="Realizar Reclamo"
 								action="#{gestionReclamos.altaReclamo}"
-								rendered="#{gestionPersona.esEstudianteLogeado()}"></p:commandButton>
+								rendered="#{gestionPersona.esEstudianteLogeado()}">
+							
+							<p:ajax event="dialogReturn" listener="#{dfView.redirect(reclamos.xhtml)}"/>		
+							
+							</p:commandButton>
 
 
 						</div>
@@ -74,7 +78,11 @@
 							<br></br>
 							<p:commandButton value="Estados"
 								action="#{dfView.viewMantenimientoEstadoReclamo}"
-								rendered="#{gestionPersona.esAnalistaLogeado()}"></p:commandButton>
+								rendered="#{gestionPersona.esAnalistaLogeado()}">
+							
+							<p:ajax event="dialogReturn" listener="#{dfView.redirect(reclamos.xhtml)}"/>		
+							
+							</p:commandButton>
 
 
 						</div>

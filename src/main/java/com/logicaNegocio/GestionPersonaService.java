@@ -109,6 +109,13 @@ public class GestionPersonaService implements Serializable {
 	}
 	
 
+	public List<ITR> listarITRsActivos() throws Exception {
+
+		List<ITR> listaITR = itrDAO.obtenerItrsActivos();
+
+		return listaITR;
+	}
+	
 	public List<ITR> listarITRs() throws Exception {
 
 		List<ITR> listaITR = itrDAO.obtenerItrs();

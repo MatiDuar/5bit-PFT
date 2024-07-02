@@ -42,7 +42,7 @@ public class GestionITR implements Serializable {
 	public void onRowEdit(RowEditEvent<ITR> itr) {
 		
 		persistenciaBean.crearITR(itr.getObject());
-		gestionPersona.updateITRs();
+		gestionPersona.updateITRsActivos();
 	
 			
 	}
@@ -78,6 +78,19 @@ public class GestionITR implements Serializable {
 		}
 		
 		
+	}
+	
+	public void modificarITR() {
+		try {
+			itrSeleccionado.setActivo(true);
+			persistenciaBean.crearITR(itrSeleccionado);
+			itrSeleccionado=new ITR();
+			gestionPersona.updateITRsActivos();
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 	
 	
