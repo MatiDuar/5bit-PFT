@@ -2,6 +2,7 @@ package com.beans;
 
 import java.io.IOException;
 import java.io.Serializable;
+import java.security.Provider.Service;
 import java.sql.Timestamp;
 import java.time.ZonedDateTime;
 import java.util.Date;
@@ -61,6 +62,8 @@ public class GestionReclamos implements Serializable {
 
 	private List<Estado> estadosReclamo;
 	
+	private List<Estado> estadosReclamoActivos;
+	
 	private Estado estadoReclamoAlta;
 	
 	private String tipoReclamo;
@@ -71,6 +74,7 @@ public class GestionReclamos implements Serializable {
 
 	@PostConstruct
 	void init() {
+		
 		reclamoSeleccionado = null;
 		fechaAlta = null;
 		reclamoAlta = new Reclamo();
@@ -79,6 +83,7 @@ public class GestionReclamos implements Serializable {
 		estadoReclamoAlta=new Estado();
 		
 		try {
+			estadosReclamoActivos= serivce.listarEstadosActivos();  
 			estadosReclamo = serivce.listarEstados();
 			yearRange="1950-2000";
 		} catch (ServicesException e) {
@@ -190,6 +195,7 @@ public class GestionReclamos implements Serializable {
 
 		try {
 			serivce.crearEstadoReclamo(es.getObject());
+			estadosReclamoActivos= serivce.listarEstadosActivos();  
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -343,6 +349,15 @@ public class GestionReclamos implements Serializable {
 		estadoAEditar = estado;
 	}
 
+	public List<Estado> getEstadosReclamoActivos() {
+		return estadosReclamoActivos;
+	}
+
+	public void setEstadosReclamoActivos(List<Estado> estadosReclamoActivos) {
+		this.estadosReclamoActivos = estadosReclamoActivos;
+	}
+
+	
 	
 	
 

@@ -38,6 +38,10 @@ public class GestionReclamoService {
 		reclamoDAO.modificarReclamo(reclamo);
 	}
 	
+	public List<Estado>listarEstadosActivos() throws ServicesException{
+		return estadoDAO.obtenerEstadosActivos();
+	}
+	
 	public List<Estado>listarEstados() throws ServicesException{
 		return estadoDAO.obtenerEstados();
 	}

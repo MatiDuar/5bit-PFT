@@ -52,7 +52,7 @@
 								value="#{dtFilterView.estadoReclamo}"
 								onchange="PF('reclamoTable').filter()">
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="es" items="#{gestionReclamos.estadosReclamo}">
+								<c:forEach var="es" items="#{gestionReclamos.estadosReclamoActivos}">
 									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es.nombre}" />
 								</c:forEach>
 

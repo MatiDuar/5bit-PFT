@@ -72,6 +72,21 @@ public class EstadoDAO {
 		}
 	}
 
+	public List<Estado> obtenerEstadosActivos() throws ServicesException {
+
+		try {
+
+			TypedQuery<Estado> query = em.createQuery("SELECT DISTINCT e FROM Estado e WHERE ACTIVO = 1",
+					Estado.class);
+
+			return query.getResultList();
+
+		} catch (PersistenceException e) {
+			throw new ServicesException("No se pudo obtener la lista de estados activos");
+		}
+
+	}
+	
 	public List<Estado> obtenerEstados() throws ServicesException {
 
 		try {
