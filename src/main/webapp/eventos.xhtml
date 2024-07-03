@@ -70,7 +70,7 @@
 								value="#{dtFilterView.itrEventoSelccionado}"
 								onchange="PF('eventoTable').filter()">
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="itr" items="#{gestionPersona.itrs}">
+								<c:forEach var="itr" items="#{gestionPersona.itrsActivos}">
 									<f:selectItem itemLabel="#{itr.nombre}"
 										itemValue="#{itr.nombre}" />
 								</c:forEach>

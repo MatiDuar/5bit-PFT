@@ -36,7 +36,9 @@
 					emptyMessage="Estados no encontradas con este criterio"
 					filteredValue="#{dtFilterView.filteredEstadosReclamo}"
 					globalFilterFunction="#{dtFilterView.globalFilterFunctionEstadoReclamo}"
-					editable="true" id="dateTable">
+					editable="true" id="dateTable"
+					scrollable="true"
+					scrollHeight="250">
 
 					<p:ajax event="rowEdit"
 						listener="#{gestionReclamos.onRowEditEstado}" update="dateTable" />

@@ -36,7 +36,9 @@
 					emptyMessage="ITRs no encontradas con este criterio"
 					filteredValue="#{dtFilterView.filteredItrs}"
 					globalFilterFunction="#{dtFilterView.globalFilterFunctionITR}"
-					editable="true" id="dateTable">
+					editable="true" id="dateTable"
+					scrollable="true"
+					scrollHeight="250">
 
 					<p:ajax event="rowEdit" listener="#{gestionITR.onRowEdit}"
 						update="dateTable" />

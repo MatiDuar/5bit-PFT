@@ -36,7 +36,9 @@
 					emptyMessage="Estados no encontradas con este criterio"
 					filteredValue="#{dtFilterView.filteredModalidadEventos}"
 					globalFilterFunction="#{dtFilterView.globalFilterFunctionModalidadEventos}"
-					editable="true" id="dateTable">
+					editable="true" id="dateTable"
+					scrollable="true"
+					scrollHeight="250">
 
 					<p:ajax event="rowEdit"
 						listener="#{gestionMantenimientoEvento.onRowEditModalidad}" update="dateTable" />
