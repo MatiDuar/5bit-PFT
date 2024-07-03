@@ -23,12 +23,8 @@
 
 
 
-<h:body>
-
-
-
+<h:body class="bodyMantenimiento">
 	<div class="card">
-
 		<h:form>
 			<p:panel id="contenido">
 				<p:dataTable var="modalidad" value="#{dtFilterView.modalidadEventos}"
@@ -119,9 +115,11 @@
 						<p:ajax event="rowEditInit" listener="#{gestionEventos.cargarModalidadAEditar(modalidad)}"/>
 				</p:dataTable>
 
-
-
 			</p:panel>
+			
+			<div class="btnAcepMant">
+				<p:commandButton value="Aceptar" action="#{dfView.closeResponsive()}"/>
+			</div>
 
 		</h:form>
 
