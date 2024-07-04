@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 
 @FacesConverter("timestampConverter")
 public class TimestampConverter implements Converter {
-	private static final String DATE_FORMAT = "yyyy-dd-MMHH:mm:ss"; // Customize the format as needed
+	private static final String DATE_FORMAT = "yyyy-dd-MMHH:mm"; // Customize the format as needed
 
 	@Override
     public Object getAsObject(FacesContext facesContext, 

@@ -149,13 +149,13 @@
 										<h5>Fecha de Inicio *</h5>
 										<p:datePicker id="fechaInicio"
 											value="#{gestionEventos.fechaInicioEvento}"
-											locale="es" monthNavigator="true"
-											pattern="yyyy-dd-MM HH:mm:ss" yearNavigator="true"
+											monthNavigator="true"
+											pattern="yyyy-dd-MM HH:mm" yearNavigator="true"
 											yearRange="2011:2100"
 											required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de inicio"
 											validatorMessage="Formato incorrecto de la Fecha"
-											converter="timestampConverter">
+											converter="timestampConverter" timeZone="America/Montevideo">
 										</p:datePicker>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="fechaInicio" /></small>
@@ -165,12 +165,12 @@
 										<h5>Fecha de Fin *</h5>
 										<p:datePicker id="fechaFin"
 											value="#{gestionEventos.eventoSeleccionado.fechaFin}"
-											locale="es" monthNavigator="true"
-											pattern="yyyy-dd-MM HH:mm:ss" yearNavigator="true"
+											monthNavigator="true"
+											validator="#{validatorEvento.validate}"
+											pattern="yyyy-dd-MM HH:mm" yearNavigator="true"
 											yearRange="2011:2100" required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de Fin"
-											converter="timestampConverter">
-
+											converter="timestampConverter" timeZone="America/Montevideo">
 										</p:datePicker>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="fechaFin" /></small>
@@ -200,7 +200,6 @@
 								<div class="flex card-container">
 									<div
 										class="flex-none flex align-items-center justify-content-center">
-
 
 									</div>
 

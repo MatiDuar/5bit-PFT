@@ -3,6 +3,7 @@ package com.validators;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -12,6 +13,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.component.UIComponent;
+import javax.faces.component.UIInput;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
 import javax.faces.validator.Validator;
@@ -46,43 +48,43 @@ public class ValidatorEvento implements Validator<Timestamp>,Serializable{
 	
 	
 	@Override
-	public void validate(FacesContext arg0, UIComponent arg1, Timestamp arg2) throws ValidatorException {
+	public void validate(FacesContext arg0, UIComponent arg1, Timestamp fecFinal) throws ValidatorException {
 		// TODO Auto-generated method stub
+
+
 		
-	}
-	
-	public void validateFechaFinal(FacesContext arg0, UIComponent arg1, Timestamp arg2) throws ValidatorException {
-			
-		Timestamp fechaInicioEvento = gestionEventos.getFechaInicioEvento();
 		
-		System.out.println(arg2);
-		System.out.println(fechaInicioEvento);
+		UIComponent fechaInicioComponent = arg1.findComponent("fechaInicio");
 		
-		if(arg2.before(fechaInicioEvento)) {
-			throw new ValidatorException(new FacesMessage("Fecha de finalización mayor a fecha de inico"));
+		Timestamp fecIni = (Timestamp) ((javax.faces.component.UIInput) fechaInicioComponent).getValue();;
+		
+		System.err.println("Formato Timestamp: " + fecIni);
+		
+		System.out.println("################################");
+		System.out.println("Fecha de Inicio " +fecIni);
+		System.out.println("Fecha de Fin "+ fecFinal);
+		
+
+		if (fecFinal.before(fecIni)) {
+			throw new ValidatorException(new FacesMessage("Fecha de inicio mayor a fecha de finalización"));
 		}
-		
-		
-		if(arg2.equals(fechaInicioEvento)) {
-			
+
+		if (fecFinal.equals(fecIni)) {
+
 			throw new ValidatorException(new FacesMessage("Las fechas de inicio y finalización no pueden coincidir"));
-			
+
 		}
-		
-		if(arg2.getYear() == fechaInicioEvento.getYear() && arg2.getMonth() == fechaInicioEvento.getMonth() && arg2.getDay() == fechaInicioEvento.getDay()){
-			if(arg2.getHours()<= fechaInicioEvento.getHours()) {
-				throw new ValidatorException(new FacesMessage("La hora de finalización no puede ser menor a la hora de inicio (Horas)"));
-			}else if(arg2.getMinutes()<= fechaInicioEvento.getMinutes()) {
-				throw new ValidatorException(new FacesMessage("La hora de finalización no puede ser menor a la hora de inicio (Minutos)"));
+
+		if (fecFinal.getYear() == fecIni.getYear() && fecFinal.getMonth() == fecIni.getMonth()
+				&& fecFinal.getDay() == fecIni.getDay()) {
+			if (fecFinal.getHours() < fecIni.getHours()) {
+				throw new ValidatorException(
+						new FacesMessage("La hora de finalización no puede ser menor a la hora de inicio (Horas)"));
+			} else if (fecFinal.getMinutes() < fecIni.getMinutes()) {
+				throw new ValidatorException(
+						new FacesMessage("La hora de finalización no puede ser menor a la hora de inicio (Minutos)"));
 			}
 		}
-			
-		
-		
-	
-		
-	}
 
-	
-	
+	}
 }
