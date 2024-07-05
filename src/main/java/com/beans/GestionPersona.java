@@ -53,6 +53,12 @@ public class GestionPersona implements Serializable {
 	@Inject
 	LoginBeanJWT jwt;
 	
+	@Inject
+	EmailSender emailSender;
+	
+	@Inject
+	GestionPersona gestionPersona;
+	
    
 
 //	private List<Alumno> personasMod;
@@ -253,9 +259,12 @@ public class GestionPersona implements Serializable {
 		personaSeleccionada.setDepartamento(persistenciaBean.buscarDepartamento(departamentoSeleccionado));
 		personaSeleccionada.setItr(persistenciaBean.buscarItr(itrSeleccionado));
 		
+		String rol= "";
+		
 		if (esAnalista()) {
 			Analista analista=(Analista) personaSeleccionada;
 			persistenciaBean.agregarUsuario(analista);
+			rol="Analista";
 			
 		} else if(esDocente()){
 			Tutor tutor=new Tutor();
@@ -265,6 +274,7 @@ public class GestionPersona implements Serializable {
 			tutor.setAreaTutor(persistenciaBean.buscarAreaTutor(areaTutorSeleccionado));
 			tutor.setTipoTutor(persistenciaBean.buscarTipoTutor(rolTutorSeleccionado));
 			persistenciaBean.agregarUsuario(tutor);
+			rol="Tutor";
 			
 
 		}else if(esEstudiante()) {
@@ -273,15 +283,30 @@ public class GestionPersona implements Serializable {
 			estudiante.setAnoIngreso(anoIngresoSeleccionado);
 			
 			persistenciaBean.agregarUsuario(estudiante);
+			rol="Estudiante";
 
 		}
+	
+		
+		// #####################  Envio de Mails #####################
+			emailSender.enviarMail("Alta de Usuario",
+						    "Estimado/a "+ personaSeleccionada.getApellido1() +" "+personaSeleccionada.getNombre1() +",\n\n" +
+						    "Le informamos que su cuenta de rol: "+rol+" y de nombre de usuario:\"" + personaSeleccionada.getNombreUsuario()+ 
+						    "\" ha sido creada con éxito y queda a la espera de validación.\".\n\n" +
+						    "Atentamente,\n" +
+						    "El equipo de analistas",
+						    personaSeleccionada.getMail());
+		// ##############################################################
+					
 		reset();
-		String msg1 = "Se creo correctamente el usuario. En espera por validación";
+		
+		String msg1 = "Se creo correctamente el usuario y se notificó. En espera por validación.";
 		// mensaje de actualizacion correcta
 		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
 		FacesContext.getCurrentInstance().addMessage(null, facesMsg);
-
+		
 		String url = "login.xhtml";
+		
 		try {
 			FacesContext.getCurrentInstance().getExternalContext().redirect(url);
 			
@@ -454,6 +479,36 @@ public class GestionPersona implements Serializable {
 	
 	public void modificarUsuarioEstado() {
 		persistenciaBean.modificarUsuario(usuarioModificar);
+		
+		
+		if(usuarioModificar.getValidado() == false) {
+			// #####################  Envio de Mails #####################
+			emailSender.enviarMail("Estado de Usario",
+				    "Estimado/a,\n\n" +
+				    "Le informamos que su cuenta ha sido invalidada. \"" + "\".\n\n" +
+				    "Atentamente,\n" +
+				    "El equipo de analistas",
+				    gestionPersona.getUsuarioLogeado().getMailInstitucional());
+			// ##############################################################
+			
+		}else {
+			// #####################  Envio de Mails #####################
+						emailSender.enviarMail("Estado de Usario",
+							    "Estimado/a,\n\n" +
+							    "Le informamos que su cuenta ha sido validada con éxito. \"" + "\".\n\n" +
+							    "Atentamente,\n" +
+							    "El equipo de analistas",
+							    gestionPersona.getUsuarioLogeado().getMailInstitucional());
+			// ##############################################################
+		}
+		
+		String msg1 = "Se ha notificado al usuario del cambio.";
+		
+		
+		FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+		FacesContext.getCurrentInstance().addMessage(null,facesMsg);
+		
+		
 		dfView.closeResponsive();
 	}
 	
