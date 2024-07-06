@@ -20,6 +20,7 @@ import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
+import com.beans.EmailSender;
 import com.google.gson.annotations.Expose;
 import com.persistencia.dao.EventoDAO;
 import com.persistencia.dao.ReclamoDAO;
@@ -53,6 +54,9 @@ public class HolaMundoRest {
 
 	@Inject
 	EventoDAO eventoDAO;
+	
+	@Inject
+	EmailSender emailSender;
 
 	public HolaMundoRest() {
 		// TODO Auto-generated constructor stub
@@ -259,6 +263,27 @@ public class HolaMundoRest {
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
+		}
+
+	}
+	
+	
+	@POST
+	@Produces("application/json")
+	@Consumes("application/json")
+	@Path("enviarMail")
+	public Response EnviarMail(String subject, String bodyText,String mail) {
+		try {
+			boolean result = emailSender.enviarMail(subject, bodyText, mail);
+			if (result) {
+				return Response.ok().status(Response.Status.ACCEPTED).build();
+			} else {
+				return Response.notModified().status(Response.Status.BAD_REQUEST).build();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return Response.notModified().build();
 		}
 
 	}

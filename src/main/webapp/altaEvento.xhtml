@@ -155,7 +155,8 @@
 											required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de inicio"
 											validatorMessage="Formato incorrecto de la Fecha"
-											converter="timestampConverter" timeZone="America/Montevideo">
+											converter="timestampConverter"
+											>
 										</p:datePicker>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="fechaInicio" /></small>
@@ -170,7 +171,9 @@
 											pattern="yyyy-dd-MM HH:mm" yearNavigator="true"
 											yearRange="2011:2100" required="true" showTime="true"
 											requiredMessage="Debe ingresar una fecha de Fin"
-											converter="timestampConverter" timeZone="America/Montevideo">
+											update="@this" 
+											converter="timestampConverter"
+											>
 										</p:datePicker>
 										<small class="block ui-state-error"><h:message
 												style="color:red;" for="fechaFin" /></small>

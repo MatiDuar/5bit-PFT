@@ -394,16 +394,21 @@ public class GestionEventos implements Serializable {
 	}
 
 	public void setFechaInicioEvento(java.sql.Timestamp fechaInicioEvento) {
-		eventoSeleccionado.setFechaInicio(new java.sql.Timestamp(fechaInicioEvento.getYear(),
-				fechaInicioEvento.getMonth(), fechaInicioEvento.getDate(), fechaInicioEvento.getHours(),
-				fechaInicioEvento.getMinutes(), fechaInicioEvento.getSeconds(), fechaInicioEvento.getNanos()));
-		this.fechaInicioEvento = fechaInicioEvento;
+		if(fechaInicioEvento != null) {
+			Timestamp sqlTimestamp = new Timestamp(fechaInicioEvento.getTime());
+	        eventoSeleccionado.setFechaInicio(sqlTimestamp);
+	        System.out.println("fecha inicio en GestionEventos: "+sqlTimestamp);
+	        this.fechaInicioEvento = sqlTimestamp;
+		}else {
+			this.fechaInicioEvento = null;
+		}
 	}
 
 	public Timestamp getFechaInicioEvento() {
 
 		return eventoSeleccionado.getFechaInicio();
 	}
+	
 
 	public EstadosEventos getEstadoAEditar() {
 		return estadoAEditar;

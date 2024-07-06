@@ -20,7 +20,9 @@ public class EmailSender implements Serializable{
     final String password = "mzrd gmnt ufaw gklz"; // deberia de estar encriptada
 	
     
-	public void enviarMail(String subject, String bodyText,String mail) {
+	public boolean enviarMail(String subject, String bodyText,String mail) {
+		
+		boolean resultado = false;
 		
 		// Propiedades del servidor de correo
         Properties propiedades = new Properties();
@@ -39,7 +41,7 @@ public class EmailSender implements Serializable{
         try {
             // Crear el mensaje para enviar
             Message message = new MimeMessage(session);
-            message.setFrom(new InternetAddress("cincobitutec@gmail.com"));
+            message.setFrom(new InternetAddress(username));
             message.setRecipients(
                     Message.RecipientType.TO,
                     InternetAddress.parse(mail)
@@ -50,6 +52,9 @@ public class EmailSender implements Serializable{
             // Enviar el correo
             Transport.send(message);
             System.out.println("Correo enviado con éxito");
+            resultado = true;
+            
+            return resultado;
 
         } catch (MessagingException e) {
             throw new RuntimeException(e);
