@@ -15,6 +15,7 @@ import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
@@ -59,6 +60,8 @@ public class GestionEventos implements Serializable {
 	private Evento eventoSeleccionadoMod;
 
 	private List<Evento> eventos;
+	
+	private List<Evento> eventosFiltrados;
 
 	private List<TipoActividad> tiposActividades;
 
@@ -80,6 +83,7 @@ public class GestionEventos implements Serializable {
 
 	private Timestamp fechaInicioEvento;
 
+	
 	@PostConstruct
 	public void init() {
 		try {
@@ -150,6 +154,13 @@ public class GestionEventos implements Serializable {
 		}
 	}
 
+   public List<Evento> buscarEventosEntreFechas(Date fechaInicio, Date FechaFin) {
+	   
+	   
+	   
+		return null;
+	}
+	
 	public void altaEvento() {
 
 		try {
@@ -191,7 +202,7 @@ public class GestionEventos implements Serializable {
 		
 
 	}
-
+	
 	public void darDeBajaEvento(Evento e) {
 		try {
 			if (persistenciaBean.buscarConvocatoriaPorEvento(e).isEmpty()) {
@@ -215,7 +226,7 @@ public class GestionEventos implements Serializable {
 
 	public void onRowEdit(RowEditEvent<Evento> evento) {
 
-		persistenciaBean.crearEvento(evento.getObject());
+		persistenciaBean.modificarEvento(evento.getObject());
 
 	}
 
@@ -313,6 +324,9 @@ public class GestionEventos implements Serializable {
 //		System.out.println("entro");
 //	}
 
+	
+	
+	
 	public List<Evento> getEventos() {
 		return eventos;
 	}
@@ -433,5 +447,16 @@ public class GestionEventos implements Serializable {
 	public void setModalidadAEditar(ModalidadesEventos modalidadAEditar) {
 		this.modalidadAEditar = modalidadAEditar;
 	}
+
+
+	public List<Evento> getEventosFiltrados() {
+		return eventosFiltrados;
+	}
+
+	public void setEventosFiltrados(List<Evento> eventosFiltrados) {
+		this.eventosFiltrados = eventosFiltrados;
+	}
+	
+	
 
 }

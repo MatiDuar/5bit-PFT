@@ -57,6 +57,7 @@ public class EmailSender implements Serializable{
             return resultado;
 
         } catch (MessagingException e) {
+        	System.out.println("No se envio Correo");
             throw new RuntimeException(e);
         }
 		

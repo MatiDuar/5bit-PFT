@@ -1,7 +1,9 @@
 package com.persistencia.dao;
 
 import java.util.List;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Set;
 import java.util.LinkedList;
 import java.util.HashSet;
@@ -147,6 +149,21 @@ public class EventoDAO {
 		
 		}catch(PersistenceException e) {
 			throw new ServicesException("No se pudo obtener la lista de eventos"); 
+		}
+		
+	}
+	
+	public List<Evento> buscarEventosEntreFechas(Timestamp inicioFecha, Timestamp finalFecha) throws ServicesException {
+		try {
+		
+			TypedQuery<Evento> query = em.createQuery("SELECT e FROM Evento e WHERE e.fechaInic BETWEEN :inicioFecha AND :finalFecha",Evento.class);
+			query.setParameter("startDate", inicioFecha);
+			query.setParameter("endDate", finalFecha);
+
+			return query.getResultList();
+		
+		}catch(PersistenceException e) {
+			throw new ServicesException("No se pudo obtener la lista de eventos entre las fechas indicadas"); 
 		}
 		
 	}

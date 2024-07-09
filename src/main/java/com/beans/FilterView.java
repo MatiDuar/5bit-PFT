@@ -1,7 +1,8 @@
 package com.beans;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Locale;
@@ -11,6 +12,7 @@ import java.util.Arrays;
 import java.util.LinkedList;
 
 import javax.annotation.PostConstruct;
+import javax.faces.bean.ManagedBean;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -94,6 +96,8 @@ public class FilterView implements Serializable {
 	private List<Evento> eventos;
 
 	private List<Evento> filteredEventos;
+	private List<Evento> eventosAntesFiltrar;
+	private List<Date> rangoFechas;
 	/////////////////////
 	// filtros Estado Evento
 
@@ -132,6 +136,7 @@ public class FilterView implements Serializable {
 			reclamos = service.listarReclamo();
 			estadosReclamo=service.listarEstadoReclamo();
 			reclamosSeleccionados = new LinkedList<Reclamo>();
+			eventosAntesFiltrar = new ArrayList<>(eventos);
 			// filtros para Usuario
 			itrSeleccionado = "";
 			tipoUsuarioSeleccionado = "";
@@ -154,10 +159,17 @@ public class FilterView implements Serializable {
 		currentYear = new Date(System.currentTimeMillis()).getYear() + 1900;
 		filterBy = new ArrayList<>();
 
-		filterBy.add(FilterMeta.builder().field("date")
-				.filterValue(
-						new ArrayList<>(Arrays.asList(LocalDate.now().minusDays(28), LocalDate.now().plusDays(28))))
-				.matchMode(MatchMode.BETWEEN).build());
+		filterBy.add(FilterMeta.builder()
+				.field("date")
+				.filterValue(new ArrayList<>(Arrays.asList(LocalDate.now().minusDays(28), LocalDate.now().plusDays(28))))
+				.matchMode(MatchMode.BETWEEN)
+				.build());
+		
+		filterBy.add(FilterMeta.builder()
+                .field("fechaInicio")
+                .filterValue(new ArrayList<>(Arrays.asList(LocalDate.now().minusDays(28), LocalDate.now().plusDays(28))))
+                .matchMode(MatchMode.BETWEEN)
+                .build());
 
 	}
 
@@ -315,7 +327,8 @@ public class FilterView implements Serializable {
 		}
 
 		return (evento.getTitulo().toLowerCase().contains(filterText))
-				|| evento.getLocalizacion().toLowerCase().contains(filterText);
+				|| evento.getLocalizacion().toLowerCase().contains(filterText)
+				|| evento.getFechaInicio().toString().toLowerCase().contains(filterText);
 
 	}
 
@@ -370,6 +383,31 @@ public class FilterView implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public void filterEvents() {
+        if (rangoFechas == null || rangoFechas.size() < 2) {
+        	eventos = eventosAntesFiltrar;
+            filteredEventos = new ArrayList<>(eventos);
+            return;
+        }
+        Date startDate = rangoFechas.get(0);
+        Date endDate = rangoFechas.get(1);
+        
+        Timestamp startDateTimestamp = new Timestamp(startDate.getTime());
+        Timestamp endDateTimestamp = new Timestamp(endDate.getTime());
+        
+        filteredEventos = new ArrayList<>();
+        for (Evento event : eventos) {
+            if ((startDate == null || !event.getFechaInicio().before(startDateTimestamp)) &&
+                (endDate == null || !event.getFechaInicio().after(endDateTimestamp))) {
+                filteredEventos.add(event);
+            }
+        }
+        
+        eventos = filteredEventos;
+        
+        System.out.println("cantidad de eventos filtrados " + filteredEventos.size());
+    }
 
 	public void toggleGlobalFilter() {
 		setGlobalFilterOnly(!isGlobalFilterOnly());
@@ -617,6 +655,16 @@ public class FilterView implements Serializable {
 	public void setFilteredEstadosReclamo(List<EstadosEventos> filteredEstadosReclamo) {
 		this.filteredEstadosReclamo = filteredEstadosReclamo;
 	}
+
+	public List<Date> getRangoFechas() {
+		return rangoFechas;
+	}
+
+	public void setRangoFechas(List<Date> rangoFechas) {
+		this.rangoFechas = rangoFechas;
+	}
+	
+	
 
 	
 }

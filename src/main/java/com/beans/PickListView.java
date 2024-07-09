@@ -162,13 +162,26 @@ public class PickListView {
 		
 		Evento evento = gestionEventos.getEventoSeleccionadoMod();
 	
+		
 		evento.setTutores(tutoresMod.getTarget());
 		System.out.println(evento + " en guardar Cambios  ");
 
+		Evento eventoOriginal = null;
+		try {
+			eventoOriginal = service.buscarEventoPorId(evento.getId());
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		List<Tutor> tutoresYaAsignados = eventoOriginal.getTutores();
+		
+		
 		gestionEventos.guardarCambios(evento);
 
-		// #####################  Envio de Mails #####################
-				for( Tutor tutor: evento.getTutores()) {					
+		
+		// #####################  Envio de Mails #####################			
+				for( Tutor tutor: evento.getTutores()) {	
+					if(!tutoresYaAsignados.contains(tutor)) {
 					emailSender.enviarMail("Asignación a Evento: " + gestionEventos.getEventoSeleccionado().getTitulo(), 
 						    "Estimado/a " + tutor.getNombre1() + " " + tutor.getApellido1() +",\n\n" +
 						    "Le informamos que ha sido asignado como tutor al siguiente evento:\n" +
@@ -177,6 +190,8 @@ public class PickListView {
 						    "Atentamente,\n" +
 						    "El equipo de gestión de eventos",
 						    tutor.getMailInstitucional());
+					}
+					
 				}
 		// ##############################################################
 		

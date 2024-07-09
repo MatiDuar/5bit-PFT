@@ -122,6 +122,10 @@ public class GestionEventoService {
 		return tutorDAO.buscarTutorPorId(id);
 	}
 	
+	public Evento buscarEventoPorId(Long id) throws ServicesException {
+		return eventoDAO.buscarEventoPorId(id);
+	}
+	
 	public Estudiante buscarEstudiantePorId(Long id) throws ServicesException {
 		return estudianteDAO.buscarEstudiantePorId(id);
 	}

@@ -17,14 +17,15 @@
 
 	<ui:define name="contenidoPrincipal">
 		<h1>Gestion de Eventos</h1>
-		<h:form>
+		<h:form styleClass="formularioEvento">
 		
 			<p:dataTable var="evento" value="#{dtFilterView.eventos}"
 				widgetVar="eventoTable"
 				emptyMessage="Eventos no encontradas con este criterio"
 				filteredValue="#{dtFilterView.filteredEventos}"
 				globalFilterFunction="#{dtFilterView.globalFilterFunctionEventos}"
-				editable="true" id="dataTable" paginator="true" rows="10">
+				editable="true" id="dataTable" paginator="true" rows="10"
+				stripedRows="true">
 				<p:growl id="mensajes" globalOnly="true" ></p:growl>
 				
 				<p:ajax event="rowEdit" listener="#{gestionEventos.onRowEdit}"
@@ -88,6 +89,12 @@
 								</c:forEach>
 							</p:selectOneMenu>
 						</div>
+						<div class="col-12 md:col-2">
+						<p:outputLabel>Fecha</p:outputLabel>
+							<p:datePicker id="dateRange" value="#{dtFilterView.rangoFechas}" pattern="dd/MM/yyyy" selectionMode="range" showIcon="true" showButtonBar="true" locale="es">
+					            <p:ajax event="viewChange" listener="#{dtFilterView.filterEvents}" update="@(.formularioEvento #dataTable)" oncomplete="PF('eventoTable').filter()" />
+					        </p:datePicker>
+				        </div>
 					</div>
 				</f:facet>
 				<p:column field="titulo" headerText="Titulo"
@@ -136,18 +143,18 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				<p:column width="130" headerText="Fecha Inicio" filterable="false">
+				<p:column width="135" headerText="Fecha Inicio" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{evento.fechaInicio}" >
-								<f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="America/Montevideo"/>
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" timeZone="America/Montevideo"/>
 							</h:outputText>
 						</f:facet>
 						<f:facet name="input" class="col-10">
 
 							<p:datePicker id="spanish" value="#{evento.fechaInicio}"
-								locale="es" monthNavigator="true" pattern="yyyy-dd-MM HH:mm:ss"
+								locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:mm"
 								showTime="true" yearNavigator="true" yearRange="1950:2023"
 								required="true"
 								requiredMessage="Debe ingresar una fecha de nacimiento"
@@ -159,17 +166,17 @@
 						</f:facet>
 					</p:cellEditor>
 				</p:column>
-				<p:column width="130" headerText="Fecha Final" filterable="false">
+				<p:column width="135" headerText="Fecha Final" filterable="false">
 					<p:cellEditor>
 						<f:facet name="output">
 							<h:outputText style="vertical-align: middle; margin-left: .5rem"
 								value="#{evento.fechaFin}">
-								<f:convertDateTime pattern="dd.MM.yyyy HH:mm" timeZone="America/Montevideo"/>
+								<f:convertDateTime pattern="dd-MM-yyyy HH:mm" timeZone="America/Montevideo"/>
 							</h:outputText>
 						</f:facet>
 						<f:facet name="input" class="col-10">
 							<p:datePicker id="fechaFin" value="#{evento.fechaFin}"
-								pattern="yyyy-dd-MM HH:mm:ss" showTime="true"
+								pattern="dd-MM-yyyy HH:mm" showTime="true"
 								yearRange="1950:2023" required="true"
 								requiredMessage="Debe ingresar una fecha de nacimiento"
 								validatorMessage="Formato incorrecto de la Fecha"
@@ -286,7 +293,6 @@
 					style="padding-right: 0; padding-left: 20px;">
 					<p:rowEditor editTitle="Edit Row" cancelTitle="Cancel Edit"
 						saveTitle="Save Row">
-
 					</p:rowEditor>
 				</p:column>
 				<p:column width="30"
