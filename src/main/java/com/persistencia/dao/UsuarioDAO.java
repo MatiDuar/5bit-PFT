@@ -7,6 +7,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.persistencia.entities.Usuario;
@@ -34,8 +35,28 @@ public class UsuarioDAO {
 		
 		try {
 			
-			em.merge(user);
-			em.flush();		
+			Query query = em.createNativeQuery("INSERT INTO USUARIOS (DOCUMENTO,NOMBRE_USUARIO,CONTRASENA,APELLIDO1,APELLIDO2,NOMBRE1,NOMBRE2,FEC_NAC,ID_DEPARTAMENTO,LOCALIDAD,MAIL,TELEFONO,ID_ITR,MAIL_INSTITUCIONAL,ACTIVO,VALIDADO) "
+	                 + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+	         query.setParameter(1, user.getDocumento());
+	         query.setParameter(2, user.getNombreUsuario());
+	         query.setParameter(3, user.getContrasena());
+	         query.setParameter(4, user.getApellido1());
+	         query.setParameter(5, user.getApellido2());
+	         query.setParameter(6, user.getNombre1());
+	         query.setParameter(7, user.getNombre2());
+	         query.setParameter(8, user.getFechaNacimiento());
+	         query.setParameter(9, user.getDepartamento().getId());
+	         query.setParameter(10, user.getLocalidad());
+	         query.setParameter(11, user.getMail());
+	         query.setParameter(12, user.getTelefono());
+	         query.setParameter(13, user.getItr().getId());
+	         query.setParameter(14, user.getMailInstitucional());
+	         query.setParameter(15, user.getActivo());
+	         query.setParameter(16, user.getValidado());
+	         
+	         query.executeUpdate();
+	        
+			 em.flush();		
 			
 		}catch(PersistenceException e) {
 			

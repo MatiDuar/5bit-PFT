@@ -155,11 +155,12 @@
 
 							<p:datePicker id="spanish" value="#{evento.fechaInicio}"
 								locale="es" monthNavigator="true" pattern="dd-MM-yyyy HH:mm"
-								showTime="true" yearNavigator="true" yearRange="1950:2023"
+								showTime="true" yearNavigator="true" yearRange="1950:2150"
 								required="true"
 								requiredMessage="Debe ingresar una fecha de nacimiento"
 								validatorMessage="Formato incorrecto de la Fecha"
-								converter="timestampConverter">
+								converter="timestampConverter"
+								timeZone="America/Montevideo">
 							</p:datePicker>
 							<small class="block ui-state-error"><h:message
 									style="color:red;" for="spanish" /></small>
