@@ -4,12 +4,17 @@ import java.util.List;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
+import com.beans.GestionPersona;
+import com.persistencia.entities.Estudiante;
+import com.persistencia.entities.Evento;
+import com.persistencia.entities.Tutor;
 import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
 
@@ -28,8 +33,12 @@ public class UsuarioDAO {
     public UsuarioDAO() {
     }
     
+    
     @PersistenceContext
 	private EntityManager em;
+    
+    @Inject
+    GestionPersona gestionPersona;
     
 	public void crearUsuario(Usuario user) throws ServicesException {
 		
@@ -55,6 +64,36 @@ public class UsuarioDAO {
 	         query.setParameter(16, user.getValidado());
 	         
 	         query.executeUpdate();
+	         
+	         
+	         // Obtener el ID generado automáticamente
+	         Query idQuery = em.createNativeQuery("SELECT USUARIO_SEC.CURRVAL FROM DUAL");
+	         Long id = ((Number) idQuery.getSingleResult()).longValue();
+
+         
+	         if(gestionPersona.esAnalista()) {
+	        	 Query QueryAnalista = em.createNativeQuery("INSERT INTO ANALISTA (ID_USUARIO) VALUES(?)");
+	        	QueryAnalista.setParameter(1, id);
+	        	QueryAnalista.executeUpdate();
+	         }
+	         
+	         if(gestionPersona.esDocente()) {
+	        	 Tutor userTutor= (Tutor) user;
+	        	 Query QueryDocente  = em.createNativeQuery("INSERT INTO TUTORES (ID_USUARIO,ID_TIPO_TUTOR,ID_AREA_TUTOR) VALUES (?,?,?)");
+	        	 QueryDocente.setParameter(1, id);
+	        	 QueryDocente.setParameter(2, userTutor.getTipoTutor().getId());
+	        	 QueryDocente.setParameter(3, userTutor.getAreaTutor().getId());
+	        	 QueryDocente.executeUpdate();
+	         }
+	         
+	         if(gestionPersona.esEstudiante()) {
+	        	 Estudiante userEstudiante= (Estudiante) user;
+	        	 Query QueryEstudiante  = em.createNativeQuery("INSERT INTO ESTUDIANTES (ID_USUARIO,ANO_INGRESO) VALUES (?,?)");
+	        	 QueryEstudiante.setParameter(1, id);
+	        	 QueryEstudiante.setParameter(2, userEstudiante.getAnoIngreso());
+	        	 QueryEstudiante.executeUpdate();
+	         }
+	         
 	        
 			 em.flush();		
 			
@@ -153,7 +192,7 @@ public class UsuarioDAO {
 		
 		try {
 			
-
+			System.out.println("Nombre de usuario en buscarNombre: "+nombreUsuario);
 			TypedQuery<Usuario> query = em.createQuery("SELECT u FROM Usuario u WHERE u.nombreUsuario = :nombreUsuario",Usuario.class)
 					.setParameter("nombreUsuario", nombreUsuario);	
 			return query.getSingleResult();

@@ -71,7 +71,7 @@ public class LoginBeanJWT implements Serializable {
 		String token = null;
 		try{
 			if(persona==null) {
-				throw new ServicesException("No cuenta con usuario en la BD,\n Comuniquese con un analista para resolver este problema");
+				throw new ServicesException("No cuenta con usuario en la BD,\n comuniquese con un analista para resolver este problema");
 			}
 			Date expirationDate = new Date(System.currentTimeMillis() + 86400000); // 1 día de expiración
 
