@@ -30,8 +30,10 @@
 	<div class="card">
 
 		<h:form>
+		
+			<p:growl id="messages" life="3000" closable="true" showDetail="true" />
 			<p:panel id="contenido">
-				<p:growl id="messages" life="3000" closable="true" showDetail="true" />
+				
 				<p:fieldset id="grid" class="fildsetprueba">
 					<div class="grid ui-fluid">
 
@@ -195,7 +197,7 @@
 						<div
 							class="flex-none flex align-items-center justify-content-center">
 							<p:commandButton value="Realizar Reclamo"
-								action="#{gestionReclamos.crearReclamo}" update="messages">
+								action="#{gestionReclamos.crearReclamo}" update="grid messages">
 								<p:confirm header="Estas Seguro?"
 									message="Los datos ingresados quedaran guardados"
 									icon="pi pi-info-circle" />

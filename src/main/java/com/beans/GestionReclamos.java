@@ -101,17 +101,27 @@ public class GestionReclamos implements Serializable {
 			serivce.modificar(reclamoSeleccionado);
 
 			fechaSeleccionada = null;
+			
+			// #####################  Envio de Mails #####################
+						emailSender.enviarMail("Estado de Reclamo",
+							    "Estimado/a,\n\n" +
+							    "Le informamos que el estado de su reclamo titulado \"" + reclamoSeleccionado.getTitulo() + 
+							    "\" ha sido modificado a \"" + reclamoSeleccionado.getEstado().getNombre() + "\".\n\n" +
+							    "Atentamente,\n" +
+							    "El equipo de gestión de reclamos",
+							    gestionPersona.getUsuarioLogeado().getMailInstitucional());
+			// ##############################################################
+						
+			String msg1 = "Se ha notificado al usuario del cambio.";
+						
+						
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null,facesMsg);
+						
+		
 			reclamoSeleccionado = new Reclamo();
 
-			// #####################  Envio de Mails #####################
-			emailSender.enviarMail("Estado de Reclamo",
-				    "Estimado/a,\n\n" +
-				    "Le informamos que el estado de su reclamo titulado \"" + reclamoSeleccionado.getTitulo() + 
-				    "\" ha sido modificado a \"" + reclamoSeleccionado.getEstado().getNombre() + "\".\n\n" +
-				    "Atentamente,\n" +
-				    "El equipo de gestión de reclamos",
-				    gestionPersona.getUsuarioLogeado().getMailInstitucional());
-			// ##############################################################
+			
 			
 
 			dfView.closeResponsive();
@@ -146,6 +156,14 @@ public class GestionReclamos implements Serializable {
 				    "El equipo de gestión de reclamos",
 				    gestionPersona.getUsuarioLogeado().getMailInstitucional());
 			// ##############################################################
+			
+			String msg1 = "Se ha ingresado el reclamo con éxito.";
+			
+			
+			FacesMessage facesMsg = new FacesMessage(FacesMessage.SEVERITY_INFO, msg1, "");
+			FacesContext.getCurrentInstance().addMessage(null,facesMsg);
+			
+			
 			
 			return "";
 
