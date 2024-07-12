@@ -190,7 +190,7 @@
 										style="width:100%;vertical-align: middle; margin-left: .5rem"
 										value="#{personas.apellido2}" required="true"
 										validatorMessage="No puede contener solo espacios vacios"
-										id="apellido2">
+										id="apellido2" maxlength="50">
 										<f:validateRegex pattern="^(?!\s*$).+"></f:validateRegex>
 
 									</p:inputText>
@@ -230,11 +230,30 @@
 						</p:column>
 						<p:column field="fechaNacimiento" headerText="Fecha Nac."
 							filterable="false" visible="false" style="width: 150px;text-align:center;">
+						<p:cellEditor>
+								<f:facet name="output">
+									<h:outputText style="vertical-align: middle; margin-left: .5rem"
+										value="#{personas.fechaNacimiento}"> 
+										<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
+									</h:outputText>
+								</f:facet>
+								<f:facet name="input" class="col-10">
+									<p:datePicker id="spanish"
+									converter="sqlDateConverter"
+									locale="es" monthNavigator="true" pattern="dd-MM-yyyy"
+									yearNavigator="true" yearRange="1950:2023" required="true"
+									value="#{personas.fechaNacimiento}"
+									requiredMessage="Debe ingresar una fecha de nacimiento"
+									validatorMessage="Formato incorrecto de la Fecha o no es mayor de edad"
+									maxdate="#{gestionPersona.fecMayoriaEdad()}">
+								</p:datePicker>
+								<small class="block ui-state-error"><h:message
+										style="color:red;" for="spanish" /></small>
+								</f:facet>
+							</p:cellEditor>
 
-							<h:outputText style="vertical-align: middle; margin-left: .5rem"
-								value="#{personas.fechaNacimiento}"> 
-								<f:convertDateTime type="date" pattern="dd-MM-yyyy"/>
-							</h:outputText>
+
+							
 
 						</p:column>
 						<p:column field="mail" headerText="Email" filterable="false" style="width: 150px;text-align:center;">
@@ -377,9 +396,16 @@
 								</f:facet>
 								<f:facet name="input" class="col-10">
 
-									<h:outputText
-										style="vertical-align: middle; margin-left: .5rem"
-										value="#{gestionPersona.usuarioToEstudiante(personas).anoIngreso}" />
+									<p:inputText type="number"
+											value="#{gestionPersona.usuarioToEstudiante(personas).anoIngreso}"
+											validator="#{validatorEstudiante.validate}"
+											requiredMessage="Debe ingresar el Año de Ingreso"
+											required="true"
+											>
+										</p:inputText>
+										<small class="block ui-state-error"><h:message
+												style="color:red;" for="anoIngreso" /></small>
+									
 								</f:facet>
 							</p:cellEditor>
 						</p:column>
