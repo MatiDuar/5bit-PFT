@@ -108,6 +108,16 @@ public class GestionEventoService {
 		}
 	}
 	
+	public List<ModalidadesEventos> listarModadlidadesEventoActivos() {
+		try {
+			return modalidadesEventosDAO.obtenerModalidadesEventosActivos();
+		} catch (ServicesException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
 	public List<EstadosEventos> listarEstadosEventos(){
 		try {
 			return estadosEventosDAO.obtenerEstadosEventos();

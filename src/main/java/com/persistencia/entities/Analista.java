@@ -37,6 +37,7 @@ public class Analista extends Usuario implements Serializable {
 		this.idAnalista = idAnalista;
 	}
 
+	
 	 
    
 }

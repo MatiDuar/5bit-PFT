@@ -28,7 +28,7 @@ public class AccionReclamo implements Serializable {
 	@ManyToOne
 	@JoinColumn(name="ID_RECLAMO")
 	private Reclamo reclamo;
-	@ManyToOne
+	
 	@JoinColumn(name="ID_ANALISTA")
 	private Analista analista;
 	
@@ -65,6 +65,9 @@ public class AccionReclamo implements Serializable {
 	public void setAnalista(Analista analista) {
 		this.analista = analista;
 	}
+	
+	
+	
 	@Override
 	public String toString() {
 		return "AccionReclamo [id=" + id + ", fechaHoraReclamo=" + fechaHoraReclamo

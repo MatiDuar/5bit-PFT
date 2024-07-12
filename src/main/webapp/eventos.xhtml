@@ -84,7 +84,7 @@
 								onchange="PF('eventoTable').filter()">
 
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="mo" items="#{gestionEventos.modalidadesEvento}">
+								<c:forEach var="mo" items="#{gestionEventos.modalidadesEventoActivos}">
 									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" />
 								</c:forEach>
 							</p:selectOneMenu>

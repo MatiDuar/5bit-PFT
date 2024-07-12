@@ -99,6 +99,21 @@ public class ModalidadesEventosDAO {
 		
 	}
 	
+	public List<ModalidadesEventos> obtenerModalidadesEventosActivos() throws ServicesException {
+			
+			try {
+				
+						
+				TypedQuery<ModalidadesEventos> query = em.createQuery("SELECT DISTINCT m FROM ModalidadesEventos m WHERE ACTIVO = 1",ModalidadesEventos.class);
+			
+				return query.getResultList();
+			
+			}catch(PersistenceException e) {
+				throw new ServicesException("No se pudo obtener la lista de modalidades de evento activos"); 
+			}
+			
+		}
+	
 	
 	public ModalidadesEventos buscarNombreModalidadEvento (String nombreModalidadEvento) throws ServicesException {
 		

@@ -66,6 +66,8 @@ public class GestionEventos implements Serializable {
 	private List<TipoActividad> tiposActividades;
 
 	private List<ModalidadesEventos> modalidadesEvento;
+	
+	private List<ModalidadesEventos> modalidadesEventoActivos;
 
 	private List<EstadosEventos> estadosEvento;
 
@@ -93,6 +95,7 @@ public class GestionEventos implements Serializable {
 			eventos = persistenciaBean.listarEventos();
 			tiposActividades = persistenciaBean.listarTiposActividad();
 			modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
+			modalidadesEventoActivos = persistenciaBean.listarModadlidadesEvento();
 			estadosEvento = persistenciaBean.listarEstadosEventos();
 			estadosAsistencia = persistenciaBean.listarEstadosAsistencia();
 			eventoSeleccionado = new Evento();
@@ -455,6 +458,14 @@ public class GestionEventos implements Serializable {
 
 	public void setEventosFiltrados(List<Evento> eventosFiltrados) {
 		this.eventosFiltrados = eventosFiltrados;
+	}
+
+	public List<ModalidadesEventos> getModalidadesEventoActivos() {
+		return modalidadesEventoActivos;
+	}
+
+	public void setModalidadesEventoActivos(List<ModalidadesEventos> modalidadesEventoActivos) {
+		this.modalidadesEventoActivos = modalidadesEventoActivos;
 	}
 	
 	

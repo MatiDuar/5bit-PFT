@@ -27,7 +27,7 @@ public class AccionReclamoDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void crearAccionReclamo(AccionReclamo accion, Usuario usuario ) throws ServicesException {
+	public void crearAccionReclamo(AccionReclamo accion, Usuario usuario) throws ServicesException {
 
 		try {
 			
@@ -35,20 +35,15 @@ public class AccionReclamoDAO {
 			System.out.println("accion: "+accion);
 			System.out.println("analista: "+usuario);
 			
-			TypedQuery<Analista> queryAnalista= em.createQuery("SELECT a FROM Analista a WHERE a.id_usuario=:id",Analista.class); 
-			queryAnalista.setParameter("id", usuario.getId());
-			
-			Analista analistaAux = queryAnalista.getSingleResult();
-			
+			Analista analista = (Analista) usuario;
 			
 			Query query = em.createNativeQuery("INSERT INTO ACCIONES_RECLAMOS (ID_RECLAMO, ID_ANALISTA, FECHA_HORA, DETALLE) "
 	                 + "VALUES (?, ?, ?, ?)");
 	         query.setParameter(1, accion.getReclamo().getId());
-	         query.setParameter(2, analistaAux.getIdAnalista());
+	         query.setParameter(2, analista.getIdAnalista());
 	         query.setParameter(3, accion.getFechaHoraReclamo());
 	         query.setParameter(4, accion.getDetalleReclamo());
 	    
-	         
 	         
 	         query.executeUpdate();
 	         
@@ -115,12 +110,18 @@ public class AccionReclamoDAO {
 
 		try {
 
-			TypedQuery<AccionReclamo> query = em.createQuery("SELECT DISTINCT a FROM AccionReclamo a where a.reclamo=:reclamo", AccionReclamo.class)
-					.setParameter("reclamo", reclamo);
+			
+//			TypedQuery<AccionReclamo> query = em.createNativeQuery("SELECT DISTINCT a FROM AccionReclamo a WHERE a.reclamo = :reclamo")
+//	                .setParameter("reclamo", reclamo);
+			
+			
+			Query query = em.createNativeQuery("SELECT * FROM ACCIONES_RECLAMOS WHERE ID_RECLAMO = ?", AccionReclamo.class);
+	        query.setParameter(1, reclamo.getId());
 
-			return query.getResultList();
+	        return query.getResultList();
 
 		} catch (PersistenceException e) {
+			e.printStackTrace();
 			throw new ServicesException("No se pudo obtener la lista de Acciones Reclamo");
 		}
 
