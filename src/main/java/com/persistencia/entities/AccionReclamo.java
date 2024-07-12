@@ -29,6 +29,7 @@ public class AccionReclamo implements Serializable {
 	@JoinColumn(name="ID_RECLAMO")
 	private Reclamo reclamo;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="ID_ANALISTA")
 	private Analista analista;
 	
