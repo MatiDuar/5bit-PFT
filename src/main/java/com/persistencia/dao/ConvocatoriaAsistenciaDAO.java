@@ -166,14 +166,14 @@ public class ConvocatoriaAsistenciaDAO {
 			throws ServicesException {
 		try {
 			
-			String queryStr = "select c.estudiante_id, u.nombre1, u.apellido1, c.evento_id, c.calificacion, eve.titulo, eve.creditos, eve.fechainicio, eve.fechafin, eve.semestre, mo.nombremodalidadevento,i.nombre\r\n"
+			String queryStr = "select c.id_estudiante, u.nombre1, u.apellido1, c.id_evento, c.calificacion, eve.titulo, eve.creditos, eve.fecha_inic, eve.fecha_fin, eve.semestre, mo.nombre as modalidad_nombre,i.nombre as itr_nombre\r\n"
 					+ "from convocatorias_asistencias c, usuarios u , estudiantes e, eventos eve, modalidades_eventos mo, itr i\r\n"
-					+ "where u.id = e.id\r\n"
-					+ "and c.estudiante_id = e.id\r\n"
-					+ "and c.evento_id = eve.id\r\n"
-					+ "and mo.id_modalidad = eve.modalidad_id_modalidad\r\n"
-					+ "and i.id = eve.itr_id\r\n"
-					+ "and c.estudiante_id = :estudiante";
+					+ "where u.id_usuario = e.id_usuario\r\n"
+					+ "and c.id_estudiante = e.id_estudiante\r\n"
+					+ "and c.id_evento = eve.id_evento\r\n"
+					+ "and mo.id_modalidad = eve.id_modalidad\r\n"
+					+ "and i.id_itr = eve.id_itr\r\n"
+					+ "and c.id_estudiante = :estudiante";
 			
 			Long idEstudiante = estudiante.getId();
 			
@@ -274,6 +274,7 @@ public class ConvocatoriaAsistenciaDAO {
 			
 			return escolaridades;
 		} catch (PersistenceException e) {
+			 e.printStackTrace();
 			return null;
 
 		}

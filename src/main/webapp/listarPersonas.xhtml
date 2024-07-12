@@ -217,6 +217,7 @@
 										requiredMessage="Debe ingresar el Documento"
 										validatorMessage="Formato incorrecto"
 										maxlength="8"
+										validator="#{validatorCedula.validate}"
 										id="documento">
 										<p:keyFilter for="documento" mask="pnum" />
 										<f:validateRegex pattern="^(?!\s*$)\d+$"></f:validateRegex>
@@ -400,7 +401,7 @@
 											value="#{gestionPersona.usuarioToEstudiante(personas).anoIngreso}"
 											validator="#{validatorEstudiante.validate}"
 											requiredMessage="Debe ingresar el Año de Ingreso"
-											required="true"
+											rendered="#{gestionPersona.esEstudianteMod(personas)}">
 											>
 										</p:inputText>
 										<small class="block ui-state-error"><h:message

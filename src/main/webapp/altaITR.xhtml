@@ -28,7 +28,8 @@
 						value="#{gestionITR.itrSeleccionado.nombre}"
 						placeholder="Nombre de ITR" required="true"
 						requiredMessage="El campo no puede estar vacio"
-						validator="#{validatorAltaITR.validate}" update="messages">
+						validator="#{validatorAltaITR.validate}" update="messages"
+						maxlength="50">
 					</p:inputText>
 					<small class="block ui-state-error"><h:message
 							style="color:red;" for="nombreITR" /> </small>

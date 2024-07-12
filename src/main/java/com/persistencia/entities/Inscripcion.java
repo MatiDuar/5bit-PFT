@@ -20,11 +20,11 @@ public class Inscripcion implements Serializable {
 	@Column(name="ACTIVO",nullable=false)
 	private Boolean activo;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_ESTUDIANTE")
 	private Estudiante estudiante;
 	
-	@ManyToOne
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name="ID_CARRERA")
 	private Carrera carrera;
 
