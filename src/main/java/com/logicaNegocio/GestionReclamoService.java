@@ -5,11 +5,14 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 
+import com.beans.GestionPersona;
 import com.persistencia.dao.AccionReclamoDAO;
 import com.persistencia.dao.EstadoDAO;
 import com.persistencia.dao.ReclamoDAO;
 import com.persistencia.entities.AccionReclamo;
+import com.persistencia.entities.Analista;
 import com.persistencia.entities.Estado;
 import com.persistencia.entities.Reclamo;
 import com.persistencia.exception.ServicesException;
@@ -26,6 +29,9 @@ public class GestionReclamoService {
 	
 	@EJB
 	AccionReclamoDAO accionReclamoDAO;
+	
+	@Inject
+	GestionPersona gestionPersona;
 
 	
 
@@ -51,7 +57,7 @@ public class GestionReclamoService {
 	}
 	
 	public void crearAccionReclamo(AccionReclamo accion) throws ServicesException {
-		accionReclamoDAO.crearAccionReclamo(accion);
+		accionReclamoDAO.crearAccionReclamo(accion,gestionPersona.getUsuarioLogeado());
 	}
 	
 	public void crearEstadoReclamo(Estado estado) throws ServicesException {

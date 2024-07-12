@@ -72,7 +72,7 @@ public class UsuarioDAO {
 
          
 	         if(gestionPersona.esAnalista()) {
-	        	 Query QueryAnalista = em.createNativeQuery("INSERT INTO ANALISTA (ID_USUARIO) VALUES(?)");
+	        	 Query QueryAnalista = em.createNativeQuery("INSERT INTO ANALISTAS (ID_USUARIO) VALUES(?)");
 	        	QueryAnalista.setParameter(1, id);
 	        	QueryAnalista.executeUpdate();
 	         }

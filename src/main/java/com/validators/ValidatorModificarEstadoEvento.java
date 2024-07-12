@@ -64,7 +64,7 @@ public class ValidatorModificarEstadoEvento implements Validator<String>, Serial
 		for (EstadosEventos estado : estados) {
 			if (estado.getNombre().toString().equalsIgnoreCase(arg2.toString()) 
 					&& estadoAModificar.getId() != estado.getId()) {				
-				FacesMessage message = new FacesMessage("No se pueden repetir nombres de ITR");
+				FacesMessage message = new FacesMessage("No se pueden repetir nombres");
 				throw new ValidatorException(message);
 				
 			}

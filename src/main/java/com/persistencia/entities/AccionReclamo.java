@@ -22,7 +22,7 @@ public class AccionReclamo implements Serializable {
 	@Column(name="FECHA_HORA",nullable=false)
 	private Timestamp fechaHoraReclamo;
 	
-	@Column(name="DETALLE",nullable=false, length=150)
+	@Column(name="DETALLE",nullable=false)
 	private String detalleReclamo;
 	
 	@ManyToOne

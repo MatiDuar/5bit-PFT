@@ -7,11 +7,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
+import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 
 import com.persistencia.entities.AccionReclamo;
 import com.persistencia.entities.Analista;
+import com.persistencia.entities.Evento;
 import com.persistencia.entities.Reclamo;
+import com.persistencia.entities.Tutor;
+import com.persistencia.entities.Usuario;
 import com.persistencia.exception.ServicesException;
 
 @Stateless
@@ -23,11 +27,31 @@ public class AccionReclamoDAO {
 	@PersistenceContext
 	private EntityManager em;
 
-	public void crearAccionReclamo(AccionReclamo accion) throws ServicesException {
+	public void crearAccionReclamo(AccionReclamo accion, Usuario usuario ) throws ServicesException {
 
 		try {
-
-			em.merge(accion);
+			
+			
+			System.out.println("accion: "+accion);
+			System.out.println("analista: "+usuario);
+			
+			TypedQuery<Analista> queryAnalista= em.createQuery("SELECT a FROM Analista a WHERE a.id_usuario=:id",Analista.class); 
+			queryAnalista.setParameter("id", usuario.getId());
+			
+			Analista analistaAux = queryAnalista.getSingleResult();
+			
+			
+			Query query = em.createNativeQuery("INSERT INTO ACCIONES_RECLAMOS (ID_RECLAMO, ID_ANALISTA, FECHA_HORA, DETALLE) "
+	                 + "VALUES (?, ?, ?, ?)");
+	         query.setParameter(1, accion.getReclamo().getId());
+	         query.setParameter(2, analistaAux.getIdAnalista());
+	         query.setParameter(3, accion.getFechaHoraReclamo());
+	         query.setParameter(4, accion.getDetalleReclamo());
+	    
+	         
+	         
+	         query.executeUpdate();
+	         
 			em.flush();
 
 		} catch (PersistenceException e) {

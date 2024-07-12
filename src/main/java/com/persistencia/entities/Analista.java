@@ -19,9 +19,24 @@ public class Analista extends Usuario implements Serializable {
 		super();
 	}
 	
+	
+	 @Column(name="ID_ANALISTA")
+	 private long idAnalista;
+	
+	
 	 @ManyToMany(mappedBy="analistas")
 	 private Set <Evento> eventos;
 
 
+	public long getIdAnalista() {
+		return idAnalista;
+	}
+
+
+	public void setIdAnalista(long idAnalista) {
+		this.idAnalista = idAnalista;
+	}
+
+	 
    
 }
