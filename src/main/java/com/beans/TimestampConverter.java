@@ -14,8 +14,9 @@ import java.sql.Timestamp;
 
 @FacesConverter("timestampConverter")
 public class TimestampConverter implements Converter {
-	private static final String DATE_FORMAT = "yyyy-dd-MM HH:mm"; // Customize the format as needed
-
+	private static final String DATE_FORMAT = "dd-MM-yyyy HH:mm"; // Customize the format as needed
+	SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+	
 	@Override
     public Object getAsObject(FacesContext facesContext, 
                               UIComponent uIComponent, 
@@ -24,7 +25,7 @@ public class TimestampConverter implements Converter {
 		
 		if (string != null && !string.isEmpty()) {
              try {
-            	 SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT);
+            	 
                  Date date = sdf.parse(string);
                  return new Timestamp(date.getTime());
              } catch (Exception e) {
@@ -41,7 +42,8 @@ public class TimestampConverter implements Converter {
 			return null;
 		}
 
-		((Timestamp) object).toString();
-		return object.toString();
+		Timestamp objetoTimeStamp = ((Timestamp) object);
+		//format.format(utilDate)
+		return sdf.format(objetoTimeStamp);
 	}
 }
