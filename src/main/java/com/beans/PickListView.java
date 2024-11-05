@@ -144,8 +144,8 @@ public class PickListView {
 		return tutor.toString();
 	}
 
-	public String estudianteToString(Estudiante estudiante) {
-		return estudiante.toString();
+	public String estudianteToStringPickList(Estudiante estudiante) {
+		return estudiante.getNombre1()+ " " + estudiante.getApellido1() + " " + estudiante.getAnoIngreso() + " " + estudiante.getItr().getNombre();
 	}
 
 	public void guardarCambios() {

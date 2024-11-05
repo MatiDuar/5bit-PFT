@@ -170,6 +170,8 @@ public class FilterView implements Serializable {
                 .filterValue(new ArrayList<>(Arrays.asList(LocalDate.now().minusDays(28), LocalDate.now().plusDays(28))))
                 .matchMode(MatchMode.BETWEEN)
                 .build());
+		
+		System.out.println("Esto son los modalidadEventos Cargados desde el Init Del FilterView \n\n " + modalidadEventos);
 
 	}
 
@@ -282,10 +284,11 @@ public class FilterView implements Serializable {
 			if (LangUtils.isBlank(filterText)) {
 				return true;
 			}
-			String nombreEstudiante = reclamo.getEstudiante().getNombre1() + " "
-					+ reclamo.getEstudiante().getApellido1();
+			String nombreEstudiante = reclamo.getEstudiante().getNombre1() + " " + reclamo.getEstudiante().getApellido1();
+			String nombreEventoVME = (reclamo.getNombreEventoVME() != null) ? reclamo.getNombreEventoVME().toLowerCase() : "";
+			
 			return (reclamo.getTitulo().toLowerCase().startsWith(filterText)
-					|| (reclamo.getNombreEventoVME().toLowerCase().contains(filterText))
+					|| (nombreEventoVME.toLowerCase().contains(filterText))
 					|| nombreEstudiante.startsWith(filterText));
 		}
 

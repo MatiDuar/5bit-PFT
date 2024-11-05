@@ -57,12 +57,10 @@
 						<div class="col-12 md:col-2">
 							<p:outputLabel>Estado</p:outputLabel>
 							<p:selectOneMenu id="groupEstado"
-								value="#{dtFilterView.estadoEvento}"
-								onchange="PF('eventoTable').filter()">
-								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="es" items="#{gestionEventos.estadosEvento}">
-									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es.nombre}" />
-								</c:forEach>
+							                 value="#{dtFilterView.estadoEvento}"
+							                 onchange="PF('eventoTable').filter()">
+							    <f:selectItem itemLabel="-" itemValue=" " />
+							    <f:selectItems value="#{gestionEventos.estadosEventoFiltradas}" var="es" itemLabel="#{es.nombre}" itemValue="#{es.nombre}" rendered="#{es.activo}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="col-12 md:col-2">
@@ -71,10 +69,7 @@
 								value="#{dtFilterView.itrEventoSelccionado}"
 								onchange="PF('eventoTable').filter()">
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="itr" items="#{gestionPersona.itrsActivos}">
-									<f:selectItem itemLabel="#{itr.nombre}"
-										itemValue="#{itr.nombre}" />
-								</c:forEach>
+								<f:selectItems value="#{gestionPersona.itrsActivos}" var="itr" itemLabel="#{itr.nombre}" itemValue="#{itr.nombre}" rendered="#{itr.activo}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="col-12 md:col-2">
@@ -82,11 +77,8 @@
 							<p:selectOneMenu id="groupModalidad"
 								value="#{dtFilterView.modalidadEventoSeleccionada}"
 								onchange="PF('eventoTable').filter()">
-
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="mo" items="#{gestionEventos.modalidadesEventoActivos}">
-									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" />
-								</c:forEach>
+								<f:selectItems value="#{gestionEventos.modalidadesEventoActivos}" var="mo" itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" rendered="#{mo.activo}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="col-12 md:col-2">

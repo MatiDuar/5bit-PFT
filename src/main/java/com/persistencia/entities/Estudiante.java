@@ -60,12 +60,10 @@ public class Estudiante extends Usuario implements Serializable {
 	public void setInscripciones(Set<Inscripcion> inscripciones) {
 		this.inscripciones = inscripciones;
 	}
-	
 
-
-
+	@Override
+	public String toString() {
+		return "Estudiante [anoIngreso=" + anoIngreso + ", inscripciones=" + inscripciones + "]";
+	}
 	
-	
-	
-   
 }

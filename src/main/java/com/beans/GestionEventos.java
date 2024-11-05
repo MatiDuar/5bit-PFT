@@ -4,19 +4,18 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.convert.FacesConverter;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 
 import org.primefaces.event.RowEditEvent;
 
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.LinkedList;
 
@@ -24,9 +23,7 @@ import com.logicaNegocio.GestionEventoService;
 import com.persistencia.entities.ConvocatoriaAsistencia;
 import com.persistencia.entities.EstadoAsistencia;
 import com.persistencia.entities.EstadosEventos;
-import com.persistencia.entities.Estudiante;
 import com.persistencia.entities.Evento;
-import com.persistencia.entities.ITR;
 import com.persistencia.entities.ModalidadesEventos;
 import com.persistencia.entities.Reclamo;
 import com.persistencia.entities.TipoActividad;
@@ -34,7 +31,7 @@ import com.persistencia.entities.Tutor;
 import com.persistencia.exception.ServicesException;
 
 @Named(value = "gestionEventos") // JEE8
-@SessionScoped // JEE8
+@ViewScoped // JEE8
 public class GestionEventos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -70,6 +67,7 @@ public class GestionEventos implements Serializable {
 	private List<ModalidadesEventos> modalidadesEventoActivos;
 
 	private List<EstadosEventos> estadosEvento;
+	private List<EstadosEventos> estadosEventoFiltradas;
 
 	private List<Tutor> tutoresSeleccionados;
 
@@ -85,7 +83,6 @@ public class GestionEventos implements Serializable {
 
 	private Timestamp fechaInicioEvento;
 
-	
 	@PostConstruct
 	public void init() {
 		try {
@@ -95,12 +92,12 @@ public class GestionEventos implements Serializable {
 			eventos = persistenciaBean.listarEventos();
 			tiposActividades = persistenciaBean.listarTiposActividad();
 			modalidadesEvento = persistenciaBean.listarModadlidadesEvento();
-			modalidadesEventoActivos = persistenciaBean.listarModadlidadesEvento();
 			estadosEvento = persistenciaBean.listarEstadosEventos();
 			estadosAsistencia = persistenciaBean.listarEstadosAsistencia();
 			eventoSeleccionado = new Evento();
 			tutoresSeleccionados = new LinkedList<>();
 			eventoSeleccionadoMod = new Evento();
+			eventosFiltrados = eventos;
 
 //			//Conseguir fecha minima y maxima para los eventos.
 //			Calendar fechMin = Calendar.getInstance();
@@ -118,11 +115,33 @@ public class GestionEventos implements Serializable {
 //	        maxDate = new Timestamp(fechMax.getTimeInMillis());
 //	        System.out.println(minDate);
 //	        System.out.println(maxDate);
-//			
+			filtrarCategoriasActivas();
+		
+			System.out.println("Esto son los ModalidadesEventos Cargados desde el Init" + modalidadesEventoActivos);
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+    public void filtrarCategoriasActivas() {
+    	estadosEventoFiltradas = estadosEvento.stream()
+                .filter(EstadosEventos::getActivo)  // Filtra solo los activos
+                .collect(Collectors.toList());
+    	
+    	modalidadesEventoActivos = modalidadesEvento.stream()
+                .filter(ModalidadesEventos::getActivo)  // Filtra solo los activos
+                .collect(Collectors.toList());
+    	
+    }
+	
+    
+	public List<EstadosEventos> getEstadosEventoFiltradas() {
+		return estadosEventoFiltradas;
+	}
+
+	public void setEstadosEventoFiltradas(List<EstadosEventos> estadosEventoFiltradas) {
+		this.estadosEventoFiltradas = estadosEventoFiltradas;
 	}
 
 	public Timestamp getMinDate() {
@@ -467,7 +486,6 @@ public class GestionEventos implements Serializable {
 	public void setModalidadesEventoActivos(List<ModalidadesEventos> modalidadesEventoActivos) {
 		this.modalidadesEventoActivos = modalidadesEventoActivos;
 	}
-	
 	
 
 }

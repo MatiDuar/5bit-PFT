@@ -41,7 +41,7 @@ import java.util.List;
 @Path("reclamo")
 @Produces("application/json") // como voy a retornar texto plano pongo esta anotacion.
 //Si no pongo nada retorna html
-public class HolaMundoRest {
+public class RestService {
 
 	@Inject
 	GestionPersonaService gestionPersonas;
@@ -58,7 +58,7 @@ public class HolaMundoRest {
 	@Inject
 	EmailSender emailSender;
 
-	public HolaMundoRest() {
+	public RestService() {
 		// TODO Auto-generated constructor stub
 	}
 
