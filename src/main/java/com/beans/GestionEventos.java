@@ -313,6 +313,16 @@ public class GestionEventos implements Serializable {
 			e.printStackTrace();
 		}
 	}
+	
+	public List<ConvocatoriaAsistencia> buscarRegistroAsistencia(Evento evento) {
+		try {
+			convocatoriasSeleccionadas = persistenciaBean.buscarConvocatoriaPorEvento(evento);
+		} catch (ServicesException e) {
+			System.out.println("########### Fallo al obtener RegistroAsistencia: ###########\n" + e.toString());
+			e.printStackTrace();
+		}
+		return convocatoriasSeleccionadas;
+	}
 
 	public void guardarCambiosRegistroAsistencias() {
 		try {

@@ -37,7 +37,7 @@ public class TutorConverter implements Converter<Tutor> {
 				
 				System.out.println("######## "+ usuarioId+" #########");
 				
-				return PickListView.instance.buscarTutorPorId(usuarioId); // Implement this method
+				return PickListView.instance.buscarTutorPorId(usuarioId); 
 
 			} catch (NumberFormatException e) {
 				throw new ConverterException("Invalid format for Usuario.\n" + e.getMessage());

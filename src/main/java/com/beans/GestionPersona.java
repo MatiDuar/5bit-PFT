@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -39,7 +40,7 @@ import io.jsonwebtoken.impl.DefaultClaims;
 import io.jsonwebtoken.security.Keys;
 
 @Named(value = "gestionPersona") // JEE8
-@SessionScoped // JEE8
+@ApplicationScoped // JEE8
 public class GestionPersona implements Serializable {
 	private static final long serialVersionUID = 1L;
 

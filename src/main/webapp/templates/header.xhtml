@@ -23,7 +23,7 @@
 						</div>
 					</div>
 				</p:menuitem>
-				<p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{estiloBean.agregarFondo()}" outcome="index" >
+				<p:menuitem value="Home" icon="pi pi-fw pi-home" action="#{estiloBean.agregarFondo()}" outcome="schedule" >
 					<f:param name="i" value="1" />
 				</p:menuitem>
 				<p:menuitem value="Gestión Usuarios" icon="pi pi-fw pi-user-edit" ajax="false" outcome="listarPersonas" rendered="#{gestionPersona.esAnalistaLogeado()}" action="#{estiloBean.sacarFondo()}">

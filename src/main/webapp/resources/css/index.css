@@ -30,7 +30,7 @@
 	position: fixed;
 	height: 100px;
 	width: 100%;
-	z-index: 1000000;
+	z-index: 1008;
 	background-color: var(--surface-a);
 	border-bottom: 2px solid var(--surface-d);
 	display: flex;
