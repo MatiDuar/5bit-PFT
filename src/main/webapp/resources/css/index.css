@@ -173,3 +173,17 @@ td .columnaEditar {
 	justify-content: end;
     margin-top: 10px !important;
 }
+
+/*
+.fc fc-media-screen fc-direction-ltr fc-theme-standard{
+	height: 50% !important;
+}
+
+.fc .fc-scrollgrid-liquid {
+    height: 50% !important;
+}
+*/
+
+.fc .fc-view-harness .fc-view-harness-active{
+	height: 750px !important;
+}

@@ -15,7 +15,7 @@
 	<link rel="stylesheet" type="text/css" href="resources/css/index.css" />
 	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 	<title>Proyecto Final</title>
-<link rel="shortcut icon" href="resources/images/UTEC.png"></link>
+	<link rel="shortcut icon" href="resources/images/UTEC.png"></link>
 </h:head>
 <h:body onload="#{gestionPersona.checkUserIsLogin()}">
 
@@ -35,25 +35,61 @@
 	<!--**************************************** 	Fin contenido barra Izquierda	**************************************** -->
 
 	<!--****************************************	Contenido Principal    **************************************** -->
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}" >
-			<div class="layout-content">
-				<div id="contenidoPrincipal">
-					<ui:insert name="contenidoPrincipal">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()!=0}">
+		<div class="layout-content">
+			<div id="contenidoPrincipal">
+				<ui:insert name="contenidoPrincipal">
 
-					</ui:insert>
-				</div>
-			</div>	
+				</ui:insert>
+			</div>
+		</div>
 	</h:panelGroup>
 
-	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }" >
-		
-			<div class="layout-content2">
-				<div id="contenidoPrincipal" style="margin-bottom: 75px;">
-					<ui:insert name="contenidoPrincipal">
+	<h:panelGroup rendered="#{gestionPersona.bottonesMenu.size()==0 }">
 
-					</ui:insert>
-				</div>
-			</div>	
+		<div class="layout-content2">
+			<div id="contenidoPrincipal" style="margin-bottom: 75px;">
+				<ui:insert name="contenidoPrincipal">
+					<h1>Agenda Universitaria</h1>
+					<div class="card">
+						<h:form styleClass="formularioSchedule">
+							<p:schedule value="#{scheduleView.eventModel}"
+								widgetVar="schedule" locale="es" timeZone="UTC"
+								aspectRatio="3">
+								<p:ajax event="dateSelect"
+									listener="#{scheduleView.onDateSelect}"
+									update="@(.formularioSchedule #eventDialog)" />
+								<p:ajax event="eventSelect"
+									listener="#{scheduleView.onEventSelect}"
+									update="@(.formularioSchedule #eventDialog)" />
+
+							</p:schedule>
+
+							<p:dialog id="eventDialog" header="Evento"
+								widgetVar="eventDialog" modal="true" showEffect="fade"
+								hideEffect="fade" style="width: 500px; height: 400px;">
+								<h:panelGrid columns="2">
+									<h:outputLabel value="Titulo:" />
+									<p:inputText value="#{scheduleView.event.title}" />
+
+									<h:outputLabel value="Fecha de inicio:" />
+									<p:calendar value="#{scheduleView.event.startDate}" />
+
+									<h:outputLabel value="Fecha de fin:" />
+									<p:calendar value="#{scheduleView.event.endDate}" />
+
+									<f:facet name="footer">
+										<p:commandButton value="Guardar"
+											action="#{scheduleView.addEvent}"
+											oncomplete="PF('eventDialog').hide();" />
+									</f:facet>
+								</h:panelGrid>
+							</p:dialog>
+						</h:form>
+					</div>
+				</ui:insert>
+			</div>
+		</div>
 	</h:panelGroup>
 	<!--****************************************	Fin contenido Principal	   ****************************************-->
 

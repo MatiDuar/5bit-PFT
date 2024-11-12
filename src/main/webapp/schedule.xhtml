@@ -16,37 +16,40 @@
 	<h:outputScript library="primefaces" name="jquery-plugins.js" />
 
 	<ui:define name="contenidoPrincipal">
-		<h1>Gestion de Eventos</h1>
+		<h1>Agenda Universitaria</h1>
 		<div class="card">
 			<h:form styleClass="formularioSchedule">
 				<p:schedule value="#{scheduleView.eventModel}" widgetVar="schedule"
-					locale="es" timeZone="UTC" style="width: 100%">
+					locale="es" timeZone="UTC" id="schedule" aspectRatio="3">
 					<p:ajax event="dateSelect" listener="#{scheduleView.onDateSelect}"
 						update="@(.formularioSchedule #eventDialog)" />
-					<p:ajax event="eventSelect" listener="#{scheduleView.onEventSelect}"
+					<p:ajax event="eventSelect"
+						listener="#{scheduleView.onEventSelect}"
 						update="@(.formularioSchedule #eventDialog)" />
-									
+
 				</p:schedule>
-	
+
 				<p:dialog id="eventDialog" header="Evento" widgetVar="eventDialog"
-					modal="true" showEffect="fade" hideEffect="fade" style="width: 500px; height: 400px;">
+					modal="true" showEffect="fade" hideEffect="fade"
+					style="width: 500px; height: 400px;">
 					<h:panelGrid columns="2">
 						<h:outputLabel value="Titulo:" />
 						<p:inputText value="#{scheduleView.event.title}" />
-	
+
 						<h:outputLabel value="Fecha de inicio:" />
 						<p:calendar value="#{scheduleView.event.startDate}" />
-	
+
 						<h:outputLabel value="Fecha de fin:" />
 						<p:calendar value="#{scheduleView.event.endDate}" />
-	
+
 						<f:facet name="footer">
-							<p:commandButton value="Guardar" action="#{scheduleView.addEvent}"
-								oncomplete="PF('eventDialog').hide();"  />
+							<p:commandButton value="Guardar"
+								action="#{scheduleView.addEvent}"
+								oncomplete="PF('eventDialog').hide();" />
 						</f:facet>
 					</h:panelGrid>
 				</p:dialog>
 			</h:form>
-		</div>	
+		</div>
 	</ui:define>
 </ui:composition>
