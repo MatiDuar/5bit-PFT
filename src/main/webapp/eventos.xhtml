@@ -60,9 +60,7 @@
 								value="#{dtFilterView.estadoEvento}"
 								onchange="PF('eventoTable').filter()">
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="es" items="#{gestionEventos.estadosEvento}">
-									<f:selectItem itemLabel="#{es.nombre}" itemValue="#{es.nombre}" />
-								</c:forEach>
+								 <f:selectItems value="#{gestionEventosWeb.estadosEventoFiltradas}" var="es" itemLabel="#{es.nombre}" itemValue="#{es.nombre}" rendered="#{es.activo}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="col-12 md:col-2">
@@ -84,9 +82,7 @@
 								onchange="PF('eventoTable').filter()">
 
 								<f:selectItem itemLabel="-" itemValue=" " />
-								<c:forEach var="mo" items="#{gestionEventos.modalidadesEventoActivos}">
-									<f:selectItem itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" />
-								</c:forEach>
+								<f:selectItems value="#{gestionEventosWeb.modalidadesEventoActivos}" var="mo" itemLabel="#{mo.nombre}" itemValue="#{mo.nombre}" rendered="#{mo.activo}" />
 							</p:selectOneMenu>
 						</div>
 						<div class="col-12 md:col-2">

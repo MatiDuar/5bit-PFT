@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -70,6 +71,8 @@ public class GestionEventos implements Serializable {
 	private List<ModalidadesEventos> modalidadesEventoActivos;
 
 	private List<EstadosEventos> estadosEvento;
+	
+	private List<EstadosEventos> estadosEventoFiltradas;
 
 	private List<Tutor> tutoresSeleccionados;
 
@@ -83,9 +86,6 @@ public class GestionEventos implements Serializable {
 
 	private Timestamp maxDate;
 
-	private Timestamp fechaInicioEvento;
-
-	
 	@PostConstruct
 	public void init() {
 		try {
@@ -119,10 +119,32 @@ public class GestionEventos implements Serializable {
 //	        System.out.println(minDate);
 //	        System.out.println(maxDate);
 //			
+			filtrarCategoriasActivas();
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void filtrarCategoriasActivas() {
+    	estadosEventoFiltradas = estadosEvento.stream()
+                .filter(EstadosEventos::getActivo)  // Filtra solo los activos
+                .collect(Collectors.toList());
+    	
+    	modalidadesEventoActivos = modalidadesEvento.stream()
+                .filter(ModalidadesEventos::getActivo)  // Filtra solo los activos
+                .collect(Collectors.toList());
+    	
+    }
+	
+	
+
+	public List<EstadosEventos> getEstadosEventoFiltradas() {
+		return estadosEventoFiltradas;
+	}
+
+	public void setEstadosEventoFiltradas(List<EstadosEventos> estadosEventoFiltradas) {
+		this.estadosEventoFiltradas = estadosEventoFiltradas;
 	}
 
 	public Timestamp getMinDate() {
@@ -155,6 +177,16 @@ public class GestionEventos implements Serializable {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public List<ConvocatoriaAsistencia> buscarRegistroAsistencia(Evento evento) {
+		try {
+			convocatoriasSeleccionadas = persistenciaBean.buscarConvocatoriaPorEvento(evento);
+		} catch (ServicesException e) {
+			System.out.println("########### Fallo al obtener RegistroAsistencia: ###########\n" + e.toString());
+			e.printStackTrace();
+		}
+		return convocatoriasSeleccionadas;
 	}
 
    public List<Evento> buscarEventosEntreFechas(Date fechaInicio, Date FechaFin) {
@@ -373,6 +405,8 @@ public class GestionEventos implements Serializable {
 	public List<Tutor> getTutoresSeleccionados() {
 		return tutoresSeleccionados;
 	}
+	
+	
 
 	public void setTutoresSeleccionados(List<Tutor> tutoresSeleccionados) {
 		this.tutoresSeleccionados = tutoresSeleccionados;
@@ -415,9 +449,7 @@ public class GestionEventos implements Serializable {
 			Timestamp sqlTimestamp = new Timestamp(fechaInicioEvento.getTime());
 	        eventoSeleccionado.setFechaInicio(sqlTimestamp);
 	        System.out.println("fecha inicio en GestionEventos: "+sqlTimestamp);
-	        this.fechaInicioEvento = sqlTimestamp;
 		}else {
-			this.fechaInicioEvento = null;
 		}
 	}
 
