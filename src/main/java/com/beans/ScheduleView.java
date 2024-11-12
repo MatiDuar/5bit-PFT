@@ -16,6 +16,8 @@ import javax.inject.Named;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.Date;
 import java.util.ArrayList;
 import java.util.List;
@@ -84,8 +86,11 @@ public class ScheduleView implements Serializable {
 		eventModel = new DefaultScheduleModel();
 		// Agregar eventos
 		for(Evento eveUsu : eventosUsuario) {			
-			LocalDateTime  startDate = eveUsu.getFechaInicio().toLocalDateTime();
-			LocalDateTime  endDate = eveUsu.getFechaFin().toLocalDateTime();
+//			LocalDateTime  startDate = eveUsu.getFechaInicio().toLocalDateTime();
+//			LocalDateTime  endDate = eveUsu.getFechaFin().toLocalDateTime();
+			
+			ZonedDateTime startDate = eveUsu.getFechaInicio().toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
+			ZonedDateTime endDate = eveUsu.getFechaFin().toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
 			
 			 // Personalización colores
 		    String backgroundColor;
@@ -117,8 +122,8 @@ public class ScheduleView implements Serializable {
 			
 			eventModel.addEvent(DefaultScheduleEvent.builder()
 					.title(eveUsu.getTitulo())
-					.startDate(startDate)
-					.endDate(endDate.plusHours(1))
+					.startDate(startDate.toLocalDateTime())
+					.endDate(endDate.toLocalDateTime())
 					.backgroundColor(backgroundColor)
 					.borderColor(borderColor)
 					.textColor(textColor)
@@ -154,12 +159,16 @@ public class ScheduleView implements Serializable {
 		//LocalDateTime startDate = selectEvent.getObject().toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime();
 		
 		for(Evento eveUsu : eventosUsuario) {
-			LocalDateTime  startDate = eveUsu.getFechaInicio().toLocalDateTime();
-			LocalDateTime  endDate = eveUsu.getFechaFin().toLocalDateTime();
+//			LocalDateTime  startDate = eveUsu.getFechaInicio().toLocalDateTime();
+//			LocalDateTime  endDate = eveUsu.getFechaFin().toLocalDateTime();
+			
+			ZonedDateTime startDate = eveUsu.getFechaInicio().toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
+			ZonedDateTime endDate = eveUsu.getFechaFin().toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(ZoneId.of("UTC"));
+			
 			event = DefaultScheduleEvent.builder()
 					.title(eveUsu.getTitulo())
-					.startDate(startDate)
-					.endDate(endDate.plusHours(1)) // Establecer una duración de ejemplo
+					.startDate(startDate.toLocalDateTime())
+					.endDate(endDate.toLocalDateTime()) // Establecer una duración de ejemplo
 					.build();
 		}
 
