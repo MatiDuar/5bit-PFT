@@ -51,6 +51,7 @@ public class PickListView {
 
 	@PostConstruct
 	public void init() {
+		gestionEventos.init();
 		List<Tutor> tutoresSource = new ArrayList<>();
 		List<Tutor> tutoresTarget = new ArrayList<>();
 		tutores = new DualListModel<>(tutoresSource, tutoresTarget);
@@ -65,6 +66,9 @@ public class PickListView {
 
 		estudiantesConvocados = new DualListModel<>(estudiantesSource, estudiantesTarget);
 
+		eventoSeleccionado = (Evento) gestionEventos.obtenerDatoDeSesionEvento("eventoSeleccionadoMod");
+		System.out.println("######################### Primero #################################\n");
+		System.out.println("Evento Seleccionado Mod: \n" + eventoSeleccionado);
 		if (eventoSeleccionado == null) {
 			eventoSeleccionado = new Evento();
 		}
@@ -79,13 +83,13 @@ public class PickListView {
 				tutores.setTarget(gestionEventos.getTutoresSeleccionados());
 			}
 			System.out.println("######################### Inicio #################################\n");
-			System.out.println("Evento Seleccionado Mod: \n" + gestionEventos.getEventoSeleccionadoMod().getTutores());
+			System.out.println("Evento Seleccionado Mod: \n" + eventoSeleccionado.getTutores());
 			
-			if (gestionEventos.getEventoSeleccionadoMod().getTutores() != null) {
+			if (eventoSeleccionado.getTutores() != null) {
 				System.out.println("Tutores No Seleccionados: \n" + tutoresMod.getSource().toString());
 				System.out.println("Tutores Seleccionados: \n" + tutoresMod.getTarget().toString());
-				tutoresMod.setTarget(gestionEventos.getEventoSeleccionadoMod().getTutores());
-				estudiantesConvocados.setTarget(service.buscarEstudiantesPorEvento(gestionEventos.getEventoSeleccionadoMod()));
+				tutoresMod.setTarget(eventoSeleccionado.getTutores());
+				estudiantesConvocados.setTarget(service.buscarEstudiantesPorEvento(eventoSeleccionado));
 			}
 			
 			System.out.println("######################### Fin #################################\n");

@@ -49,10 +49,6 @@ public class FilterView implements Serializable {
 	@Inject
 	private GestionPersona gestionPersona;
 	
-	@Inject
-	private GestionEventos gestionEventos;
-	
-
 	// filtros para Usuarios
 	private String carreraSel;
 

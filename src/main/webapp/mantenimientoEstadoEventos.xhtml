@@ -127,7 +127,9 @@
 			</p:panel>
 			
 			<div class="btnAcepMant">
-				<p:commandButton value="Aceptar" action="#{dfView.closeResponsive()}"/>
+				<p:commandButton value="Aceptar" action="#{dfView.closeResponsive()}">
+					<p:ajax event="dialogReturn" listener="#{dfView.redirect(eventos.xhtml)}"/>
+				</p:commandButton>
 			</div>
 
 		</h:form>

@@ -20,9 +20,7 @@ public class DFView {
 	
 	@Inject
 	GestionITR gestionITR;
-	
-
-	
+		
 	
 	  public void viewResponsive() {
 		  

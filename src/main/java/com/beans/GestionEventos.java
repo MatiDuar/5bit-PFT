@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
@@ -31,7 +32,7 @@ import com.persistencia.entities.Tutor;
 import com.persistencia.exception.ServicesException;
 
 @Named(value = "gestionEventos") // JEE8
-@ViewScoped // JEE8
+@SessionScoped  // JEE8
 public class GestionEventos implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -81,8 +82,6 @@ public class GestionEventos implements Serializable {
 
 	private Timestamp maxDate;
 
-	private Timestamp fechaInicioEvento;
-
 	@PostConstruct
 	public void init() {
 		try {
@@ -124,6 +123,21 @@ public class GestionEventos implements Serializable {
 		}
 	}
 	
+	// Método para recrear el bean
+    public void recrearBean() {
+        // Invalidar la sesión actual
+        FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+
+        // Redireccionar o realizar una acción que vuelva a instanciar el bean
+        // Aquí podrías redirigir a la página de inicio, por ejemplo:
+        try {
+            FacesContext.getCurrentInstance().getExternalContext().redirect("eventos.xhtml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+
     public void filtrarCategoriasActivas() {
     	estadosEventoFiltradas = estadosEvento.stream()
                 .filter(EstadosEventos::getActivo)  // Filtra solo los activos
@@ -298,7 +312,8 @@ public class GestionEventos implements Serializable {
 
 	public void convocatoriaEvento(Evento evento) {
 		eventoSeleccionadoMod = evento;
-
+		guardarDatoEnSesion("eventoSeleccionadoMod",eventoSeleccionadoMod);
+		System.out.println("Paso por convocatoriaEvento");
 		dfView.viewEstudiantesConvocados();
 	}
 
@@ -306,12 +321,28 @@ public class GestionEventos implements Serializable {
 		try {
 			convocatoriasSeleccionadas = persistenciaBean.buscarConvocatoriaPorEvento(evento);
 			eventoSeleccionadoMod = evento;
+
 			dfView.viewRegistroAsistencia();
 
 		} catch (ServicesException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	public void guardarDatoEnSesion(String key, Object value) {
+	    FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(key, value);
+	}
+	
+	public Object obtenerDatoDeSesionEvento(String key) {
+	    return FacesContext.getCurrentInstance().getExternalContext().getSessionMap().get(key);
+	}
+	
+	public void mostrarSesionEnConsola() {
+	    Map<String, Object> sessionMap = FacesContext.getCurrentInstance().getExternalContext().getSessionMap();
+	    sessionMap.forEach((key, value) -> {
+	        System.out.println("Clave: " + key + ", Valor: " + value);
+	    });
 	}
 	
 	public List<ConvocatoriaAsistencia> buscarRegistroAsistencia(Evento evento) {
@@ -444,9 +475,7 @@ public class GestionEventos implements Serializable {
 			Timestamp sqlTimestamp = new Timestamp(fechaInicioEvento.getTime());
 	        eventoSeleccionado.setFechaInicio(sqlTimestamp);
 	        System.out.println("fecha inicio en GestionEventos: "+sqlTimestamp);
-	        this.fechaInicioEvento = sqlTimestamp;
 		}else {
-			this.fechaInicioEvento = null;
 		}
 	}
 
