@@ -284,8 +284,9 @@ public class FilterView implements Serializable {
 			}
 			String nombreEstudiante = reclamo.getEstudiante().getNombre1() + " "
 					+ reclamo.getEstudiante().getApellido1();
-			return (reclamo.getTitulo().toLowerCase().startsWith(filterText)
-					|| (reclamo.getNombreEventoVME().toLowerCase().contains(filterText))
+			return (reclamo.getTitulo().toLowerCase().contains(filterText)
+					|| (reclamo.getNombreEventoVME() != null 
+			                && reclamo.getNombreEventoVME().toLowerCase().contains(filterText))
 					|| nombreEstudiante.startsWith(filterText));
 		}
 
