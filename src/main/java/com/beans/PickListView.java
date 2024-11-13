@@ -145,7 +145,7 @@ public class PickListView {
 	}
 
 	public String estudianteToString(Estudiante estudiante) {
-		return estudiante.toString();
+		return estudiante.toString()+ " " + estudiante.getAnoIngreso();
 	}
 
 	public void guardarCambios() {

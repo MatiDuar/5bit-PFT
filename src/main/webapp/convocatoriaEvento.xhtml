@@ -33,7 +33,6 @@
 				<p:pickList id="pojoPickList" value="#{pickListView.estudiantesConvocados}"
 					var="estudiante" itemValue="#{estudiante}" itemLabel="#{pickListView.estudianteToString(estudiante)}"
 					showSourceFilter="true" showTargetFilter="true"
-					
 					filterMatchMode="contains" converter="estudianteConverter"  responsive="true">
 				
 
@@ -80,36 +79,30 @@
 
 
 
-					<p:column field="nombre1" headerText="Nombre">
-						<div class="flex align-items-center">
-							<h:outputText value="#{estudiante.nombre1}" />
-							<h:outputText value=" " />
-							<h:outputText value="#{estudiante.apellido1}" />
+					<p:column field="nombre1" headerText="Nombre" style="width:94%">
+						<div class="row flex">
+							<div class="flex align-items-center justify-content-center col-3">
+								<h:outputText value="#{estudiante.nombre1}" />
+								<h:outputText value=" " />
+								<h:outputText value="#{estudiante.apellido1}" />
+							</div>
+	
+							<div class="flex align-items-center justify-content-center col-3">
+	
+								<h:outputText value="#{estudiante.documento}" />
+							</div>
+						
+							<div class="flex align-items-center justify-content-center col-3">
+	
+								<h:outputText value="#{estudiante.anoIngreso}" />
+							</div>
+	
+							<div class="flex align-items-center justify-content-center col-3">
+	
+								<h:outputText value="#{estudiante.itr.nombre}" />
+							</div>
 						</div>
 					</p:column>
-
-
-					<p:column headerText="Documento">
-						<div class="flex align-items-center">
-
-							<h:outputText value="#{estudiante.documento}" />
-						</div>
-					</p:column>
-					
-					<p:column headerText="Año ingreso">
-						<div class="flex align-items-center">
-
-							<h:outputText value="#{estudiante.anoIngreso}" />
-						</div>
-					</p:column>
-					
-					<p:column headerText="ITR">
-						<div class="flex align-items-center">
-
-							<h:outputText value="#{estudiante.itr.nombre}" />
-						</div>
-					</p:column>
-					
 					
 					
 

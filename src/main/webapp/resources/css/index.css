@@ -136,9 +136,9 @@ body {
 }
 
 ul {
-	overflow: hidden !important;
+	/*overflow: hidden !important;
+	overflow-y: hidden !important;*/
 	overflow-x: hidden !important;
-	overflow-y: hidden !important;
 }
 
 td .columnaEditar {
@@ -174,15 +174,10 @@ td .columnaEditar {
     margin-top: 10px !important;
 }
 
-/*
-.fc fc-media-screen fc-direction-ltr fc-theme-standard{
-	height: 50% !important;
+.ui-picklist-source, .ui-picklist-target {
+    max-height: 200px; /* Ajusta la altura deseada */
+    overflow-y: auto;
 }
-
-.fc .fc-scrollgrid-liquid {
-    height: 50% !important;
-}
-*/
 
 .fc .fc-view-harness .fc-view-harness-active{
 	height: 750px !important;
