@@ -80,6 +80,7 @@
 									maxlength="50"
 									id="nombre"
 									validator="#{validatorModificarEstadoEvento.validate}">
+									<f:attribute name="originalValue" value="#{estado.nombre}" />
 								</p:inputText>
 								<small class="block ui-state-error"><h:message
 										style="color:red;" for="nombre" /></small>

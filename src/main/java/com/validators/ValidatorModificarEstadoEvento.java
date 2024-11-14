@@ -61,13 +61,22 @@ public class ValidatorModificarEstadoEvento implements Validator<String>, Serial
 			e.printStackTrace();
 		}
 
+		String nombreOriginal = (String) arg1.getAttributes().get("originalValue");
 		for (EstadosEventos estado : estados) {
-			if (estado.getNombre().toString().equalsIgnoreCase(arg2.toString()) 
-					&& estadoAModificar.getId() != estado.getId()) {				
+			if (nombreDuplicado(nombreOriginal,arg2.toString())
+					&& estadoAModificar.getId() != estado.getId()) {			
 				FacesMessage message = new FacesMessage("No se pueden repetir nombres");
 				throw new ValidatorException(message);
 				
 			}
 		}
+		
+		nombreDuplicado(nombreOriginal,arg2.toString());
 	}
+	
+	public boolean nombreDuplicado(String nombreOriginal, String nombreNuevo) {
+		return false;
+		
+	}
+	
 }
